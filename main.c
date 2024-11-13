@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 19:57:48 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/10/16 19:49:47 by hladeiro         ###   ########.fr       */
+/*   Updated: 2024/11/13 18:54:45 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	main(int ac, char **av, char **env)
 	else
 		create_env(super_env);
 	inti_minishel(super_env); */
+	//teste
 	m.prompt = "shell > ";
 	m.readline = readline(m.prompt);
 	printf_evn(env);
@@ -59,7 +60,7 @@ int	main(int ac, char **av, char **env)
 		parsing(m.readline);
 		free(m.readline);
 		m.readline = readline(m.prompt);
-	}	
+	}
 	free(m.c);
 	return 1;
 }
