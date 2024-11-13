@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 19:57:48 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/11/13 18:54:45 by malourei         ###   ########.fr       */
+/*   Updated: 2024/11/13 23:05:19 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	main(int ac, char **av, char **env)
 		create_env(super_env);
 	inti_minishel(super_env); */
 	//teste
+	// ze novo teste
 	m.prompt = "shell > ";
 	m.readline = readline(m.prompt);
 	printf_evn(env);
