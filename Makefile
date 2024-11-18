@@ -4,29 +4,38 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -g
 
+LIBFT_DIR = ./src/libft
+
+LIBFT = $(LIBFT_DIR)/libft.a
+
 SRC_DIR = .
 
-SRCC_DIR = ./src
+SRC_UTILS_DIR = ./src
 
 SRCS = main.c
 
-SRCSS = copy_env.c ft_strcpy.c ft_strlen.c ft_free_strs.c create_env.c ft_strcat.c ft_strrchr.c
+SRCS_UTILS = copy_env.c ft_free_strs.c create_env.c
 
 OBJS = $(SRCS:%.c=$(SRC_DIR)/%.o)
 
-OBJSS = $(SRCSS:%.c=$(SRCC_DIR)/%.o)
+OBJS_UTILS = $(SRCS_UTILS:%.c=$(SRC_UTILS_DIR)/%.o)
 
-$(NAME): $(OBJSS) $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJSS) $(OBJS) -o $(NAME)
+$(NAME): $(LIBFT) $(OBJS_UTILS) $(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS_UTILS) $(OBJS) -L$(LIBFT_DIR) -lft -o $(NAME)
+
+$(LIBFT):
+	@make -C $(LIBFT_DIR)
 
 all: $(NAME)
 
 clean:
 	@rm -f $(OBJS)
-	@rm -f $(OBJSS)
+	@rm -f $(OBJS_UTILS)
+	@make clean -C $(LIBFT_DIR)
 
 fclean: clean
 	@rm -f $(NAME)
+	@make fclean -C $(LIBFT_DIR)
 
 re: fclean all
 

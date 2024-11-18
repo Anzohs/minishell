@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/17 19:51:16 by malourei          #+#    #+#             */
-/*   Updated: 2024/11/17 20:04:54 by malourei         ###   ########.fr       */
+/*   Created: 2024/11/17 22:07:41 by malourei          #+#    #+#             */
+/*   Updated: 2024/11/18 23:15:42 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-int	ft_strlen(char *str)
+char	*ft_strrchr(char *s, char c)
 {
-	int	i;
+	size_t	tamanho;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	tamanho = ft_strlen(s);
+	while (s[tamanho] != c)
+	{
+		if (tamanho == 0)
+			return (NULL);
+		tamanho--;
+	}
+	s[tamanho] = '\0';
+	return (s);
 }

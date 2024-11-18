@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/17 22:07:41 by malourei          #+#    #+#             */
-/*   Updated: 2024/11/18 00:41:12 by malourei         ###   ########.fr       */
+/*   Created: 2024/04/15 00:32:30 by malourei          #+#    #+#             */
+/*   Updated: 2024/11/18 23:14:11 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#ifndef LIBFT_H
+# define LIBFT_H
 
-char	*ft_strrchr(char *s, char c)
-{
-	size_t	tamanho;
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <string.h>
+# include <limits.h>
 
-	tamanho = ft_strlen(s);
-	while (s[tamanho] != c)
-	{
-		if (tamanho == 0)
-			return (NULL);
-		tamanho--;
-	}
-	s[tamanho] = '\0';
-	return (s);
-}
+void	ft_bzero(void *s, size_t n);
+void	*ft_calloc(size_t nmemb, size_t size);
+char	*ft_strcpy(char *dst, const char *src);
+char	*ft_strcat(char *dest, const char *src);
+char	*ft_strrchr(char *s, char c);
+int		ft_strlen(char *str);
+
+
+#endif

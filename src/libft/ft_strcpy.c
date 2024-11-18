@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcat.c                                        :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/17 21:47:07 by malourei          #+#    #+#             */
-/*   Updated: 2024/11/17 21:50:22 by malourei         ###   ########.fr       */
+/*   Created: 2024/11/16 01:10:33 by malourei          #+#    #+#             */
+/*   Updated: 2024/11/18 23:15:33 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-char	*ft_strcat(char *dest, const char *src)
+char	*ft_strcpy(char *dst, const char *src)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = ft_strlen(dest);
-	while (src[i])
+	while (src[i] != '\0')
 	{
-		dest[j] = src[i];
+		dst[i] = src[i];
 		i++;
-		j++;
 	}
-	dest[j] = '\0';
-	return (dest);
+	dst[i] = '\0';
+	return (dst);
 }
