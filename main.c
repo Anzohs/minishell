@@ -6,23 +6,23 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 19:57:48 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/11/13 23:05:19 by malourei         ###   ########.fr       */
+/*   Updated: 2024/11/17 21:54:36 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	str_cpm(char *c, char *d)
-{
-	int	i;
+// static int	str_cpm(char *c, char *d)
+// {
+// 	int	i;
 
-	i = 0;
-	while (c[i] == d[i] && d[i])
-		i++;
-	if (d[i] == c[i])
-		return (0);
-	return (1);
-}
+// 	i = 0;
+// 	while (c[i] == d[i] && d[i])
+// 		i++;
+// 	if (d[i] == c[i])
+// 		return (0);
+// 	return (1);
+// }
 
 void	parsing(char *c)
 {
@@ -31,7 +31,11 @@ void	parsing(char *c)
 
 void	printf_evn(char **env)
 {
-	int	i = 0;
+	int	i;
+
+	i = 0;
+	if (!env)
+		exit (1);
 	while (env[i])
 	{
 		printf("%s\n", env[i]);
@@ -39,30 +43,47 @@ void	printf_evn(char **env)
 	}
 }
 
+void	free_all(char **strs)
+{
+	int	i;
+
+	i = 0;
+	while (strs[i])
+	{
+		free(strs[i]);
+		i++;
+	}
+	free(strs);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	static t_mini	m;
-	char		**super_env;
 
+	(void)av;
 	if (ac > 1)
-		return 0;
-	/* if (*env)
-		copy_env(env, super_env);
+		return (0);
+	m.super_env = NULL;
+	if (*env)
+		copy_env(&m, env);
 	else
-		create_env(super_env);
-	inti_minishel(super_env); */
+		creat_env(&m);
+	// else
+	// 	create_env(m.super_env);
+	//inti_minishel(super_env);
 	//teste
 	// ze novo teste
-	m.prompt = "shell > ";
-	m.readline = readline(m.prompt);
-	printf_evn(env);
-	while (m.readline  && str_cpm(m.readline, "exit"))
-	{
-		parsing(m.readline);
-		free(m.readline);
-		m.readline = readline(m.prompt);
-	}
-	free(m.c);
-	return 1;
+	// m.prompt = "shell > ";
+	// m.readline = readline(m.prompt);
+	printf_evn(m.super_env);
+	// while (m.readline  && str_cpm(m.readline, "exit"))
+	// {
+	// 	parsing(m.readline);
+	// 	free(m.readline);
+	// 	m.readline = readline(m.prompt);
+	// }
+	free_all(m.super_env);
+	//free(m.c);
+	return (0);
 }
 //valgrind --suppressions=read.supp --show-leak-kinds=all --leak-check=full
