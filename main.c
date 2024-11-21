@@ -12,17 +12,17 @@
 
 #include "minishell.h"
 
-// static int	str_cpm(char *c, char *d)
-// {
-// 	int	i;
+static int	str_cpm(char *c, char *d)
+{
+	int	i;
 
-// 	i = 0;
-// 	while (c[i] == d[i] && d[i])
-// 		i++;
-// 	if (d[i] == c[i])
-// 		return (0);
-// 	return (1);
-// }
+	i = 0;
+	while (c[i] == d[i] && d[i])
+		i++;
+ 	if (d[i] == c[i])
+ 		return (0);
+ 	return (1);
+}
 
 void	parsing(char *c)
 {
@@ -68,20 +68,28 @@ int	main(int ac, char **av, char **env)
 		copy_env(&m, env);
 	else
 		creat_env(&m);
-	// else
-	// 	create_env(m.super_env);
 	//inti_minishel(super_env);
-	//teste
-	// ze novo teste
-	// m.prompt = "shell > ";
-	// m.readline = readline(m.prompt);
+	m.prompt = "shell > ";
+	m.readline = readline(m.prompt);
 	printf_evn(m.super_env);
-	// while (m.readline  && str_cpm(m.readline, "exit"))
-	// {
-	// 	parsing(m.readline);
-	// 	free(m.readline);
-	// 	m.readline = readline(m.prompt);
-	// }
+	while (m.readline  && str_cpm(m.readline, "exit"))
+	{
+		//parsing(m.readline);
+		add_history(m.readline);
+		if (!str_cpm(m.readline, "pwd"))
+		{
+			//fazer update do pwd
+			// getcwd(NULL, 1);
+		}
+		if (!str_cpm(m.readline, "cd"))
+		{
+			//faz so o absolute path (cd) e prepara para receber o parsing!
+			//update ao pwd, e ao old pwd
+
+		}
+		free(m.readline);
+		m.readline = readline(m.prompt);
+	}
 	free_all(m.super_env);
 	//free(m.c);
 	return (0);
