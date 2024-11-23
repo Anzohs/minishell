@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_search/ft_search.h"
 #include "minishell.h"
 
 static int	str_cpm(char *c, char *d)
@@ -19,14 +20,22 @@ static int	str_cpm(char *c, char *d)
 	i = 0;
 	while (c[i] == d[i] && d[i])
 		i++;
- 	if (d[i] == c[i])
- 		return (0);
- 	return (1);
+	if (d[i] == c[i])
+		return (0);
+	return (1);
 }
 
-void	parsing(char *c)
-{
-	printf("%s \n", c);
+void print_hash_table(t_hash *ht) {
+    if (!ht) {
+        return;
+    }
+    for (size_t i = 0; i < ht->len; i++) {
+        t_node *node = ht->node[i];
+        while (node) {
+            printf("Command: %s, Arguments: %s\n", node->entry.key, (char *)node->entry.value);
+            node = node->next;
+        }
+    }
 }
 
 void	printf_evn(char **env)
@@ -59,11 +68,13 @@ void	free_all(char **strs)
 int	main(int ac, char **av, char **env)
 {
 	static t_mini	m;
+	t_hash	*ht;
 
 	(void)av;
 	if (ac > 1)
 		return (0);
 	m.super_env = NULL;
+
 	if (*env)
 		copy_env(&m, env);
 	else
@@ -71,11 +82,12 @@ int	main(int ac, char **av, char **env)
 	//inti_minishel(super_env);
 	m.prompt = "shell > ";
 	m.readline = readline(m.prompt);
-	printf_evn(m.super_env);
+	ht = hcreate(10);
 	while (m.readline  && str_cpm(m.readline, "exit"))
 	{
-		//parsing(m.readline);
+		parse_input(ht, m.readline);
 		add_history(m.readline);
+		print_hash_table(ht);
 		if (!str_cpm(m.readline, "pwd"))
 		{
 			//fazer update do pwd

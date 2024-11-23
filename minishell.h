@@ -13,16 +13,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "./src/libft/libft.h"
-# include <stdio.h>
-# include <stdbool.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <sys/wait.h>
-# include <signal.h>
-# include <fcntl.h>
-# include <stdlib.h>
-# include <unistd.h>
+# include "ft_search/ft_search.h"
 
 typedef struct s_minishell
 {
@@ -36,5 +27,6 @@ typedef struct s_minishell
 void	copy_env(t_mini *mini, char **env);
 void	ft_free_strs(char **strs, int size);
 void	creat_env(t_mini *mini);
+void	parse_input(t_hash *ht, const char *input);
 
 #endif
