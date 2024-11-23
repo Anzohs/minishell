@@ -1,42 +1,36 @@
 NAME = minishell
 
 CC = cc
+OBJ_DIR = obj
+CFLAGS = -Wall -Wextra -Werror -g -I. -Isrc/libf -Ift_search
+CCFLAGS = -lreadline
+SRC_FT = hash.c hcreate.c hdestroy.c hsearch.c
+SRC_SRC = copy_env.c create_env.c ft_free_strs.c
+SRC_LIBF = ft_bzero.c ft_calloc.c ft_strcat.c ft_strcpy.c ft_strlen.c ft_strrchr.c
 
-CFLAGS = -Wall -Wextra -Werror -g -lreadline
+SRCS := main.c parsing.c
+SRCS += $(addprefix ft_search/, $(SRC_FT))
+SRCS += $(addprefix src/, $(SRC_SRC))
+SRCS += $(addprefix src/libft/, $(SRC_LIBF))
 
-LIBFT_DIR = ./src/libft
+OBJ := $(patsubst %.c, $(OBJ_DIR)/%.o,$(SRCS))
 
-LIBFT = $(LIBFT_DIR)/libft.a
+all:	$(NAME)
 
-SRC_DIR = .
+$(OBJ_DIR)/%.o: %.c
+		@mkdir -p $(@D)
+		$(CC) $(CFLAGS) -c $< -o $@
 
-SRC_UTILS_DIR = ./src
-
-SRCS = main.c
-
-SRCS_UTILS = copy_env.c ft_free_strs.c create_env.c
-
-OBJS = $(SRCS:%.c=$(SRC_DIR)/%.o)
-
-OBJS_UTILS = $(SRCS_UTILS:%.c=$(SRC_UTILS_DIR)/%.o)
-
-$(NAME): $(LIBFT) $(OBJS_UTILS) $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS_UTILS) $(OBJS) -L$(LIBFT_DIR) -lft -o $(NAME)
-
-$(LIBFT):
-	@make -C $(LIBFT_DIR)
-
-all: $(NAME)
+$(NAME): $(OBJ)
+	$(CC) $(CCFLAGS) $(OBJ) -o $(NAME)
 
 clean:
-	@rm -f $(OBJS)
-	@rm -f $(OBJS_UTILS)
-	@make clean -C $(LIBFT_DIR)
+	@rm -rf	$(OBJ_DIR)
+	@echo "Objects files clean"
 
 fclean: clean
-	@rm -f $(NAME)
-	@make fclean -C $(LIBFT_DIR)
+	@rm -rf $(NAME)
+	@echo "executable removed: $(NAME)"
 
 re: fclean all
-
 .PHONY: all clean fclean re
