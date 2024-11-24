@@ -3,41 +3,45 @@
 
 static t_string	extract_arg(const char *input, size_t *index)
 {
-	while (input[*index] && (input[*index] == ' ' || input[*index] == '\t')) {
-        (*index)++;
-    }
-    size_t start = *index;
-    int in_quotes = 0;
-    while (input[*index] && (input[*index] != '|' || in_quotes)) {
-        if (input[*index] == '"' || input[*index] == '\'') {
-            in_quotes = !in_quotes;
-        }
-        (*index)++;
-    }
-    size_t len = *index - start;
-    char *arguments = (char *)malloc(len + 1);
-    if (!arguments) {
-        return NULL;
-    }
-    strncpy(arguments, input + start, len);
-    arguments[len] = '\0';
-    return arguments;
+	size_t	start;
+	int		in_quotes;
+	size_t	len;
+	char	*arguments;
+
+	while (input[*index] && (input[*index] == ' ' || input[*index] == '\t'))
+		(*index)++;
+	start = *index;
+	in_quotes = 0;
+	while (input[*index] && (input[*index] != '|' || in_quotes))
+	{
+		if (input[*index] == '"' || input[*index] == '\'')
+			in_quotes = !in_quotes;
+		(*index)++;
+	}
+	len = *index - start;
+	arguments = (char *)malloc(len + 1);
+	if (!arguments)
+		return (NULL);
+	strncpy(arguments, input + start, len);
+	arguments[len] = '\0';
+	return (arguments);
 }
 
 static t_string	extract_command(const char *input, size_t *index)
 {
-	size_t start = *index;
-    while (input[*index] && input[*index] != ' ' && input[*index] != '\t') {
-        (*index)++;
-    }
-    size_t len = *index - start;
-    char *command = (char *)malloc(len + 1);
-    if (!command) {
-        return NULL;
-    }
-    strncpy(command, input + start, len);
-    command[len] = '\0';
-    return command;
+	size_t	start;
+	size_t	len;
+	char	*command;
+
+	start = *index;
+	while (input[*index] && input[*index] != ' ' && input[*index] != '\t')
+		(*index)++;
+	len = *index - start;
+	command = ft_calloc(len + 1, sizeof(char));
+	if (!command)
+		return (NULL);
+	strncpy(command, input + start, len);
+	return (command);
 }
 
 void	parse_input(t_hash *ht, const char *input)
@@ -47,20 +51,20 @@ void	parse_input(t_hash *ht, const char *input)
 	t_string	arg;
 
 	index = 0;
-    while (input[index]) {
-        command = extract_command(input, &index);
-        if (!command)
-        	return;
-        arg = extract_arg(input, &index);
-        if (!arg)
-        {
-            free(command);
-            return;
-        }
-        t_entry entry = { command, arg};
-        hsearch(ht, entry, ENTER);
-        while (input[index] && (input[index] == ' ' || input[index] == '\t' || input[index] == '|')) {
-            index++;
-        }
-    }
+	while (input[index])
+	{
+		command = extract_command(input, &index);
+		if (!command)
+			return ;
+		arg = extract_arg(input, &index);
+		if (!arg)
+		{
+			free(command);
+			return ;
+		}
+		hsearch(ht, (t_entry){command, arg}, ENTER);
+		while (input[index] && (input[index] == ' ' || input[index] == '\t'
+				|| input[index] == '|'))
+			index++;
+	}
 }

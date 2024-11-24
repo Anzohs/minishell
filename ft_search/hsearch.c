@@ -1,4 +1,5 @@
 #include "ft_search.h"
+#include <stdlib.h>
 
 static	t_entry	*hash_search(t_node *n, t_entry item)
 {
@@ -11,15 +12,30 @@ static	t_entry	*hash_search(t_node *n, t_entry item)
 	return (NULL);
 }
 
+
 static	t_entry	*hash_add(t_hash *ht, t_entry item, unsigned int i)
 {
 	t_node	*new;
+	t_entry	*entry;
 
-	new = ft_calloc(sizeof(t_node), 1);
+	entry = hsearch(ht, item, FIND);
+	if (entry)
+	{
+		free(entry->value);
+		entry->value = strdup((t_string)item.value);
+		return (entry);
+	}
+	new = ft_calloc(1, sizeof(t_node));
 	if (!new)
 		return (NULL);
 	new->entry.key = strdup(item.key);
 	new->entry.value = strdup((t_string)item.value);
+	if (ht->node[i])
+	{
+		free(ht->node[i]->entry.key);
+		free(ht->node[i]->entry.value);
+		free(ht->node[i]);
+	}
 	ht->node[i] = new;
 	return (&new->entry);
 }
