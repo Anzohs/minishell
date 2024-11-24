@@ -6,14 +6,11 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 19:57:48 by malourei          #+#    #+#             */
-/*   Updated: 2024/11/24 19:04:12 by hladeiro         ###   ########.fr       */
+/*   Updated: 2024/11/24 20:08:17 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search/ft_search.h"
 #include "minishell.h"
-#include <readline/readline.h>
-#include <stddef.h>
 
 static int	str_cpm(char *c, char *d)
 {
@@ -74,10 +71,24 @@ void	free_all(char **strs)
 	free(strs);
 }
 
+void	free_node(t_node *n)
+{
+	t_node	*tmp;
+
+	tmp = n;
+	while (tmp)
+	{
+		tmp = tmp->next;
+		free(n);
+		n = tmp;
+	}
+}
+
 int	main(int ac, char **av, char **env)
 {
 	static t_mini	m;
 	t_hash			*ht;
+	t_node			*node;
 
 	(void)av;
 	if (ac > 1)
@@ -90,9 +101,10 @@ int	main(int ac, char **av, char **env)
 	m.prompt = "shell > ";
 	m.readline = readline(m.prompt);
 	ht = hcreate(10);
+	node = ft_calloc(sizeof(t_node), 1);
 	while (m.readline && str_cpm(m.readline, "exit"))
 	{
-		parse_input(ht, m.readline);
+		parse_input(ht, m.readline, node);
 		add_history(m.readline);
 		print_hash_table(ht);
 		if (!str_cpm(m.readline, "pwd"))
@@ -107,6 +119,7 @@ int	main(int ac, char **av, char **env)
 		}
 		free(m.readline);
 		m.readline = readline(m.prompt);
+		free_node(node);
 	}
 	rl_clear_history();
 	free_all(m.super_env);

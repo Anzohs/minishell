@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 18:46:45 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/11/24 19:24:48 by hladeiro         ###   ########.fr       */
+/*   Updated: 2024/11/24 20:06:28 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,18 @@ static t_string	extract_command(const char *input, size_t *index)
 	return (command);
 }
 
-void	parse_input(t_hash *ht, const char *input)
+static t_node	*get_last(t_node *n)
+{
+	t_node	*tmp;
+
+	tmp = n;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = ft_calloc(sizeof(t_node), 1);
+	return (tmp->next);
+}
+
+void	parse_input(t_hash *ht, const char *input, t_node *n)
 {
 	size_t		index;
 	t_string	command;
@@ -73,7 +84,10 @@ void	parse_input(t_hash *ht, const char *input)
 			free(command);
 			return ;
 		}
-		hsearch(ht, (t_entry){command, arg}, ENTER);
+		if (!n->entry.key)
+			n->entry = *hsearch(ht, (t_entry){command, arg}, ENTER);
+		else
+			get_last(n)->entry = *hsearch(ht, (t_entry){command, arg}, ENTER);
 		while (input[index] && (input[index] == ' ' || input[index] == '\t'
 				|| input[index] == '|'))
 			index++;
