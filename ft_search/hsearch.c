@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hsearch.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/24 18:46:45 by hladeiro          #+#    #+#             */
+/*   Updated: 2024/11/24 21:02:00 by hladeiro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_search.h"
 #include <stdlib.h>
 
 static	t_entry	*hash_search(t_node *n, t_entry item)
 {
-	while(n)
+	while (n)
 	{
 		if (strcmp(n->entry.key, item.key) == 0)
 			return (&n->entry);
@@ -11,7 +23,6 @@ static	t_entry	*hash_search(t_node *n, t_entry item)
 	}
 	return (NULL);
 }
-
 
 static	t_entry	*hash_add(t_hash *ht, t_entry item, unsigned int i)
 {
@@ -40,7 +51,7 @@ static	t_entry	*hash_add(t_hash *ht, t_entry item, unsigned int i)
 	return (&new->entry);
 }
 
-t_entry		*hsearch(t_hash *ht, t_entry item, t_action action)
+t_entry	*hsearch(t_hash *ht, t_entry item, t_action action)
 {
 	if (!item.key || (action != FIND && action != ENTER) || !ht)
 		return (NULL);

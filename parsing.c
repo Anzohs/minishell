@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/24 18:46:45 by hladeiro          #+#    #+#             */
+/*   Updated: 2024/11/24 19:24:48 by hladeiro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_search/ft_search.h"
 #include "minishell.h"
 
@@ -19,11 +31,10 @@ static t_string	extract_arg(const char *input, size_t *index)
 		(*index)++;
 	}
 	len = *index - start;
-	arguments = (char *)malloc(len + 1);
+	arguments = (char *)ft_calloc(len + 1, sizeof(char));
 	if (!arguments)
 		return (NULL);
 	strncpy(arguments, input + start, len);
-	arguments[len] = '\0';
 	return (arguments);
 }
 
@@ -66,5 +77,7 @@ void	parse_input(t_hash *ht, const char *input)
 		while (input[index] && (input[index] == ' ' || input[index] == '\t'
 				|| input[index] == '|'))
 			index++;
+		free(command);
+		free(arg);
 	}
 }

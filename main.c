@@ -5,13 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/15 19:57:48 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/11/18 20:13:30 by malourei         ###   ########.fr       */
+/*   Created: 2024/10/15 19:57:48 by malourei          #+#    #+#             */
+/*   Updated: 2024/11/24 19:04:12 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_search/ft_search.h"
 #include "minishell.h"
+#include <readline/readline.h>
+#include <stddef.h>
 
 static int	str_cpm(char *c, char *d)
 {
@@ -28,12 +30,12 @@ static int	str_cpm(char *c, char *d)
 void	print_hash_table(t_hash *ht)
 {
 	t_node	*node;
+	size_t	i;
 
 	if (!ht)
-	{
 		return ;
-	}
-	for (size_t i = 0; i < ht->len; i++)
+	i = -1;
+	while (++i < ht->len)
 	{
 		node = ht->node[i];
 		while (node)
@@ -106,7 +108,9 @@ int	main(int ac, char **av, char **env)
 		free(m.readline);
 		m.readline = readline(m.prompt);
 	}
+	rl_clear_history();
 	free_all(m.super_env);
+	hdestroy(ht);
 	return (0);
 }
 // valgrind --suppressions=read.supp --show-leak-kinds=all --leak-check=full
