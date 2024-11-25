@@ -6,24 +6,12 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 19:57:48 by malourei          #+#    #+#             */
-/*   Updated: 2024/11/24 20:20:29 by hladeiro         ###   ########.fr       */
+/*   Updated: 2024/11/25 22:20:25 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_search/ft_search.h"
 #include "minishell.h"
-
-static int	str_cpm(char *c, char *d)
-{
-	int	i;
-
-	i = 0;
-	while (c[i] == d[i] && d[i])
-		i++;
-	if (d[i] == c[i])
-		return (0);
-	return (1);
-}
 
 void	print_hash_table(t_hash *ht)
 {
@@ -99,7 +87,7 @@ void	print_node(t_node *n)
 int	main(int ac, char **av, char **env)
 {
 	static t_mini	m;
-	t_hash			*ht;
+	// t_hash			*ht;
 
 	(void)av;
 	if (ac > 1)
@@ -111,18 +99,18 @@ int	main(int ac, char **av, char **env)
 		creat_env(&m);
 	m.prompt = "shell > ";
 	m.readline = readline(m.prompt);
-	ht = hcreate(10);
-	while (m.readline && str_cpm(m.readline, "exit"))
+	m.ht = hcreate(10);
+	while (m.readline && ft_strcmp(m.readline, "exit"))
 	{
-		parse_input(ht, m.readline);
+		parse_input(m.ht, m.readline);
 		add_history(m.readline);
-		print_hash_table(ht);
-		if (!str_cpm(m.readline, "pwd"))
+		print_hash_table(m.ht);
+		if (!ft_strcmp(m.readline, "pwd"))
 		{
 			// fazer update do pwd
 			// getcwd(NULL, 1);
 		}
-		if (!str_cpm(m.readline, "cd"))
+		if (!ft_strcmp(m.readline, "cd"))
 		{
 			// faz so o absolute path (cd) e prepara para receber o parsing!
 			// update ao pwd, e ao old pwd
@@ -132,7 +120,7 @@ int	main(int ac, char **av, char **env)
 	}
 	rl_clear_history();
 	free_all(m.super_env);
-	hdestroy(ht);
+	hdestroy(m.ht);
 	return (0);
 }
 // valgrind --suppressions=read.supp --show-leak-kinds=all --leak-check=full

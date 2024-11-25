@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hsearch.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 18:46:45 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/11/24 21:02:00 by hladeiro         ###   ########.fr       */
+/*   Updated: 2024/11/25 22:07:43 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static	t_entry	*hash_search(t_node *n, t_entry item)
 {
 	while (n)
 	{
-		if (strcmp(n->entry.key, item.key) == 0)
+		if (ft_strcmp(n->entry.key, item.key) == 0)
 			return (&n->entry);
 		n = n->next;
 	}
@@ -33,14 +33,14 @@ static	t_entry	*hash_add(t_hash *ht, t_entry item, unsigned int i)
 	if (entry)
 	{
 		free(entry->value);
-		entry->value = strdup((t_string)item.value);
+		entry->value = ft_strdup((t_string)item.value);
 		return (entry);
 	}
 	new = ft_calloc(1, sizeof(t_node));
 	if (!new)
 		return (NULL);
-	new->entry.key = strdup(item.key);
-	new->entry.value = strdup((t_string)item.value);
+	new->entry.key = ft_strdup(item.key);
+	new->entry.value = ft_strdup((t_string)item.value);
 	if (ht->node[i])
 	{
 		free(ht->node[i]->entry.key);
