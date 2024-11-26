@@ -7,7 +7,7 @@ CCFLAGS = -lreadline
 SRC_FT = hash.c hcreate.c hdestroy.c hsearch.c
 SRC_SRC = copy_env.c create_env.c ft_free_strs.c
 SRC_LIBF = ft_bzero.c ft_calloc.c ft_strcat.c ft_strcpy.c ft_strlen.c ft_strrchr.c ft_strcmp.c \
-			ft_strdup.c
+			ft_strdup.c ft_strncpy.c
 
 SRCS := main.c parsing.c
 SRCS += $(addprefix ft_search/, $(SRC_FT))

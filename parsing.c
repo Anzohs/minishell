@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 18:46:45 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/11/24 20:19:48 by hladeiro         ###   ########.fr       */
+/*   Updated: 2024/11/26 18:49:17 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static t_string	extract_arg(const char *input, size_t *index)
 	arguments = (char *)ft_calloc(len + 1, sizeof(char));
 	if (!arguments)
 		return (NULL);
-	strncpy(arguments, input + start, len);
+	ft_strncpy(arguments, input + start, len);
 	return (arguments);
 }
 
@@ -51,7 +51,7 @@ static t_string	extract_command(const char *input, size_t *index)
 	command = ft_calloc(len + 1, sizeof(char));
 	if (!command)
 		return (NULL);
-	strncpy(command, input + start, len);
+	ft_strncpy(command, input + start, len);
 	return (command);
 }
 

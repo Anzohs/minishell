@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:01:09 by malourei          #+#    #+#             */
-/*   Updated: 2024/11/24 20:20:00 by hladeiro         ###   ########.fr       */
+/*   Updated: 2024/11/26 19:08:08 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ void	copy_env(t_mini *mini, char **env);
 void	ft_free_strs(char **strs, int size);
 void	creat_env(t_mini *mini);
 void	parse_input(t_hash *ht, const char *input);
+void	parse_commands(t_mini *mini, t_node *commands);
 
 #endif
