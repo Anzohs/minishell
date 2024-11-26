@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 19:57:48 by malourei          #+#    #+#             */
-/*   Updated: 2024/11/26 19:10:13 by malourei         ###   ########.fr       */
+/*   Updated: 2024/11/26 20:34:04 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,6 @@ void	print_hash_table(t_hash *ht)
 	}
 }
 
-void	printf_evn(char **env)
-{
-	int	i;
-
-	i = 0;
-	if (!env)
-		exit(1);
-	while (env[i])
-	{
-		printf("%s\n", env[i]);
-		i++;
-	}
-}
 
 void	free_all(char **strs)
 {
@@ -68,6 +55,8 @@ void	free_node(t_node *n)
 	while (tmp)
 	{
 		tmp = tmp->next;
+		free(n->entry.key);
+		free(n->entry.value);
 		free(n);
 		n = tmp;
 	}

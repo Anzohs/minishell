@@ -6,11 +6,10 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 18:46:45 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/11/26 18:49:17 by malourei         ###   ########.fr       */
+/*   Updated: 2024/11/26 20:28:22 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search/ft_search.h"
 #include "minishell.h"
 
 static t_string	extract_arg(const char *input, size_t *index)
