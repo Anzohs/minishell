@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:21:26 by malourei          #+#    #+#             */
-/*   Updated: 2024/11/26 21:41:50 by malourei         ###   ########.fr       */
+/*   Updated: 2024/11/27 20:21:24 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,15 @@ void	update_pwd(t_mini *m, char *path)
 
 	position = get_env(m->super_env, "PWD");
 	free(m->super_env[position]);
-	m->super_env[position] = ft_calloc(sizeof(char), ft_strlen(path) + 6);
+/* 	m->super_env[position] = ft_calloc(sizeof(char), ft_strlen(path) + 6);
 	if (!m->super_env[position])
 		printf("malloc_failed fun: update_pwd \n");
 	ft_strcpy(m->super_env[position], "PWD=");
-	ft_strcat(m->super_env[position], path);
+	ft_strcat(m->super_env[position], path); */
+	m->super_env[position] = ft_strjoin("PWD", path);
+	if (!m->super_env[position])
+		printf("malloc_failed fun: update_pwd \n");
+
 }
 
 void	update_old_pwd(t_mini *m)
@@ -54,9 +58,11 @@ void	update_old_pwd(t_mini *m)
 
 void	parse_commands(t_mini *mini, t_node *commands)
 {
+	commands->entry.key = "cd";
+	commands->entry.value = "..";
 	while (commands->next)
 	{
-		if (ft_strcmp(commands->entry.key, "cd") && node_len(commands) == 1)
+		if (ft_strcmp(commands->entry.key, "cd"))// && node_len(commands) == 1)
 		{
 			if (chdir(commands->entry.value) == 0)
 			{

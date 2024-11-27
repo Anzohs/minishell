@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 19:57:48 by malourei          #+#    #+#             */
-/*   Updated: 2024/11/26 20:34:04 by hladeiro         ###   ########.fr       */
+/*   Updated: 2024/11/27 20:21:44 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	main(int ac, char **av, char **env)
 		parse_input(m.ht, m.readline);
 		add_history(m.readline);
 		print_hash_table(m.ht);
-		//parse_commands(&m, m.commands);
+		parse_commands(&m, &(t_node){0});
 		// if (!ft_strcmp(m.readline, "pwd"))
 		// {
 		// 	// fazer update do pwd
@@ -108,7 +108,7 @@ int	main(int ac, char **av, char **env)
 		free(m.readline);
 		m.readline = readline(m.prompt);
 	}
-	rl_clear_history();
+	//rl_clear_history();
 	free_all(m.super_env);
 	hdestroy(m.ht);
 	return (0);

@@ -6,13 +6,13 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 21:28:48 by malourei          #+#    #+#             */
-/*   Updated: 2024/11/26 21:33:55 by malourei         ###   ########.fr       */
+/*   Updated: 2024/11/27 20:18:48 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_total_len(char const *s1, char const *s2)
+static int	ft_total_len(char *s1, char *s2)
 {
 	int	total;
 
@@ -20,7 +20,7 @@ static int	ft_total_len(char const *s1, char const *s2)
 	return (total);
 }
 
-static char	*ft_strcat(char const *s1, char const *s2)
+static char	*ft_strcat_2(char *s1, char *s2)
 {
 	char	*str;
 	int		i;
@@ -45,10 +45,10 @@ static char	*ft_strcat(char const *s1, char const *s2)
 	return (str);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
 
-	str = ft_strcat(s1, s2);
+	str = ft_strcat_2(s1, s2);
 	return (str);
 }
