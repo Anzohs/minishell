@@ -6,7 +6,7 @@ CFLAGS = -Wall -Wextra -Werror -g -I. -Isrc/libf -Ift_search
 CCFLAGS = -lreadline
 SRC_FT = hash.c hcreate.c hdestroy.c hsearch.c
 SRC_SRC = copy_env.c create_env.c ft_free_strs.c
-SRC_LIBF = ft_bzero.c ft_calloc.c ft_strcat.c ft_strcpy.c ft_strlen.c ft_strrchr.c ft_strcmp.c \
+SRC_LIBF = ft_bzero.c ft_calloc.c ft_strcat.c ft_strcpy.c ft_strncmp.c ft_strlen.c ft_strrchr.c ft_strcmp.c \
 			ft_strdup.c ft_strncpy.c ft_strjoin.c
 
 SRCS := main.c parsing.c parse_commands.c
