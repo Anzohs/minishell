@@ -54,11 +54,38 @@ static t_string	extract_command(const char *input, size_t *index)
 	return (command);
 }
 
-void	parse_input(t_hash *ht, const char *input)
+static t_node	*new_node(t_entry *e)
+{
+	t_node	*n;
+
+	n = ft_calloc(sizeof(t_node), 1);
+	if (!n)
+		return (NULL);
+	n->entry = (t_entry){0};
+	n->entry.key = ft_strdup(e->key);
+	n->entry.value = ft_strdup(e->value);
+	n->next = NULL;
+	return (n);
+}
+
+static t_node	*copy(t_mini *m, t_entry *e)
+{
+	t_node *n;
+	if (!m->commands)
+		return (new_node(e));
+	n = m->commands;
+	while (n->next)
+		n = n->next;
+	n->next = new_node(e);
+	return (m->commands);
+}
+
+void	parse_input(t_hash *ht, const char *input, t_mini *m)
 {
 	size_t		index;
 	t_string	command;
 	t_string	arg;
+	t_entry		*entry;
 
 	index = 0;
 	while (input[index])
@@ -72,10 +99,11 @@ void	parse_input(t_hash *ht, const char *input)
 			free(command);
 			return ;
 		}
-		hsearch(ht, (t_entry){command, arg}, ENTER);
+		entry = hsearch(ht, (t_entry){command, arg}, ENTER);
 		while (input[index] && (input[index] == ' ' || input[index] == '\t'
 				|| input[index] == '|'))
 			index++;
+		m->commands = copy(m, entry);
 		free(command);
 		free(arg);
 	}

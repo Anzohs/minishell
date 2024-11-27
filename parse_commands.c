@@ -37,7 +37,8 @@ void	update_pwd(t_mini *m, char *path)
 		printf("malloc_failed fun: update_pwd \n");
 	ft_strcpy(m->super_env[position], "PWD=");
 	ft_strcat(m->super_env[position], path); */
-	m->super_env[position] = ft_strjoin("PWD", path);
+	m->super_env[position] = ft_strjoin("PWD=", path);
+	printf("%s\n", m->super_env[position]);
 	if (!m->super_env[position])
 		printf("malloc_failed fun: update_pwd \n");
 
@@ -58,17 +59,17 @@ void	update_old_pwd(t_mini *m)
 
 void	parse_commands(t_mini *mini, t_node *commands)
 {
-	commands->entry.key = "cd";
-	commands->entry.value = "..";
-	while (commands->next)
+	while (commands)
 	{
-		if (ft_strcmp(commands->entry.key, "cd"))// && node_len(commands) == 1)
+		if (!ft_strcmp(commands->entry.key, "cd"))// && node_len(commands) == 1)
 		{
 			if (chdir(commands->entry.value) == 0)
 			{
 				update_old_pwd(mini);
 				update_pwd(mini, commands->entry.value);
+				get_env(mini->super_env, "pwd");
 			}
 		}
+		commands = commands->next;
 	}
 }

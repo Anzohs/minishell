@@ -101,6 +101,6 @@ void	creat_env(t_mini *mini)
 	}
 	else
 	{
-		printf("MAXI MACHO\n");
+		write(1, "MAXI MACHO\n", 12);
 	}
 }

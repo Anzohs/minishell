@@ -28,8 +28,8 @@ typedef struct s_minishell
 
 void	copy_env(t_mini *mini, char **env);
 void	ft_free_strs(char **strs, int size);
-void	creat_env(t_mini *mini);
-void	parse_input(t_hash *ht, const char *input);
+void	creat_env(t_mini *mini);	
+void	parse_input(t_hash *ht, const char *input, t_mini *m);
 void	parse_commands(t_mini *mini, t_node *commands);
 
 #endif

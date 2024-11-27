@@ -91,10 +91,11 @@ int	main(int ac, char **av, char **env)
 	m.ht = hcreate(10);
 	while (m.readline && ft_strcmp(m.readline, "exit"))
 	{
-		parse_input(m.ht, m.readline);
+		parse_input(m.ht, m.readline, &m);
 		add_history(m.readline);
-		print_hash_table(m.ht);
-		parse_commands(&m, &(t_node){0});
+		//print_hash_table(m.ht);
+		print_node(m.commands);
+		parse_commands(&m, m.commands);
 		// if (!ft_strcmp(m.readline, "pwd"))
 		// {
 		// 	// fazer update do pwd
@@ -105,6 +106,7 @@ int	main(int ac, char **av, char **env)
 		// 	// faz so o absolute path (cd) e prepara para receber o parsing!
 		// 	// update ao pwd, e ao old pwd
 		// }
+		free_node(m.commands);
 		free(m.readline);
 		m.readline = readline(m.prompt);
 	}
