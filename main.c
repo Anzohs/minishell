@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 19:57:48 by malourei          #+#    #+#             */
-/*   Updated: 2024/11/27 20:21:44 by malourei         ###   ########.fr       */
+/*   Updated: 2024/11/28 21:02:11 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,20 +93,10 @@ int	main(int ac, char **av, char **env)
 	{
 		parse_input(m.ht, m.readline, &m);
 		add_history(m.readline);
-		//print_hash_table(m.ht);
 		print_node(m.commands);
 		parse_commands(&m, m.commands);
-		// if (!ft_strcmp(m.readline, "pwd"))
-		// {
-		// 	// fazer update do pwd
-		// 	// getcwd(NULL, 1);
-		// }
-		// if (!ft_strcmp(m.readline, "cd"))
-		// {
-		// 	// faz so o absolute path (cd) e prepara para receber o parsing!
-		// 	// update ao pwd, e ao old pwd
-		// }
 		free_node(m.commands);
+		m.commands = NULL;
 		free(m.readline);
 		m.readline = readline(m.prompt);
 	}

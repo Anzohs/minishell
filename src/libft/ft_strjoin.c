@@ -6,49 +6,35 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 21:28:48 by malourei          #+#    #+#             */
-/*   Updated: 2024/11/27 20:18:48 by malourei         ###   ########.fr       */
+/*   Updated: 2024/11/28 21:15:04 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_total_len(char *s1, char *s2)
-{
-	int	total;
-
-	total = ft_strlen(s1) + ft_strlen(s2);
-	return (total);
-}
-
-static char	*ft_strcat_2(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
 	int		i;
 	int		j;
+	int	len;
 
-	i = 0;
-	str = ft_calloc(sizeof(char) , (ft_total_len(s1, s2) + 1));
+	len = ft_strlen(s1) + ft_strlen(s2);
+	str = (char *)ft_calloc((int)len + 1, 1);
 	if (!str)
 		return (NULL);
-	while (s1[i] != '\0')
+	i = 0;
+	j = 0;
+	while (s1[i])
 	{
 		str[i] = s1[i];
 		i++;
 	}
-	j = 0;
-	while (s2[j] != '\0')
+	while (s2[j])
 	{
 		str[i] = s2[j];
-		j++;
 		i++;
+		j++;
 	}
-	return (str);
-}
-
-char	*ft_strjoin(char *s1, char *s2)
-{
-	char	*str;
-
-	str = ft_strcat_2(s1, s2);
 	return (str);
 }

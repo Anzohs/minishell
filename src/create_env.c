@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 20:22:10 by malourei          #+#    #+#             */
-/*   Updated: 2024/11/18 23:52:27 by malourei         ###   ########.fr       */
+/*   Updated: 2024/11/28 20:46:49 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	creat_env(t_mini *mini)
 	pwd = getcwd(NULL, 0);
 	if (pwd)
 	{
-		mini->super_env = ft_calloc(sizeof(char *), 4);
+		mini->super_env = ft_calloc(sizeof(char *), 5);
 		if (!mini->super_env)
 		{
 			free(mini->super_env);

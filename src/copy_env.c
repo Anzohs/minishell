@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 01:07:04 by malourei          #+#    #+#             */
-/*   Updated: 2024/11/18 23:50:48 by malourei         ###   ########.fr       */
+/*   Updated: 2024/11/28 20:52:47 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	count_envs(char **strs)
 	int	i;
 
 	i = 0;
-	while (strs[i])
+	while (strs[i] != NULL)
 		i++;
 	return (i);
 }
@@ -35,13 +35,12 @@ void	copy_env(t_mini *mini, char **env)
 	}
 	while (env[i])
 	{
-		mini->super_env[i] = ft_calloc(sizeof(char), (ft_strlen(env[i]) + 1));
+		mini->super_env[i] = ft_strdup(env[i]);
 		if (!mini->super_env[i])
 		{
 			ft_free_strs(mini->super_env, i);
 			exit (1);
 		}
-		ft_strcpy(mini->super_env[i], env[i]);
 		i++;
 	}
 	mini->super_env[i] = NULL;

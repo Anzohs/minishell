@@ -6,17 +6,19 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 19:51:16 by malourei          #+#    #+#             */
-/*   Updated: 2024/11/18 23:15:37 by malourei         ###   ########.fr       */
+/*   Updated: 2024/11/28 21:21:28 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strlen(char *str)
+size_t	ft_strlen(char *str)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
+	if (!str)
+		return 0;
 	while (str[i])
 		i++;
 	return (i);
