@@ -49,4 +49,5 @@ t_hash			*hcreate(size_t nel);
 void			hdestroy(t_hash *ht);
 t_entry			*hsearch(t_hash *ht, t_entry item, t_action action);
 unsigned int	hash(const t_string key, size_t nel);
+size_t			node_len(t_node *n);
 #endif

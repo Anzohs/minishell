@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_search/ft_search.h"
 #include "minishell.h"
-
+#include <stdio.h>
 
 static int	get_index(char **env, char *c, size_t len)
 {
@@ -29,50 +30,55 @@ static int	get_index(char **env, char *c, size_t len)
 
 /* void	update_old_pwd(t_mini *m)
 {
-	int	pwd_p;
-    int	oldpwd_p;
-    char *s;
+	int			pwd_p;
+	int			oldpwd_p;
+	char		*s;
+	int			i;
+	t_string	p;
+	t_string	cwd;
 
-    oldpwd_p = get_env(m->super_env, "OLDPWD=", 7);
-    pwd_p = get_env(m->super_env, "PWD=", 4);
-
-    if (oldpwd_p == -1 || pwd_p == -1)
-        return;
-
-    free(m->super_env[oldpwd_p]);
+	oldpwd_p = get_env(m->super_env, "OLDPWD=", 7);
+	pwd_p = get_env(m->super_env, "PWD=", 4);
+	if (oldpwd_p == -1 || pwd_p == -1)
+		return ;
+	free(m->super_env[oldpwd_p]);
 	m->super_env[oldpwd_p] = NULL;
-    s = ft_strjoin("OLD", m->super_env[pwd_p]);
-    m->super_env[oldpwd_p] = ft_strdup(s);
-    free(s);
-
-    printf("OLDPWD: %s\n", m->super_env[oldpwd_p]);
+	s = ft_strjoin("OLD", m->super_env[pwd_p]);
+	m->super_env[oldpwd_p] = ft_strdup(s);
+	free(s);
+	printf("OLDPWD: %s\n", m->super_env[oldpwd_p]);
 } */
-
 void	update_pwd(t_mini *m)
 {
-	int	i = get_index(m->super_env, "PWD=", 4);
+	int			i;
+	t_string	p;
+	t_string	cwd;
+
+	i = get_index(m->super_env, "PWD=", 4);
 	if (i < 0)
-		return;
+		return ;
 	free(m->super_env[i]);
-	t_string p = getcwd(NULL, 0);
-	t_string cwd = ft_strjoin("PWD=", p);
+	p = getcwd(NULL, 0);
+	cwd = ft_strjoin("PWD=", p);
+	printf("%s\n", cwd);
 	free(p);
-    m->super_env[i] = ft_strdup(cwd);
-    free(cwd);
-	printf("%s\n",m->super_env[i]);
+	m->super_env[i] = ft_strdup(cwd);
+	free(cwd);
+	printf("%s\n", m->super_env[i]);
 }
 
 void	parse_commands(t_mini *mini, t_node *commands)
 {
-	t_node *m = commands;
-	//printf("MACHO \n");
+	t_node	*m;
+
+	m = commands;
 	while (m)
 	{
-		if (!ft_strcmp(m->entry.key, "cd"))// && node_len(commands) == 1)
+		if (!ft_strcmp(m->entry.key, "cd") && node_len(commands) == 1)
 		{
-			if (chdir(m->entry.value) == 0)
+			if (chdir(m->entry.value) >= 0)
 			{
-				//update_old_pwd(mini);
+				// update_old_pwd(mini);
 				update_pwd(mini);
 			}
 		}

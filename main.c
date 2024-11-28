@@ -33,7 +33,6 @@ void	print_hash_table(t_hash *ht)
 	}
 }
 
-
 void	free_all(char **strs)
 {
 	int	i;
@@ -64,7 +63,9 @@ void	free_node(t_node *n)
 
 void	print_node(t_node *n)
 {
-	t_node	*node = n;
+	t_node	*node;
+
+	node = n;
 	while (node)
 	{
 		printf("Command: %s, Arguments: %s\n", node->entry.key,
@@ -76,8 +77,8 @@ void	print_node(t_node *n)
 int	main(int ac, char **av, char **env)
 {
 	static t_mini	m;
-	// t_hash			*ht;
 
+	// t_hash			*ht;
 	(void)av;
 	if (ac > 1)
 		return (0);
@@ -100,7 +101,7 @@ int	main(int ac, char **av, char **env)
 		free(m.readline);
 		m.readline = readline(m.prompt);
 	}
-	//rl_clear_history();
+	// rl_clear_history();
 	free_all(m.super_env);
 	hdestroy(m.ht);
 	return (0);

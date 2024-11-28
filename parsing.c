@@ -70,7 +70,8 @@ static t_node	*new_node(t_entry *e)
 
 static t_node	*copy(t_mini *m, t_entry *e)
 {
-	t_node *n;
+	t_node	*n;
+
 	if (!m->commands)
 		return (new_node(e));
 	n = m->commands;
