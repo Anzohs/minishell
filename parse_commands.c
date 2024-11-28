@@ -59,6 +59,9 @@ void	update_pwd(t_mini *m)
 		return ;
 	free(m->super_env[i]);
 	p = getcwd(NULL, 0);
+	printf("%s\n", p);
+	if (!p || p == NULL)
+		return;
 	cwd = ft_strjoin("PWD=", p);
 	printf("%s\n", cwd);
 	free(p);
