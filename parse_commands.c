@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:21:26 by malourei          #+#    #+#             */
-/*   Updated: 2024/11/29 16:37:54 by malourei         ###   ########.fr       */
+/*   Updated: 2024/11/29 17:41:55 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,18 @@ void	update_pwd(t_mini *m)
 	i = get_index(m->super_env, "PWD=", 4);
 	if (i < 0)
 		return ;
-	free(m->super_env[i]);
 	p = getcwd(NULL, 0);
 	if (!p || p == NULL)
+	{
+		perror("ERROR");
+		p = ft_strdup(m->super_env[i]);
+		free(m->super_env[i]);
+		m->super_env[i] = ft_strjoin(p, "/..");
+		free(p);
+		printf("PWD: %s\n", m->super_env[i]);
 		return ;
+	}
+	free(m->super_env[i]);
 	m->super_env[i] = ft_strjoin("PWD=", p);
 	free(p);
 	printf("PWD: %s\n", m->super_env[i]);
