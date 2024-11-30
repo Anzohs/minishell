@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:21:26 by malourei          #+#    #+#             */
-/*   Updated: 2024/11/29 17:41:55 by malourei         ###   ########.fr       */
+/*   Updated: 2024/11/30 18:25:58 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,31 @@ void	update_pwd(t_mini *m)
 	printf("PWD: %s\n", m->super_env[i]);
 }
 
+/*
+Argumentos do cd
+
+sem argumentos -> vai para o home
+com o ~ -> vai para o home
+com o - -> replica o oldpwd
+*/
+
+void	cd_args(t_mini *m)
+{
+	t_string	temp;
+	int			oldpwd_i;
+	int			pwd_i;
+
+	oldpwd_i = get_index(m->super_env, "OLDPWD=", 7);
+	pwd_i = get_index(m->super_env, "PWD=", 4);
+	temp = ft_strdup(m->super_env[pwd_i]);
+	free(m->super_env[pwd_i]);
+	m->super_env[pwd_i] = ft_strdup(m->super_env[oldpwd_i]);
+	free(m->super_env[oldpwd_i]);
+	m->super_env[oldpwd_i] = ft_strdup(temp);
+	free(temp);
+	printf("%s\n", ft_strchr(m->super_env[pwd_i], '='));
+}
+
 void	parse_commands(t_mini *mini, t_node *commands)
 {
 	t_node	*m;
@@ -82,6 +107,8 @@ void	parse_commands(t_mini *mini, t_node *commands)
 				update_old_pwd(mini);
 				update_pwd(mini);
 			}
+			else if (ft_strncmp(commands->entry.value, "-", 1) == 0)
+				cd_args(mini);
 		}
 		m = m->next;
 	}
