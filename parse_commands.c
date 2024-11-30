@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:21:26 by malourei          #+#    #+#             */
-/*   Updated: 2024/11/30 18:25:58 by malourei         ###   ########.fr       */
+/*   Updated: 2024/11/30 23:42:16 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,36 +79,50 @@ com o - -> replica o oldpwd
 void	cd_args(t_mini *m)
 {
 	t_string	temp;
+	int			dir;
 	int			oldpwd_i;
 	int			pwd_i;
+	t_string	old_tmp;
 
 	oldpwd_i = get_index(m->super_env, "OLDPWD=", 7);
 	pwd_i = get_index(m->super_env, "PWD=", 4);
 	temp = ft_strdup(m->super_env[pwd_i]);
+	old_tmp = ft_strdup(m->super_env[oldpwd_i]);
 	free(m->super_env[pwd_i]);
-	m->super_env[pwd_i] = ft_strdup(m->super_env[oldpwd_i]);
 	free(m->super_env[oldpwd_i]);
-	m->super_env[oldpwd_i] = ft_strdup(temp);
+	m->super_env[pwd_i] = ft_strdup(old_tmp + 3);
+	m->super_env[oldpwd_i] = ft_strjoin("OLD", temp);
 	free(temp);
+	free(old_tmp);
+	dir = chdir(ft_strchr(m->super_env[pwd_i], '='));
+	if (dir == -1)
+		perror("CD -");
 	printf("%s\n", ft_strchr(m->super_env[pwd_i], '='));
 }
 
 void	parse_commands(t_mini *mini, t_node *commands)
 {
-	t_node	*m;
+	t_node		*m;
+	t_string	s;
 
 	m = commands;
 	while (m)
 	{
 		if (!ft_strcmp(m->entry.key, "cd") && node_len(commands) == 1)
 		{
-			if (chdir(m->entry.value) >= 0)
+			if (ft_strncmp(commands->entry.value, "-", 1) == 0)
+				cd_args(mini);
+			else if (chdir(m->entry.value) >= 0)
 			{
 				update_old_pwd(mini);
 				update_pwd(mini);
 			}
-			else if (ft_strncmp(commands->entry.value, "-", 1) == 0)
-				cd_args(mini);
+		}
+		if (!ft_strcmp(m->entry.key, "pwd"))
+		{
+			s = getcwd(NULL, 0);
+			printf("%s\n", s);
+			free(s);
 		}
 		m = m->next;
 	}
