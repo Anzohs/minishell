@@ -10,71 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search/ft_search.h"
 #include "minishell.h"
-#include <stdio.h>
-
-static int	get_index(char **env, char *c, size_t len)
-{
-	int	i;
-
-	i = 0;
-	while (env[i] != NULL)
-	{
-		if (!strncmp(env[i], c, len))
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-void	update_old_pwd(t_mini *m)
-{
-	int		pwd_p;
-	int		oldpwd_p;
-
-	oldpwd_p = get_index(m->super_env, "OLDPWD=", 7);
-	pwd_p = get_index(m->super_env, "PWD=", 4);
-	if (oldpwd_p == -1 || pwd_p == -1)
-		return ;
-	free(m->super_env[oldpwd_p]);
-	m->super_env[oldpwd_p] = NULL;
-	m->super_env[oldpwd_p] = ft_strjoin("OLD", m->super_env[pwd_p]);
-	printf("OLDPWD: %s\n", m->super_env[oldpwd_p]);
-}
-
-void	update_pwd(t_mini *m)
-{
-	int			i;
-	t_string	p;
-
-	i = get_index(m->super_env, "PWD=", 4);
-	if (i < 0)
-		return ;
-	p = getcwd(NULL, 0);
-	if (!p || p == NULL)
-	{
-		perror("ERROR");
-		p = ft_strdup(m->super_env[i]);
-		free(m->super_env[i]);
-		m->super_env[i] = ft_strjoin(p, "/..");
-		free(p);
-		printf("PWD: %s\n", m->super_env[i]);
-		return ;
-	}
-	free(m->super_env[i]);
-	m->super_env[i] = ft_strjoin("PWD=", p);
-	free(p);
-	printf("PWD: %s\n", m->super_env[i]);
-}
-
-/*
-Argumentos do cd
-
-sem argumentos -> vai para o home
-com o ~ -> vai para o home
-com o - -> replica o oldpwd
-*/
 
 void	cd_args(t_mini *m)
 {
@@ -100,10 +36,39 @@ void	cd_args(t_mini *m)
 	printf("%s\n", ft_strchr(m->super_env[pwd_i], '='));
 }
 
+void    cd_home(t_mini *m)
+{
+    int home;
+    int old_pwd;
+    int pwd;
+    int dir;
+    t_string    tmp;
+    t_string    pwd_temp;
+
+    home = get_index(m->super_env, "HOME=", 5);
+    if (home == -1)
+    {
+        write(2, "cd: HOME not set\n", 17);
+        return ;
+    }
+    pwd = get_index(m->super_env, "PWD=", 4);
+    old_pwd = get_index(m->super_env, "OLDPWD=", 7);
+    free(m->super_env[old_pwd]);
+    pwd_temp = ft_strdup(m->super_env[pwd]);
+    m->super_env[old_pwd] = ft_strjoin("OLD", pwd_temp);
+    free(pwd_temp);
+    free(m->super_env[pwd]);
+    tmp = ft_strdup(m->super_env[home]);
+    m->super_env[pwd] = ft_strjoin("PWD=", tmp + 5);
+    free(tmp);
+    dir = chdir(ft_strchr(m->super_env[pwd], '='));
+	if (dir == -1)
+		perror("CD ~");
+}
+
 void	parse_commands(t_mini *mini, t_node *commands)
 {
 	t_node		*m;
-	t_string	s;
 
 	m = commands;
 	while (m)
@@ -112,18 +77,17 @@ void	parse_commands(t_mini *mini, t_node *commands)
 		{
 			if (ft_strncmp(commands->entry.value, "-", 1) == 0)
 				cd_args(mini);
+			else if (!ft_strncmp(commands->entry.value, "~", 1) || !ft_strcmp(commands->entry.value, "") || !commands->entry.value)
+			     cd_home(mini);
 			else if (chdir(m->entry.value) >= 0)
 			{
-				update_old_pwd(mini);
+				update_oldpwd(mini);
 				update_pwd(mini);
 			}
+			get_pwd(getcwd(NULL, 0), 3);
 		}
 		if (!ft_strcmp(m->entry.key, "pwd"))
-		{
-			s = getcwd(NULL, 0);
-			printf("%s\n", s);
-			free(s);
-		}
+			get_pwd(getcwd(NULL, 0), 3);
 		m = m->next;
 	}
 }

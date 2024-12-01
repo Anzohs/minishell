@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search/ft_search.h"
 #include "minishell.h"
 
 void	print_hash_table(t_hash *ht)
