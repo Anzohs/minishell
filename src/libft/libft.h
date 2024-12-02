@@ -18,6 +18,10 @@
 # include <stdio.h>
 # include <string.h>
 # include <limits.h>
+# include <fcntl.h>
+# include <sys/wait.h>
+# include <sys/types.h>
+# include "get_next_line.h"
 
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);

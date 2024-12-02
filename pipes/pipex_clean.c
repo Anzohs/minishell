@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../minishell.h"
 
 void	ft_clean_path(t_pipex *pipex, char *path)
 {

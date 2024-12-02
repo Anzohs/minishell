@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../minishell.h"
 
 static int	ft_only_space(char *str)
 {

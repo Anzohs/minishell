@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../minishell.h"
 
 void	execve2(const char *path, char *const argv[], char *const envp[])
 {
 	if (execve(path, argv, envp) == -1)
 	{
-		ft_printf("Error: Comando invalido %s!\n", path);
+		printf("Error: Comando invalido %s!\n", path);
 		exit(1);
 	}
 }

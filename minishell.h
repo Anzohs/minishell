@@ -15,6 +15,7 @@
 
 # include "ft_search/ft_search.h"
 # include "env_variables/envvariables.h"
+# include "pipes/pipex.h"
 
 typedef struct s_minishell
 {

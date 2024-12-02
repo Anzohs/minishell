@@ -13,16 +13,9 @@
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include "libft/libft.h"
-# include "ft_printf/ft_printf.h"
-# include "get_next_line/get_next_line.h"
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <stdio.h>
-# include <string.h>
-# include <sys/wait.h>
-# include <sys/types.h>
+# include "../libs.h"
+
+typedef struct s_minishell	t_mini;
 
 typedef struct s_fds
 {
