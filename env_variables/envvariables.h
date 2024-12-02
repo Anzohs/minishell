@@ -1,4 +1,4 @@
-#ifndef ENVVARAIBLES_H
+#ifndef ENVVARIABLES_H
 # define ENVVARIABLES_H
 
 # include <unistd.h>
