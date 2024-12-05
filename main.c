@@ -100,7 +100,7 @@ int	main(int ac, char **av, char **env)
 		free(m.readline);
 		m.readline = readline(m.prompt);
 	}
-	// rl_clear_history();
+	// rl_clear_history() ;
 	free_all(m.super_env);
 	hdestroy(m.ht);
 	return (0);
