@@ -14,8 +14,10 @@
 # define PIPEX_H
 
 # include "../libs.h"
+# include <stddef.h>
 
 typedef struct s_minishell	t_mini;
+typedef struct s_node		t_node;
 
 typedef struct s_fds
 {
@@ -39,23 +41,23 @@ typedef struct s_pipex
 	char	**cmd2;
 }	t_pipex;
 
-void	validate_args(int argc, char **argv, int *cmd_argc);
+void	validate_args(t_node *argv, int *cmd_argc);
 void	ft_child_one(t_pipex *pipex, char **env, char *cmd_path);
 void	ft_child_two(t_pipex *pipex, char **env, char *cmd_path);
 void	clean_pointer(char **strs);
 void	ft_close(int fd);
-void	find_full_cmd(t_pipex *pipex, char **env, char **argv);
+void	find_full_cmd(t_pipex *pipex, t_mini *mini, t_node *node);
 void	ft_parent(t_pipex *pipex);
 void	clean_all(t_pipex *pipex);
 void	ft_clean_path(t_pipex *pipex, char *path);
-void	execve2(const char *path, char *const argv[], char *const envp[]);
+void	execve2(const char *path, t_node *node, char *const envp[]);
 void	ft_close_all_p(t_pipex *pipex);
 void	ft_close_all_1(t_pipex *pipex);
 void	ft_close_all_m(t_pipex *pipex, int i);
 void	clean_null_env(t_pipex *pipex);
 void	count_pids(t_pipex *pipex, int argc);
 void	ft_child_doc_one(t_pipex *pipex, char **env, char *cmd_path);
-void	start_here_doc(t_pipex *pipex, char *argV[]);
-void	start_in_file(t_pipex *pipex, char *argV[]);
+void	start_here_doc(t_pipex *pipex, t_node *n);
+void	start_in_file(t_pipex *pipex);
 
 #endif

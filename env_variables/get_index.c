@@ -8,7 +8,7 @@ int	get_index(char **env, char *c, size_t len)
 	i = 0;
 	while (env[i] != NULL)
 	{
-		if (!strncmp(env[i], c, len))
+		if (!ft_strncmp(env[i], c, len))
 			return (i);
 		i++;
 	}

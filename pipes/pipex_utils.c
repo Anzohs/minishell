@@ -12,8 +12,12 @@
 
 #include "../minishell.h"
 
-void	execve2(const char *path, char *const argv[], char *const envp[])
+void	execve2(const char *path, t_node *node, char *const envp[])
 {
+	char	*argv[2];
+
+	argv[0] = node->entry.key;
+	argv[1] = node->entry.value;
 	if (execve(path, argv, envp) == -1)
 	{
 		printf("Error: Comando invalido %s!\n", path);

@@ -12,76 +12,76 @@
 
 #include "../minishell.h"
 
-static char	*find_path(char **env)
-{
-	char	*path;
-	int		i;
-
-	i = 0;
-	path = NULL;
-	while (env[i])
-	{
-		if (ft_strncmp(env[i], "PATH=", 5) == 0)
-			path = (env[i] + 5);
-		i++;
-	}
-	return (path);
-}
-
 static char	*find_cmd(char *cmd, char **path)
 {
 	int		i;
 	char	*tmp;
 	char	*tmp2;
-	char	**temp3;
 
 	i = 0;
-	temp3 = ft_split(cmd, ' ');
-	while (path[i])
+	while (path[i] && cmd)
 	{
 		tmp = ft_strjoin(path[i], "/");
-		tmp2 = ft_strjoin(tmp, temp3[0]);
+		tmp2 = ft_strjoin(tmp, cmd);
 		free(tmp);
 		if (access(tmp2, F_OK) == 0)
-		{
-			clean_pointer(temp3);
 			return (tmp2);
-		}
 		free(tmp2);
 		i++;
 	}
-	clean_pointer(temp3);
 	return (NULL);
 }
 
-static void	get_all_path(t_pipex *pipex, char **argv)
+static t_string	get_command(t_node *n, int i)
+{
+	t_node	*tmp;
+	int		j;
+
+	tmp = n;
+	j = 0;
+	while (j < i && tmp)
+	{
+		j++;
+		tmp = tmp->next;
+	}
+	if (!tmp)
+		return (NULL);
+	return (tmp->entry.key);
+}
+
+static void	get_all_path(t_pipex *pipex, t_node *node)
 {
 	int	i;
 	int	j;
+	int	n;
 
 	i = pipex->cmd_argc;
 	j = 0;
-	while (i <= pipex->argc)
+	n = node_len(node);
+	while (i <= n)
 	{
-		pipex->paths[j] = find_cmd(argv[i], pipex->env);
+		pipex->paths[j] = find_cmd(get_command(node, i), pipex->env);
 		ft_clean_path(pipex, pipex->paths[j]);
 		j++;
 		i++;
 	}
 	pipex->paths[j] = NULL;
-	pipex->path2 = find_cmd(argv[pipex->argc + 1], pipex->env);
+	pipex->path2 = find_cmd(get_command(node, n - 1), pipex->env);
 	ft_clean_path(pipex, pipex->path2);
 }
 
-void	find_full_cmd(t_pipex *pipex, char **env, char **argv)
+void	find_full_cmd(t_pipex *pipex, t_mini *mini, t_node *node)
 {
-	pipex->env = ft_split(find_path(env), ':');
-	if (pipex->env == NULL)
+	int	i;
+
+	i = get_index(mini->super_env, "PATH=", 5);
+	if (i == -1)
 	{
-		write(2, "Error: VEIO NULO NO PATH!\n", 26);
+		perror("Error: No Path!");
 		clean_null_env(pipex);
-		exit(1);
+		return ;
 	}
-	get_all_path(pipex, argv);
-	pipex->cmd2 = ft_split(argv[pipex->argc + 1], ' ');
+	pipex->env = ft_split(mini->super_env[i], ':');
+	get_all_path(pipex, node);
+	pipex->cmd2 = (char **)get_command(node, node_len(node) - 1);
 }

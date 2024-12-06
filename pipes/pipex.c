@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "pipex.h"
 #include "../minishell.h"
+#include <unistd.h>
 
 static void	start_pipe_1(t_pipex *pipex, char **env, char *argv2)
 {
@@ -78,7 +80,7 @@ static void	start_multi2_pipe(t_pipex *pipex, char **env, int i, char *cmd_path)
 	}
 }
 
-static void	start_multi_pipe(t_pipex *pipex, char **env, int argc, char **argv)
+static void	start_multi_pipe(t_pipex *pipex, char **env, int argc, t_node *n)
 {
 	int	i;
 
@@ -99,29 +101,29 @@ static void	start_multi_pipe(t_pipex *pipex, char **env, int argc, char **argv)
 	}
 }
 
-int	main(int argC, char *argV[], char **env)
+void	pipex(t_mini *mini, t_node *comands)
 {
 	t_pipex	pipex;
 
-	validate_args(argC, argV, &pipex.cmd_argc);
-	pipex.argc = argC - 3;
-	count_pids(&pipex, pipex.argc);
-	find_full_cmd(&pipex, env, argV);
-	if (ft_strncmp(argV[1], "here_doc", 8) == 0)
-		start_here_doc(&pipex, argV);
+	pipex = (t_pipex){0};
+	validate_args(comands, &pipex.cmd_argc);
+	count_pids(&pipex, node_len(comands) - pipex.cmd_argc);
+	find_full_cmd(&pipex, mini, comands);
+	if (ft_strncmp(comands->entry.key, "here_doc", 8) == 0)
+		start_here_doc(&pipex, comands);
 	else
-		start_in_file(&pipex, argV);
-	pipex.out_file = open(argV[argC - 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		start_in_file(&pipex);
+	pipex.out_file = open(".outfile_pipex", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (pipex.out_file < 0)
 	{
 		perror("ErrorOUT");
 		ft_close(pipex.in_file);
+		unlink(".infile_pipex");
 		clean_all(&pipex);
-		exit(1);
+		return ;
 	}
-	start_multi_pipe(&pipex, env, argC, argV);
+	//continuar aqui
+	start_multi_pipe(&pipex, mini->super_env, node_len(comands), comands);
 	start_pipe_2(&pipex, env);
 	ft_parent(&pipex);
-	return (0);
 }
-void	pipex(t_mini *m, t_node *c)

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <fcntl.h>
 
 void	ft_child_doc_one(t_pipex *pipex, char **env, char *cmd_path)
 {
@@ -54,38 +55,37 @@ static void	here_doc(char *limiter, int fd[2], t_pipex *pipex)
 	ft_close(fd[0]);
 	ft_close(fd[1]);
 	clean_all(pipex);
-	exit(0);
 }
 
-void	start_here_doc(t_pipex *pipex, char *argV[])
+void	start_here_doc(t_pipex *pipex, t_node *n)
 {
 	pipex->i_multi_argv = 2;
 	pipex->is_doc = 1;
 	if (pipe(pipex->fds[0].fd) < 0)
 	{
 		perror("pipe1");
-		exit(1);
+		return ;
 	}
 	pipex->pids[0] = fork();
 	if (pipex->pids[0] < 0)
 	{
 		perror("pid3");
-		exit(1);
+		return ;
 	}
 	if (pipex->pids[0] == 0)
-		here_doc(argV[2], pipex->fds[0].fd, pipex);
+		here_doc(n->entry.value, pipex->fds[0].fd, pipex);
 	ft_close(pipex->fds[0].fd[1]);
 }
 
-void	start_in_file(t_pipex *pipex, char *argV[])
+void	start_in_file(t_pipex *pipex)
 {
 	pipex->i_multi_argv = 1;
 	pipex->is_doc = 0;
-	pipex->in_file = open(argV[1], O_RDONLY);
+	pipex->in_file = open(".infile_pipex", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (pipex->in_file < 0)
 	{
 		perror("ErrorIN");
 		clean_all(pipex);
-		exit(1);
+		return ;
 	}
 }
