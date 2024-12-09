@@ -59,5 +59,6 @@ void	count_pids(t_pipex *pipex, int argc);
 void	ft_child_doc_one(t_pipex *pipex, char **env, char *cmd_path);
 void	start_here_doc(t_pipex *pipex, t_node *n);
 void	start_in_file(t_pipex *pipex);
+void	pipex(t_mini *mini, t_node *comands);
 
 #endif

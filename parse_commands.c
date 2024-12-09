@@ -71,7 +71,11 @@ void	parse_commands(t_mini *mini, t_node *commands)
 	t_node	*m;
 
 	m = commands;
-	while (m)
+	if (node_len(m) < 1)
+		return ;
+	if (node_len(m) > 1)
+		pipex(mini, m);
+	else
 	{
 		if (!ft_strcmp(m->entry.key, "cd") && node_len(commands) == 1)
 		{
@@ -90,6 +94,5 @@ void	parse_commands(t_mini *mini, t_node *commands)
 		}
 		if (!ft_strcmp(m->entry.key, "pwd"))
 			get_pwd(getcwd(NULL, 0), 0);
-		m = m->next;
 	}
 }
