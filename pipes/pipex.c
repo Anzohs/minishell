@@ -14,12 +14,12 @@
 #include "../minishell.h"
 #include <unistd.h>
 
-static void	start_pipe_1(t_pipex *pipex, char **env, char *argv2)
+static void	start_pipe_1(t_pipex *pipex, char **env, size_t len,t_node *argv2)
 {
 	int	i;
 
-	i = pipex->cmd_argc - 2;
-	if (pipe(pipex->fds[i].fd) < 0)
+	i = len - 1;
+	if (pipe(pipex->fds[0].fd) < 0)
 	{
 		perror("pipe");
 		exit(1);
@@ -31,7 +31,6 @@ static void	start_pipe_1(t_pipex *pipex, char **env, char *argv2)
 		free(pipex->pids);
 		exit(1);
 	}
-	pipex->cmd1 = ft_split(argv2, ' ');
 	if (pipex->pids[i] == 0)
 	{
 		if (pipex->is_doc == 0)
@@ -54,7 +53,7 @@ static void	start_pipe_2(t_pipex *pipex, char **env)
 		ft_child_two(pipex, env, pipex->path2);
 }
 
-static void	start_multi2_pipe(t_pipex *pipex, char **env, int i, char *cmd_path)
+static void	start_multi2_pipe(t_pipex *pipex, t_mini *mini, int i, char *cmd_path)
 {
 	pipex->pids[i] = fork();
 	if (pipex->pids[i] < 0)
@@ -76,28 +75,27 @@ static void	start_multi2_pipe(t_pipex *pipex, char **env, int i, char *cmd_path)
 			exit(1);
 		}
 		ft_close_all_m(pipex, i);
-		execve2(cmd_path, pipex->cmd1, env);
+		execve2(cmd_path, mini->commands, mini->super_env);
 	}
 }
 
 static void	start_multi_pipe(t_pipex *pipex, char **env, int argc, t_node *n)
 {
 	int	i;
+	int	j;
 
-	start_pipe_1(pipex, env, argv[pipex->cmd_argc]);
-	i = 1;
-	while (pipex->i_multi_argv < (argc - 4))
+	start_pipe_1(pipex, env, node_len(n), n);
+	i = 0;
+	j = node_len(n);
+	while (++i < j)
 	{
-		pipex->cmd1 = ft_split(argv[pipex->i_multi_argv + 2], ' ');
-		if (pipe(pipex->fds[pipex->i_multi_argv].fd) < 0)
+		if (pipe(pipex->fds[i].fd) < 0)
 		{
 			perror("pipe2");
 			exit(1);
 		}
-		start_multi2_pipe(pipex, env, pipex->i_multi_argv, pipex->paths[i]);
-		clean_pointer(pipex->cmd1);
-		i++;
-		pipex->i_multi_argv++;
+		//free_current(n);
+		start_multi2_pipe(pipex, env, i, pipex->paths[i]);
 	}
 }
 
@@ -124,6 +122,7 @@ void	pipex(t_mini *mini, t_node *comands)
 	}
 	//continuar aqui
 	start_multi_pipe(&pipex, mini->super_env, node_len(comands), comands);
+	// tenho que falar com o ze sobre o commands e as envs porque passo a mini em vez do envs
 	start_pipe_2(&pipex, env);
 	ft_parent(&pipex);
 }

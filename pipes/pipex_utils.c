@@ -25,7 +25,7 @@ void	execve2(const char *path, t_node *node, char *const envp[])
 	}
 }
 
-void	ft_child_one(t_pipex *pipex, char **env, char *cmd_path)
+void	ft_child_one(t_pipex *pipex, char **env, char *cmd_path, t_node *node)
 {
 	if (dup2(pipex->in_file, STDIN_FILENO) < 0)
 	{
@@ -38,7 +38,7 @@ void	ft_child_one(t_pipex *pipex, char **env, char *cmd_path)
 		exit(1);
 	}
 	ft_close_all_1(pipex);
-	execve2(cmd_path, pipex->cmd1, env);
+	execve2(cmd_path, node, env);
 	exit(0);
 }
 
