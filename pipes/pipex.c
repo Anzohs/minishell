@@ -14,7 +14,7 @@
 #include "../minishell.h"
 #include <unistd.h>
 
-static void	start_pipe_1(t_pipex *pipex, char **env, size_t len,t_node *argv2)
+static void	start_pipe_1(t_pipex *pipex, t_mini *mini, size_t len,t_node *argv2)
 {
 	int	i;
 
@@ -22,35 +22,34 @@ static void	start_pipe_1(t_pipex *pipex, char **env, size_t len,t_node *argv2)
 	if (pipe(pipex->fds[0].fd) < 0)
 	{
 		perror("pipe");
-		exit(1);
+		return ;
 	}
 	pipex->pids[i] = fork();
 	if (pipex->pids[i] < 0)
 	{
 		perror("pid");
 		free(pipex->pids);
-		exit(1);
+		return ;
 	}
 	if (pipex->pids[i] == 0)
 	{
 		if (pipex->is_doc == 0)
-			ft_child_one(pipex, env, pipex->paths[0]);
+			ft_child_one(pipex, mini->super_env, pipex->paths[0]);
 		else
-			ft_child_doc_one(pipex, env, pipex->paths[0]);
+			ft_child_doc_one(pipex, mini->super_env, pipex->paths[0]);
 	}
-	clean_pointer(pipex->cmd1);
 }
 
-static void	start_pipe_2(t_pipex *pipex, char **env)
+static void	start_pipe_2(t_pipex *pipex, t_mini *m)
 {
 	pipex->pids[pipex->argc - 1] = fork();
 	if (pipex->pids[pipex->argc - 1] < 0)
 	{
 		perror("pid2");
-		exit(1);
+		return ;
 	}
 	if (pipex->pids[pipex->argc - 1] == 0)
-		ft_child_two(pipex, env, pipex->path2);
+		ft_child_two(pipex, m->super_env, pipex->path2);
 }
 
 static void	start_multi2_pipe(t_pipex *pipex, t_mini *mini, int i, char *cmd_path)
@@ -60,42 +59,44 @@ static void	start_multi2_pipe(t_pipex *pipex, t_mini *mini, int i, char *cmd_pat
 	{
 		perror("pid");
 		free(pipex->pids);
-		exit(1);
+		return ;
 	}
 	if (pipex->pids[i] == 0)
 	{
 		if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
 		{
 			perror("dup1");
-			exit(1);
+			return ;
 		}
 		if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
 		{
 			perror("dup2");
-			exit(1);
+			return ;
 		}
 		ft_close_all_m(pipex, i);
 		execve2(cmd_path, mini->commands, mini->super_env);
 	}
 }
 
-static void	start_multi_pipe(t_pipex *pipex, char **env, int argc, t_node *n)
+static void	start_multi_pipe(t_pipex *pipex, t_mini *mini, int argc, t_node *n)
 {
 	int	i;
 	int	j;
 
-	start_pipe_1(pipex, env, node_len(n), n);
+	start_pipe_1(pipex, mini, node_len(n), n);
 	i = 0;
 	j = node_len(n);
-	while (++i < j)
+	while (++i < j && n)
 	{
+		n = n->next;
 		if (pipe(pipex->fds[i].fd) < 0)
 		{
 			perror("pipe2");
-			exit(1);
+			return ;
 		}
-		//free_current(n);
-		start_multi2_pipe(pipex, env, i, pipex->paths[i]);
+		//free_current(mini->commands);
+		//mini->current = n;
+		start_multi2_pipe(pipex, mini, i, pipex->paths[i]);
 	}
 }
 
@@ -121,8 +122,8 @@ void	pipex(t_mini *mini, t_node *comands)
 		return ;
 	}
 	//continuar aqui
-	start_multi_pipe(&pipex, mini->super_env, node_len(comands), comands);
+	start_multi_pipe(&pipex, mini, node_len(comands), comands);
 	// tenho que falar com o ze sobre o commands e as envs porque passo a mini em vez do envs
-	start_pipe_2(&pipex, env);
+	start_pipe_2(&pipex, mini);
 	ft_parent(&pipex);
 }

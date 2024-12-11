@@ -21,7 +21,7 @@ void	execve2(const char *path, t_node *node, char *const envp[])
 	if (execve(path, argv, envp) == -1)
 	{
 		printf("Error: Comando invalido %s!\n", path);
-		exit(1);
+		return ;
 	}
 }
 
@@ -30,16 +30,15 @@ void	ft_child_one(t_pipex *pipex, char **env, char *cmd_path, t_node *node)
 	if (dup2(pipex->in_file, STDIN_FILENO) < 0)
 	{
 		perror("dup1");
-		exit(1);
+		return ;
 	}
 	if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
 	{
 		perror("dup2");
-		exit(1);
+		return ;
 	}
 	ft_close_all_1(pipex);
 	execve2(cmd_path, node, env);
-	exit(0);
 }
 
 void	ft_child_two(t_pipex *pipex, char **env, char *cmd_path)
@@ -47,16 +46,15 @@ void	ft_child_two(t_pipex *pipex, char **env, char *cmd_path)
 	if (dup2(pipex->fds[pipex->argc - 2].fd[0], STDIN_FILENO) < 0)
 	{
 		perror("dup3");
-		exit(1);
+		return ;
 	}
 	if (dup2(pipex->out_file, STDOUT_FILENO) < 0)
 	{
 		perror("dup4");
-		exit(1);
+		return ;
 	}
 	ft_close_all_p(pipex);
 	execve2(cmd_path, pipex->cmd2, env);
-	exit(0);
 }
 
 void	ft_parent(t_pipex *pipex)
