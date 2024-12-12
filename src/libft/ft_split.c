@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:25:47 by malourei          #+#    #+#             */
-/*   Updated: 2024/09/30 16:42:00 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/12 20:34:47 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	ft_split_free(char **strs, size_t len)
 	free(strs);
 }
 
-static char	*ft_split_help(const char *str, size_t i, size_t j)
+static char	*ft_split_help(char *str, size_t i, size_t j)
 {
 	size_t	start;
 	size_t	len;
@@ -66,7 +66,7 @@ static char	*ft_split_help(const char *str, size_t i, size_t j)
 	return (ft_substr(str, start, len));
 }
 
-static void	ft_help_2(t_split *split, char const *s, char c, size_t k)
+static void	ft_help_2(t_split *split, char *s, char c, size_t k)
 {
 	size_t	j;
 	int		aspas;
@@ -84,7 +84,7 @@ static void	ft_help_2(t_split *split, char const *s, char c, size_t k)
 	split->strs[k] = ft_split_help(s, split->i, j);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char *s, char c)
 {
 	t_split	split;
 	size_t	k;

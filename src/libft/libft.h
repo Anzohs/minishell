@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 00:32:30 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/09 21:30:10 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/12 20:35:04 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*ft_strncpy(char *dest, const char *src, size_t n);
 char	*ft_strjoin(char *s1, char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strchr(const char *s, int c);
-char	**ft_split(char const *s, char c);
+char	**ft_split(char *s, char c);
 char	*ft_substr(char *s, unsigned int start, size_t len);
 
 #endif

@@ -1,38 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   get_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/11 19:35:38 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/12 20:33:58 by malourei         ###   ########.fr       */
+/*   Created: 2024/12/12 19:45:53 by malourei          #+#    #+#             */
+/*   Updated: 2024/12/12 20:29:13 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-char	*ft_substr(char *s, unsigned int start, size_t len)
+void	get_export(t_node *command)
 {
-	char	*str;
-	size_t	i;
-
-	if (!s)
-		return (NULL);
-	else if ((size_t)start > ft_strlen(s))
-		return (ft_strdup(""));
-	else if (len >= ft_strlen(s))
-		len = ft_strlen(s + start);
-	str = malloc((sizeof(char) * len) + 1);
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (i < len)
+	if (!ft_strrchr(command->entry.value, '='))
 	{
-		str[i] = s[start + i];
-		i++;
+		printf("MACHO\n");
+		return ;
 	}
-	str[i] = '\0';
-	return (str);
-}
 
+}

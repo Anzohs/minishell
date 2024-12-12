@@ -9,5 +9,6 @@ void	update_oldpwd(t_mini *m);
 int		get_index(char **env, char *c, size_t len);
 void	update_pwd(t_mini *m);
 void	get_pwd(t_string s, int i);
+void	get_export(t_node *command);
 
 #endif

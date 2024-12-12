@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:21:26 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/02 18:28:45 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:56:14 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,7 @@ void	parse_commands(t_mini *mini, t_node *commands)
 		}
 		if (!ft_strcmp(m->entry.key, "pwd"))
 			get_pwd(getcwd(NULL, 0), 0);
+		if (!ft_strcmp(m->entry.key, "export"))
+			get_export(m);
 	}
 }
