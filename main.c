@@ -6,10 +6,11 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 19:57:48 by malourei          #+#    #+#             */
-/*   Updated: 2024/11/30 18:33:17 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/14 16:39:12 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_clean/ft_clean.h"
 #include "minishell.h"
 
 void	free_all(char **strs)
@@ -23,21 +24,6 @@ void	free_all(char **strs)
 		i++;
 	}
 	free(strs);
-}
-
-void	free_node(t_node *n)
-{
-	t_node	*tmp;
-
-	tmp = n;
-	while (tmp)
-	{
-		tmp = tmp->next;
-		free(n->entry.key);
-		free(n->entry.value);
-		free(n);
-		n = tmp;
-	}
 }
 
 int	main(int ac, char **av, char **env)
@@ -66,7 +52,7 @@ int	main(int ac, char **av, char **env)
 		m.readline = readline(m.prompt);
 	}
 	// rl_clear_history() ;
-	free_all(m.super_env);
+	free_env(m.super_env);
 	hdestroy(m.ht);
 	return (0);
 }

@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_pwd.c                                          :+:      :+:    :+:   */
+/*   free_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/09 20:50:49 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/14 16:30:46 by hladeiro         ###   ########.fr       */
+/*   Created: 2024/12/14 14:40:55 by hladeiro          #+#    #+#             */
+/*   Updated: 2024/12/14 16:39:47 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../ft_search/ft_search.h"
+#include "ft_clean.h"
 
-void	get_pwd(t_string s, int i)
+void	free_env(char **c)
 {
-	printf("%s \n", s + i);
-	free(s);
+	int	i;
+
+	i = 0;
+	while (c[i])
+	{
+		free(c[i]);
+		i++;
+	}
+	free(c);
 }

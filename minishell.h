@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:01:09 by malourei          #+#    #+#             */
-/*   Updated: 2024/11/26 19:08:08 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/14 16:38:23 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "ft_search/ft_search.h"
 # include "env_variables/envvariables.h"
 # include "pipes/pipex.h"
+# include "ft_clean/ft_clean.h"
 
 typedef struct s_minishell
 {

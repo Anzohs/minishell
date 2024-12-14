@@ -10,6 +10,7 @@ SRC_LIBF = ft_bzero.c ft_calloc.c ft_strcat.c ft_strcpy.c ft_strncmp.c ft_strlen
 			ft_strdup.c ft_strncpy.c ft_strjoin.c ft_strchr.c get_next_line.c get_next_line_utils.c ft_split.c ft_substr.c
 SRC_ENV = get_index.c update_oldpwd.c update_pwd.c get_pwd.c
 SRC_PIP = pipex.c pipex_utils.c pipex_utils2.c pipex_val_cmd.c pipex_here_doc.c pipex_close.c pipex_clean.c
+SRC_FREE = free_env.c free_node.c free_tmini.c free_singlenode.c
 
 SRCS := main.c parsing.c parse_commands.c
 SRCS += $(addprefix ft_search/, $(SRC_FT))

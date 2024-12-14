@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_pwd.c                                          :+:      :+:    :+:   */
+/*   ft_clean.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/09 20:50:49 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/14 16:30:46 by hladeiro         ###   ########.fr       */
+/*   Created: 2024/12/14 16:17:04 by hladeiro          #+#    #+#             */
+/*   Updated: 2024/12/14 16:34:24 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../ft_search/ft_search.h"
+#ifndef FT_CLEAN_H
+# define FT_CLEAN_H
 
-void	get_pwd(t_string s, int i)
-{
-	printf("%s \n", s + i);
-	free(s);
-}
+# include "../libs.h"
+
+typedef struct s_node	t_node;
+
+void	free_node(t_node *n);
+void	free_env(char **c);
+
+#endif
