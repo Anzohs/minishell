@@ -14,7 +14,7 @@
 #include "../minishell.h"
 #include <unistd.h>
 
-static void	start_pipe_1(t_pipex *pipex, t_mini *mini, size_t len,t_node *argv2)
+static void	start_pipe_1(t_pipex *pipex, t_mini *mini, size_t len, t_node *argv2)
 {
 	int	i;
 
@@ -34,7 +34,7 @@ static void	start_pipe_1(t_pipex *pipex, t_mini *mini, size_t len,t_node *argv2)
 	if (pipex->pids[i] == 0)
 	{
 		if (pipex->is_doc == 0)
-			ft_child_one(pipex, mini->super_env, pipex->paths[0]);
+			ft_child_one(pipex, mini->super_env, pipex->paths[0], argv2);
 		else
 			ft_child_doc_one(pipex, mini->super_env, pipex->paths[0]);
 	}
@@ -83,9 +83,9 @@ static void	start_multi_pipe(t_pipex *pipex, t_mini *mini, int argc, t_node *n)
 	int	i;
 	int	j;
 
-	start_pipe_1(pipex, mini, node_len(n), n);
+	start_pipe_1(pipex, mini, argc, n);
 	i = 0;
-	j = node_len(n);
+	j = argc;
 	while (++i < j && n)
 	{
 		n = n->next;

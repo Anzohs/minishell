@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envvariables.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 14:15:20 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/14 16:32:01 by hladeiro         ###   ########.fr       */
+/*   Updated: 2024/12/16 18:02:05 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ void	update_oldpwd(t_mini *m);
 int		get_index(char **env, char *c, size_t len);
 void	update_pwd(t_mini *m);
 void	get_pwd(t_string s, int i);
-void	get_export(t_node *command);
+void	get_export(t_mini *mini, t_node *command);
 
 #endif

@@ -42,7 +42,7 @@ typedef struct s_pipex
 }	t_pipex;
 
 void	validate_args(t_node *argv, int *cmd_argc);
-void	ft_child_one(t_pipex *pipex, char **env, char *cmd_path);
+void	ft_child_one(t_pipex *pipex, char **env, char *cmd_path, t_node *node);
 void	ft_child_two(t_pipex *pipex, char **env, char *cmd_path);
 void	clean_pointer(char **strs);
 void	ft_close(int fd);

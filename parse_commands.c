@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:21:26 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/12 19:56:14 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/16 21:36:10 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ void	parse_commands(t_mini *mini, t_node *commands)
 	m = commands;
 	if (node_len(m) < 1)
 		return ;
-	if (node_len(m) > 1)
-		pipex(mini, m);
+/* 	if (node_len(m) > 1)
+		pipex(mini, m); */
 	else
 	{
 		if (!ft_strcmp(m->entry.key, "cd") && node_len(commands) == 1)
@@ -95,6 +95,6 @@ void	parse_commands(t_mini *mini, t_node *commands)
 		if (!ft_strcmp(m->entry.key, "pwd"))
 			get_pwd(getcwd(NULL, 0), 0);
 		if (!ft_strcmp(m->entry.key, "export"))
-			get_export(m);
+			get_export(mini, m);
 	}
 }
