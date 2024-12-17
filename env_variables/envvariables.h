@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 14:15:20 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/16 18:02:05 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/17 20:55:07 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ int		get_index(char **env, char *c, size_t len);
 void	update_pwd(t_mini *m);
 void	get_pwd(t_string s, int i);
 void	get_export(t_mini *mini, t_node *command);
+void	get_unset(t_mini *mini, t_node *command);
 
 #endif
