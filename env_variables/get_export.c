@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 19:45:53 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/16 21:41:55 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/17 20:10:46 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,23 +76,25 @@ void	get_export(t_mini *mini, t_node *command)
 		return ;
 	else
 	{
-		var = ft_calloc(sizeof(char), ft_strlen(command->entry.value) + 1);
+		var = ft_strdup(command->entry.value);
 		if (!var)
-			return;
-		ft_strcpy(var, command->entry.value);
-		var = ft_strrchr(command->entry.value, '=');
+			return ;
+		ft_strrchr(var, '=');
 		index = get_index(mini->super_env, var, ft_strlen(var));
 		if (index == -1)
 		{
-			free(var);
-
 			tmp = add_env(mini->super_env, command->entry.value);
 			free_env(mini->super_env);
 			mini->super_env = tmp;
+			free(var);
 			return ;
 		}
+		free(var);
 		free(mini->super_env[index]);
-		mini->super_env[index] = ft_strdup(command->entry.value);
+		var = ft_strdup(command->entry.value);
+		if (!var)
+			return;
+		mini->super_env[index] = ft_strdup(var);
 		free(var);
 	}
 }
