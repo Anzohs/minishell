@@ -6,22 +6,52 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 20:53:15 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/18 21:39:16 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/19 20:52:07 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	is_exist(int *array, int number)
+/* static int	is_exist(int *array, int number)
 {
 
+} */
+
+static	int	len_vars(char **strs)
+{
+	int	i;
+
+	i = 0;
+	while(strs[i] != NULL)
+		i++;
+	return (i);
 }
 
 static char	**copy_new_env(t_mini *mini, int *array, int tam)
 {
 	char	**new_env;
+	int		i;
+	int		j;
 
+	(void) array;
 	new_env = ft_calloc(sizeof(char *), len_vars(mini->super_env) - tam - 1);
+	if (!new_env)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (mini->super_env[i] != NULL)
+	{
+		if (mini->super_env[i][0] == '\0')
+			i++;
+		else if (mini->super_env[i][0] != '\0')
+		{
+			new_env[j] = ft_strdup(mini->super_env[i]);
+			j++;
+			i++;
+		}
+	}
+	new_env[j] = NULL;
+	return (new_env);
 }
 
 static void	fill_array_index(int *array, char **envs, char **vars)
@@ -37,21 +67,12 @@ static void	fill_array_index(int *array, char **envs, char **vars)
 		index = get_index(envs, vars[j], ft_strlen(vars[j]));
 		if (index != -1)
 		{
+			envs[index][0] = '\0';
 			array[j] = index;
 			j++;
 		}
 		i++;
 	}
-}
-
-static	int	len_vars(char **strs)
-{
-	int	i;
-
-	i = 0;
-	while(strs[i] != NULL)
-		i++;
-	return (i);
 }
 
 static void	init_array(int *array, int len, int *count)
@@ -84,13 +105,17 @@ static void	remove_env(t_mini *mini, t_node *node)
 		return ;
 	init_array(array, len_vars(strs), &i);
 	fill_array_index(array, mini->super_env, strs);
-	copy_new_env(mini, array, i);
+	strs = copy_new_env(mini, array, i);
+	free(mini->super_env);
+	mini->super_env = strs;
 }
 
 
 
 void	get_unset(t_mini *mini, t_node *command)
 {
-	(void) mini;
-	printf("%s\n", (char *)command->entry.value);
+	//(void) mini;
+	//printf("%s\n", (char *)command->entry.value);
+	// ver o porquê do segfault mesmo quando não tem VAR a pesquisar
+	remove_env(mini, command);
 }
