@@ -6,11 +6,16 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:21:26 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/17 20:53:03 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/22 15:56:24 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "env_variables/envvariables.h"
+#include "ft_clean/ft_clean.h"
 #include "minishell.h"
+#include "valid_str/valid_str.h"
+#include <stdbool.h>
+#include <stdio.h>
 
 void	cd_args(t_mini *m)
 {
@@ -71,9 +76,9 @@ void	parse_commands(t_mini *mini, t_node *commands)
 	t_node	*m;
 
 	m = commands;
-	if (node_len(m) < 1)
+	if (node_len(m) < 1 || !clean_command(mini))
 		return ;
-/* 	if (node_len(m) > 1)
+	/* 	if (node_len(m) > 1)
 		pipex(mini, m); */
 	else
 	{

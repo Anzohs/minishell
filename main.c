@@ -52,6 +52,7 @@ int	main(int ac, char **av, char **env)
 		m.readline = readline(m.prompt);
 	}
 	// rl_clear_history() ;
+	
 	free_env(m.super_env);
 	hdestroy(m.ht);
 	return (0);

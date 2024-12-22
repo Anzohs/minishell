@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libs.h                                             :+:      :+:    :+:   */
+/*   clean_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 18:45:14 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/22 15:49:46 by hladeiro         ###   ########.fr       */
+/*   Created: 2024/12/22 14:41:45 by hladeiro          #+#    #+#             */
+/*   Updated: 2024/12/22 16:02:08 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBS_H
-# define LIBS_H
+#include "../minishell.h"
 
-# include "./src/libft/libft.h"
-# include "valid_str/valid_str.h"
-# include <stdio.h>
-# include <stdbool.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <sys/wait.h>
-# include <signal.h>
-# include <fcntl.h>
-# include <stdlib.h>
-# include <unistd.h>
+bool	clean_command(t_mini *m)
+{
+	t_node	*tmp;
 
-#endif
+	tmp = m->commands;
+	while (tmp)
+	{
+		if (!closed_quotes(tmp->entry.key) || !closed_quotes(tmp->entry.value))
+		{
+			printf("Error: open quotes!\n");
+			return (false);
+		}
+		tmp = tmp->next;
+	}
+	return (true);
+}

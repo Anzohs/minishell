@@ -11,6 +11,7 @@ SRC_LIBF = ft_bzero.c ft_calloc.c ft_strcat.c ft_strcpy.c ft_strncmp.c ft_strlen
 SRC_ENV = get_index.c update_oldpwd.c update_pwd.c get_pwd.c get_export.c get_unset.c
 SRC_PIP = pipex.c pipex_utils.c pipex_utils_2.c pipex_val_cmd.c pipex_here_doc.c pipex_close.c pipex_clean.c
 SRC_FREE = free_env.c free_node.c free_tmini.c free_singlenode.c
+SRC_CLN = clean_command.c closed_quotes.c 
 
 SRCS := main.c parsing.c parse_commands.c
 SRCS += $(addprefix ft_search/, $(SRC_FT))
@@ -18,6 +19,7 @@ SRCS += $(addprefix src/, $(SRC_SRC))
 SRCS += $(addprefix env_variables/, $(SRC_ENV))
 SRCS += $(addprefix src/libft/, $(SRC_LIBF))
 SRCS += $(addprefix ft_clean/, $(SRC_FREE))
+SRCS += $(addprefix valid_str/, $(SRC_CLN))
 #SRCS += $(addprefix pipes/, $(SRC_PIP))
 
 OBJ := $(patsubst %.c, $(OBJ_DIR)/%.o,$(SRCS))
