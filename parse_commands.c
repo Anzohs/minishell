@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:21:26 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/17 20:53:03 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/21 23:55:34 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ void	cd_args(t_mini *m)
 	t_string	old_tmp;
 
 	oldpwd_i = get_index(m->super_env, "OLDPWD=", 7);
+	if (oldpwd_i == -1)
+	{
+		write(2, "CD: OLDPWD not defined\n", 23);
+		return ;
+	}
 	pwd_i = get_index(m->super_env, "PWD=", 4);
 	temp = ft_strdup(m->super_env[pwd_i]);
 	old_tmp = ft_strdup(m->super_env[oldpwd_i]);

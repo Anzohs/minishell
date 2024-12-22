@@ -6,12 +6,14 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 20:53:15 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/21 00:36:13 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/22 01:11:46 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+//Zé Função repedita o mesmo que -> static int	ft_count(char **strs)
+// está no get_export
 static int	len_vars(char **strs)
 {
 	int	i;
