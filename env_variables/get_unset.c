@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 20:53:15 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/22 01:11:46 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/23 00:31:05 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static int	*init_array(char **strs, char **envs)
 	int	i;
 	int	tam;
 	int	*array;
+	char	*str;
 
 	tam = len_vars(strs);
 	array = malloc(sizeof(int) * tam);
@@ -40,8 +41,10 @@ static int	*init_array(char **strs, char **envs)
 	i = 0;
 	while (tam > i)
 	{
-		array[i] = get_index(envs, strs[i], ft_strlen(strs[i]));
+		str = ft_strjoin(strs[i], "=");
+		array[i] = get_index(envs, str, ft_strlen(str));
 		i++;
+		free(str);
 	}
 	return (array);
 }
