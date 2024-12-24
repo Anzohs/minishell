@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 20:53:15 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/23 00:31:05 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/24 00:23:57 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,28 @@ static int	len_vars(char **strs)
 	while(strs[i] != NULL)
 		i++;
 	return (i);
+}
+
+static void	array_duplicate(int *array, int array_length)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while ((array_length - 1) > i)
+	{
+		if (array[i] != -1)
+		{
+			j = i + 1;
+			while (j < array_length)
+			{
+				if (array[i] == array[j])
+					array[j] = -1;
+				j++;
+			}
+		}
+		i++;
+	}
 }
 
 static int	*init_array(char **strs, char **envs)
@@ -46,6 +68,7 @@ static int	*init_array(char **strs, char **envs)
 		i++;
 		free(str);
 	}
+	array_duplicate(array, tam);
 	return (array);
 }
 
