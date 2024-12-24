@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 19:45:53 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/17 20:10:46 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/24 18:36:01 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,32 +69,42 @@ void	get_export(t_mini *mini, t_node *command)
 	int		index;
 	char	*var;
 	char	**tmp;
+	char	**strs;
+	int		i;
 
 	if (!ft_strcmp(command->entry.value, ""))
 		print_env(mini);
-	if (!ft_strchr(command->entry.value, '='))
+	strs = ft_split((char *)command->entry.value, ' ');
+	if (!strs)
 		return ;
-	else
+	i = 0;
+	while (strs[i])
 	{
-		var = ft_strdup(command->entry.value);
-		if (!var)
-			return ;
-		ft_strrchr(var, '=');
-		index = get_index(mini->super_env, var, ft_strlen(var));
-		if (index == -1)
+		if (ft_strchr(strs[i], '='))
 		{
-			tmp = add_env(mini->super_env, command->entry.value);
-			free_env(mini->super_env);
-			mini->super_env = tmp;
+			var = ft_strdup(strs[i]);
+			if (!var)
+			{
+				free_env(strs);
+				return ;
+			}
+			ft_strrchr(var, '=');
+			index = get_index(mini->super_env, var, ft_strlen(var));
+			if (index == -1)
+			{
+				tmp = add_env(mini->super_env, strs[i]);
+				free_env(mini->super_env);
+				mini->super_env = tmp;
+				free(var);
+				continue ;
+			}
 			free(var);
-			return ;
+			free(mini->super_env[index]);
+			mini->super_env[index] = ft_strdup(strs[i]);
+			if (!mini->super_env[index])
+				return ;
 		}
-		free(var);
-		free(mini->super_env[index]);
-		var = ft_strdup(command->entry.value);
-		if (!var)
-			return;
-		mini->super_env[index] = ft_strdup(var);
-		free(var);
+		i++;
 	}
+	free_env(strs);
 }
