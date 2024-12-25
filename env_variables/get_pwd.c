@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_pwd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 20:50:49 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/14 16:30:46 by hladeiro         ###   ########.fr       */
+/*   Updated: 2024/12/25 22:43:18 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../ft_search/ft_search.h"
+#include "../ft_search/ft_search.h"
 
 void	get_pwd(t_string s, int i)
 {

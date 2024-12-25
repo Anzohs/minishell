@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 20:53:15 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/24 00:23:57 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/25 22:42:52 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-//Zé Função repedita o mesmo que -> static int	ft_count(char **strs)
-// está no get_export
-static int	len_vars(char **strs)
-{
-	int	i;
-
-	i = 0;
-	while(strs[i] != NULL)
-		i++;
-	return (i);
-}
 
 static void	array_duplicate(int *array, int array_length)
 {
@@ -48,12 +36,12 @@ static void	array_duplicate(int *array, int array_length)
 
 static int	*init_array(char **strs, char **envs)
 {
-	int	i;
-	int	tam;
-	int	*array;
+	int		i;
+	int		tam;
+	int		*array;
 	char	*str;
 
-	tam = len_vars(strs);
+	tam = ft_count(strs);
 	array = malloc(sizeof(int) * tam);
 	if (!array)
 	{
@@ -95,7 +83,7 @@ static char	**copy_new_env(t_mini *mini, int count_index)
 	int		i;
 	int		j;
 
-	new_env = ft_calloc(sizeof(char *), len_vars(mini->super_env) - count_index + 1);
+	new_env = ft_calloc(sizeof(char *), ft_count(mini->super_env) - count_index + 1);
 	if (!new_env)
 		return (NULL);
 	i = 0;
@@ -126,7 +114,7 @@ static void	remove_env(t_mini *mini, t_node *node)
 	array = init_array(strs, mini->super_env);
 	if (!array)
 		return ;
-	fill_array_index(array, len_vars(strs), mini->super_env, &i);
+	fill_array_index(array, ft_count(strs), mini->super_env, &i);
 	new_env = copy_new_env(mini, i);
 	if (!new_env)
 	{

@@ -3,54 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 19:45:53 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/24 18:53:44 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/25 23:35:15 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-
-static int	ft_count(char **strs)
-{
-	int	i;
-
-	i = 0;
-	while (strs[i] != NULL)
-		i++;
-	return (i);
-}
-
-static char	**add_env(char **strs, char *env)
-{
-	char	**temp;
-	int		i;
-
-	temp = ft_calloc(sizeof(char *), ft_count(strs) + 2);
-	if (!temp)
-		return (NULL);
-	i = 0;
-	while (strs[i])
-	{
-		temp[i] = ft_strdup(strs[i]);
-		if (!temp[i])
-		{
-			ft_free_strs(temp, i);
-			return (NULL);
-		}
-		i++;
-	}
-	temp[i] = ft_strdup(env);
-	if (!temp[i])
-	{
-		ft_free_strs(temp, i);
-		return (NULL);
-	}
-	temp[i + 1] = NULL;
-	return (temp);
-}
 
 static void	print_env(t_mini *m)
 {
@@ -64,11 +24,51 @@ static void	print_env(t_mini *m)
 	}
 }
 
-void	get_export(t_mini *mini, t_node *command)
+static void	add_new_env(t_mini *mini, char **strs, char *strs_i)
+{
+	char	**tmp;
+
+	tmp = add_env(mini->super_env, strs_i);
+	if (!tmp)
+	{
+		free_env(strs);
+		return ;
+	}
+	free_env(mini->super_env);
+	mini->super_env = tmp;
+}
+
+static void	get_export_help(t_mini *mini, char **strs, int *i)
 {
 	int		index;
 	char	*var;
-	char	**tmp;
+
+	if (ft_strchr(strs[*i], '='))
+	{
+		var = ft_strdup(strs[*i]);
+		if (!var)
+		{
+			free_env(strs);
+			return ;
+		}
+		ft_strrchr(var, '=');
+		index = get_index(mini->super_env, var, ft_strlen(var));
+		free(var);
+		if (index == -1)
+		{
+			add_new_env(mini, strs, strs[*i]);
+			i++;
+			return ;
+		}
+		free(mini->super_env[index]);
+		mini->super_env[index] = ft_strdup(strs[*i]);
+		if (!mini->super_env[index])
+			return ;
+	}
+}
+
+void	get_export(t_mini *mini, t_node *command)
+{
 	char	**strs;
 	int		i;
 
@@ -83,35 +83,7 @@ void	get_export(t_mini *mini, t_node *command)
 	i = 0;
 	while (strs[i])
 	{
-		if (ft_strchr(strs[i], '='))
-		{
-			var = ft_strdup(strs[i]);
-			if (!var)
-			{
-				free_env(strs);
-				return ;
-			}
-			ft_strrchr(var, '=');
-			index = get_index(mini->super_env, var, ft_strlen(var));
-			free(var);
-			if (index == -1)
-			{
-				tmp = add_env(mini->super_env, strs[i]);
-				if (!tmp)
-				{
-					free_env(strs);
-					return ;
-				}
-				free_env(mini->super_env);
-				mini->super_env = tmp;
-				i++;
-				continue ;
-			}
-			free(mini->super_env[index]);
-			mini->super_env[index] = ft_strdup(strs[i]);
-			if (!mini->super_env[index])
-				return ;
-		}
+		get_export_help(mini, strs, &i);
 		i++;
 	}
 	free_env(strs);
