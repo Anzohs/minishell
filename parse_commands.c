@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:21:26 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/22 15:56:24 by hladeiro         ###   ########.fr       */
+/*   Updated: 2024/12/26 21:02:44 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,7 @@ void	parse_commands(t_mini *mini, t_node *commands)
 			get_export(mini, m);
 		if (!ft_strcmp(m->entry.key, "unset"))
 			get_unset(mini, m);
+		if (!ft_strcmp(m->entry.key, "env"))
+			get_env(mini, m);
 	}
 }
