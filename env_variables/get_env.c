@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 20:55:19 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/26 21:17:53 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/26 22:04:50 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	get_env(t_mini *mini, t_node *command)
 {
 	int	i;
 
+	(void) command;
 	i = 0;
 	while (mini->super_env[i])
 	{
