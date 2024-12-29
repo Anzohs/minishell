@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 22:44:14 by malourei          #+#    #+#             */
-/*   Updated: 2024/09/24 22:59:37 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/29 17:03:28 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_pipex
 
 void	validate_args(t_node *argv, int *cmd_argc);
 void	ft_child_one(t_pipex *pipex, char **env, char *cmd_path, t_node *node);
-void	ft_child_two(t_pipex *pipex, char **env, char *cmd_path);
+void	ft_child_two(t_pipex *pipex, char **env, char *cmd_path, t_node *node);
 void	clean_pointer(char **strs);
 void	ft_close(int fd);
 void	find_full_cmd(t_pipex *pipex, t_mini *mini, t_node *node);
@@ -56,7 +56,7 @@ void	ft_close_all_1(t_pipex *pipex);
 void	ft_close_all_m(t_pipex *pipex, int i);
 void	clean_null_env(t_pipex *pipex);
 void	count_pids(t_pipex *pipex, int argc);
-void	ft_child_doc_one(t_pipex *pipex, char **env, char *cmd_path);
+void	ft_child_doc_one(t_pipex *pipex, char **env, char *cmd_path, t_node *n);
 void	start_here_doc(t_pipex *pipex, t_node *n);
 void	start_in_file(t_pipex *pipex);
 void	pipex(t_mini *mini, t_node *comands);

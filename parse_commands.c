@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:21:26 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/26 21:30:25 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/29 16:52:40 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ void	parse_commands(t_mini *mini, t_node *commands)
 	m = commands;
 	if (node_len(m) < 1 || !clean_command(mini))
 		return ;
-	/* 	if (node_len(m) > 1)
-		pipex(mini, m); */
+	if (node_len(m) > 1)
+		pipex(mini, m);
 	else
 	{
 		if (!ft_strcmp(m->entry.key, "cd") && node_len(commands) == 1)

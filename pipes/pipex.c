@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 23:22:58 by malourei          #+#    #+#             */
-/*   Updated: 2024/09/24 23:39:24 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/29 17:04:15 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	start_pipe_1(t_pipex *pipex, t_mini *mini, size_t len, t_node *argv2
 		if (pipex->is_doc == 0)
 			ft_child_one(pipex, mini->super_env, pipex->paths[0], argv2);
 		else
-			ft_child_doc_one(pipex, mini->super_env, pipex->paths[0]);
+			ft_child_doc_one(pipex, mini->super_env, pipex->paths[0], mini->commands);
 	}
 }
 
@@ -49,7 +49,7 @@ static void	start_pipe_2(t_pipex *pipex, t_mini *m)
 		return ;
 	}
 	if (pipex->pids[pipex->argc - 1] == 0)
-		ft_child_two(pipex, m->super_env, pipex->path2);
+		ft_child_two(pipex, m->super_env, pipex->path2, m->commands);
 }
 
 static void	start_multi2_pipe(t_pipex *pipex, t_mini *mini, int i, char *cmd_path)

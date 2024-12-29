@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 23:24:14 by malourei          #+#    #+#             */
-/*   Updated: 2024/09/24 23:37:54 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/29 16:58:30 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_child_one(t_pipex *pipex, char **env, char *cmd_path, t_node *node)
 	execve2(cmd_path, node, env);
 }
 
-void	ft_child_two(t_pipex *pipex, char **env, char *cmd_path)
+void	ft_child_two(t_pipex *pipex, char **env, char *cmd_path, t_node *node)
 {
 	if (dup2(pipex->fds[pipex->argc - 2].fd[0], STDIN_FILENO) < 0)
 	{
@@ -54,7 +54,7 @@ void	ft_child_two(t_pipex *pipex, char **env, char *cmd_path)
 		return ;
 	}
 	ft_close_all_p(pipex);
-	execve2(cmd_path, pipex->cmd2, env);
+	execve2(cmd_path, node, env);
 }
 
 void	ft_parent(t_pipex *pipex)

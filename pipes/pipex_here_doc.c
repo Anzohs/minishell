@@ -6,14 +6,14 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:52:43 by malourei          #+#    #+#             */
-/*   Updated: 2024/10/04 22:52:52 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/29 17:05:28 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include <fcntl.h>
 
-void	ft_child_doc_one(t_pipex *pipex, char **env, char *cmd_path)
+void	ft_child_doc_one(t_pipex *pipex, char **env, char *cmd_path, t_node *n)
 {
 	if (dup2(pipex->fds[0].fd[0], STDIN_FILENO) < 0)
 	{
@@ -29,7 +29,7 @@ void	ft_child_doc_one(t_pipex *pipex, char **env, char *cmd_path)
 	ft_close(pipex->fds[0].fd[1]);
 	ft_close(pipex->fds[1].fd[0]);
 	ft_close(pipex->fds[1].fd[1]);
-	execve2(cmd_path, pipex->cmd1, env);
+	execve2(cmd_path, n, env);
 	exit(0);
 }
 

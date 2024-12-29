@@ -20,7 +20,7 @@ SRCS += $(addprefix env_variables/, $(SRC_ENV))
 SRCS += $(addprefix src/libft/, $(SRC_LIBF))
 SRCS += $(addprefix ft_clean/, $(SRC_FREE))
 SRCS += $(addprefix valid_str/, $(SRC_CLN))
-#SRCS += $(addprefix pipes/, $(SRC_PIP))
+SRCS += $(addprefix pipes/, $(SRC_PIP))
 
 OBJ := $(patsubst %.c, $(OBJ_DIR)/%.o,$(SRCS))
 
