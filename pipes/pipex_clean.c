@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 00:12:01 by malourei          #+#    #+#             */
-/*   Updated: 2024/09/24 23:38:01 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/30 19:33:13 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	ft_clean_path(t_pipex *pipex, char *path)
 		clean_pointer(pipex->paths);
 		free(pipex->pids);
 		free(pipex->fds);
-		exit(1);
 	}
 }
 

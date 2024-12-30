@@ -6,11 +6,12 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 00:42:55 by malourei          #+#    #+#             */
-/*   Updated: 2024/09/24 23:01:03 by malourei         ###   ########.fr       */
+/*   Updated: 2024/12/30 19:37:00 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <stdio.h>
 
 static char	*find_cmd(char *cmd, char **path)
 {
@@ -58,7 +59,7 @@ static void	get_all_path(t_pipex *pipex, t_node *node)
 	i = pipex->cmd_argc;
 	j = 0;
 	n = node_len(node);
-	while (i <= n)
+	while (i < n)
 	{
 		pipex->paths[j] = find_cmd(get_command(node, i), pipex->env);
 		ft_clean_path(pipex, pipex->paths[j]);
