@@ -20,13 +20,17 @@ static char	*find_cmd(char *cmd, char **path)
 	char	*tmp2;
 
 	i = 0;
+	printf("PUNHETA: %s\n", path[i]);
+	printf("PUNHETA: %s\n", cmd);
 	while (path[i] && cmd)
 	{
 		tmp = ft_strjoin(path[i], "/");
 		tmp2 = ft_strjoin(tmp, cmd);
 		free(tmp);
 		if (access(tmp2, F_OK) == 0)
+		{
 			return (tmp2);
+		}
 		free(tmp2);
 		i++;
 	}
@@ -58,7 +62,7 @@ static void	get_all_path(t_pipex *pipex, t_node *node)
 
 	i = pipex->cmd_argc;
 	j = 0;
-	n = node_len(node);
+	n = node_len(node) - 1;
 	while (i < n)
 	{
 		pipex->paths[j] = find_cmd(get_command(node, i), pipex->env);
@@ -67,7 +71,7 @@ static void	get_all_path(t_pipex *pipex, t_node *node)
 		i++;
 	}
 	pipex->paths[j] = NULL;
-	pipex->path2 = find_cmd(get_command(node, n - 1), pipex->env);
+	pipex->path2 = find_cmd(get_command(node, n), pipex->env);
 	ft_clean_path(pipex, pipex->path2);
 }
 

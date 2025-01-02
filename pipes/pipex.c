@@ -65,12 +65,12 @@ static void	start_multi2_pipe(t_pipex *pipex, t_mini *mini, int i, char *cmd_pat
 	{
 		if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
 		{
-			perror("dup1");
+			perror("dup5");
 			return ;
 		}
 		if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
 		{
-			perror("dup2");
+			perror("dup6");
 			return ;
 		}
 		ft_close_all_m(pipex, i);
@@ -86,6 +86,7 @@ static void	start_multi_pipe(t_pipex *pipex, t_mini *mini, int argc, t_node *n)
 	start_pipe_1(pipex, mini, argc, n);
 	i = 0;
 	j = argc;
+	// Nao deve entar no while ve o que se passa
 	while (++i < j && n)
 	{
 		n = n->next;
