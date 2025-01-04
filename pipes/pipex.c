@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 23:22:58 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/30 21:22:03 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/01/04 18:33:52 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include "../minishell.h"
 #include <unistd.h>
 
-static void	start_pipe_1(t_pipex *pipex, t_mini *mini, size_t len, t_node *argv2)
+static void	start_pipe_1(t_pipex *pipex, \
+				t_mini *mini, size_t len, t_node *argv2)
 {
 	int	i;
 
@@ -36,7 +37,8 @@ static void	start_pipe_1(t_pipex *pipex, t_mini *mini, size_t len, t_node *argv2
 		if (pipex->is_doc == 0)
 			ft_child_one(pipex, mini->super_env, pipex->paths[0], argv2);
 		else
-			ft_child_doc_one(pipex, mini->super_env, pipex->paths[0], mini->commands);
+			ft_child_doc_one(pipex, mini->super_env, \
+							pipex->paths[0], mini->commands);
 	}
 }
 
@@ -52,7 +54,8 @@ static void	start_pipe_2(t_pipex *pipex, t_mini *m)
 		ft_child_two(pipex, m->super_env, pipex->path2, m->commands);
 }
 
-static void	start_multi2_pipe(t_pipex *pipex, t_mini *mini, int i, char *cmd_path)
+static void	start_multi2_pipe(t_pipex *pipex, \
+				t_mini *mini, int i, char *cmd_path)
 {
 	pipex->pids[i] = fork();
 	if (pipex->pids[i] < 0)
@@ -86,7 +89,6 @@ static void	start_multi_pipe(t_pipex *pipex, t_mini *mini, int argc, t_node *n)
 	start_pipe_1(pipex, mini, argc, n);
 	i = 0;
 	j = argc;
-	// Nao deve entar no while ve o que se passa
 	while (++i < j && n)
 	{
 		n = n->next;
@@ -95,8 +97,6 @@ static void	start_multi_pipe(t_pipex *pipex, t_mini *mini, int argc, t_node *n)
 			perror("pipe2");
 			return ;
 		}
-		//free_current(mini->commands);
-		//mini->current = n;
 		start_multi2_pipe(pipex, mini, i, pipex->paths[i]);
 	}
 }
@@ -122,9 +122,7 @@ void	pipex(t_mini *mini, t_node *comands)
 		clean_all(&pipex);
 		return ;
 	}
-	//continuar aqui
 	start_multi_pipe(&pipex, mini, node_len(comands), comands);
-	// tenho que falar com o ze sobre o commands e as envs porque passo a mini em vez do envs
 	start_pipe_2(&pipex, mini);
 	ft_parent(&pipex);
 }

@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:35:38 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/12 20:33:58 by malourei         ###   ########.fr       */
+/*   Updated: 2025/01/04 18:34:54 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,3 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	str[i] = '\0';
 	return (str);
 }
-
