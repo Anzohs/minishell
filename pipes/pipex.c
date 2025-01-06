@@ -19,7 +19,7 @@ static void	start_pipe_1(t_pipex *pipex, \
 {
 	int	i;
 
-	i = len - 1;
+	i = 0;
 	if (pipe(pipex->fds[0].fd) < 0)
 	{
 		perror("pipe");
@@ -107,7 +107,7 @@ void	pipex(t_mini *mini, t_node *comands)
 
 	pipex = (t_pipex){0};
 	validate_args(comands, &pipex.cmd_argc);
-	count_pids(&pipex, node_len(comands));
+	count_pids(&pipex, pipex.cmd_argc);
 	find_full_cmd(&pipex, mini, comands);
 	if (ft_strncmp(comands->entry.key, "here_doc", 8) == 0)
 		start_here_doc(&pipex, comands);

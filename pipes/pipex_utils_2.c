@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 22:59:58 by malourei          #+#    #+#             */
-/*   Updated: 2025/01/06 17:35:21 by malourei         ###   ########.fr       */
+/*   Updated: 2025/01/06 21:01:24 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	count_pids(t_pipex *pipex, int argc)
 		perror("malloc1");
 		return ;
 	}
-	pipex->paths = ft_calloc(sizeof(char *), argc + 1);
+	pipex->paths = ft_calloc(sizeof(char *), argc);
 	if (pipex->paths == NULL)
 	{
 		perror("malloc2");

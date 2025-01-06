@@ -12,6 +12,9 @@
 
 #include "../minishell.h"
 
+
+// Estou a ver os processos ft_child_one
+
 void	execve2(const char *path, t_node *node, char *const envp[])
 {
 	char	*argv[2];
@@ -27,7 +30,11 @@ void	execve2(const char *path, t_node *node, char *const envp[])
 
 void	ft_child_one(t_pipex *pipex, char **env, char *cmd_path, t_node *node)
 {
-	if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
+	if (dup2(pipex->fds[0].fd[0], STDIN_FILENO) < 0)
+	{
+
+	}
+	if (dup2(pipex->fds[1].fd[1], STDOUT_FILENO) < 0)
 	{
 		perror("dup2");
 		return ;

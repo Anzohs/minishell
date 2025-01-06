@@ -57,27 +57,25 @@ static t_string	get_command(t_node *n, int i)
 static void	get_all_path(t_pipex *pipex, t_node *node)
 {
 	int	i;
-	int	j;
 	int	n;
 
-	i = pipex->cmd_argc;
-	j = 0;
+	i = 0;
 	n = node_len(node) - 1;
 	while (i < n)
 	{
-		pipex->paths[j] = find_cmd(get_command(node, i), pipex->env);
-		ft_clean_path(pipex, pipex->paths[j]);
-		j++;
+		pipex->paths[i] = find_cmd(get_command(node, i), pipex->env);
+		ft_clean_path(pipex, pipex->paths[i]);
 		i++;
 	}
-	pipex->paths[j] = NULL;
+	pipex->paths[i] = NULL;
 	pipex->path2 = find_cmd(get_command(node, n), pipex->env);
 	ft_clean_path(pipex, pipex->path2);
 }
 
 void	find_full_cmd(t_pipex *pipex, t_mini *mini, t_node *node)
 {
-	int	i;
+	int		i;
+	char	*tmp;
 
 	i = get_index(mini->super_env, "PATH=", 5);
 	if (i == -1)
@@ -87,6 +85,10 @@ void	find_full_cmd(t_pipex *pipex, t_mini *mini, t_node *node)
 		return ;
 	}
 	pipex->env = ft_split(mini->super_env[i], ':');
+	tmp = ft_strdup(pipex->env[0] + 5);
+	free(pipex->env[0]);
+	pipex->env[0] = ft_strdup(tmp);
+	free(tmp);
 	get_all_path(pipex, node);
 	//pipex->cmd2 = (char **)get_command(node, node_len(node) - 1);
 }
