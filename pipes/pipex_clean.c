@@ -46,7 +46,7 @@ void	clean_null_env(t_pipex *pipex)
 
 void	clean_all(t_pipex *pipex)
 {
-	clean_pointer(pipex->cmd2);
+	//clean_pointer(pipex->cmd2);
 	clean_pointer(pipex->env);
 	clean_pointer(pipex->paths);
 	free(pipex->path2);

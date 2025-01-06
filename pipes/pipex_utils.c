@@ -43,7 +43,7 @@ void	ft_child_one(t_pipex *pipex, char **env, char *cmd_path, t_node *node)
 
 void	ft_child_two(t_pipex *pipex, char **env, char *cmd_path, t_node *node)
 {
-	if (dup2(pipex->fds[pipex->argc - 2].fd[0], STDIN_FILENO) < 0)
+	if (dup2(pipex->fds[pipex->cmd_argc - 1].fd[0], STDIN_FILENO) < 0)
 	{
 		perror("dup3");
 		return ;

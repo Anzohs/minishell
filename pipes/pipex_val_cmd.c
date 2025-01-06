@@ -88,5 +88,5 @@ void	find_full_cmd(t_pipex *pipex, t_mini *mini, t_node *node)
 	}
 	pipex->env = ft_split(mini->super_env[i], ':');
 	get_all_path(pipex, node);
-	pipex->cmd2 = (char **)get_command(node, node_len(node) - 1);
+	//pipex->cmd2 = (char **)get_command(node, node_len(node) - 1);
 }

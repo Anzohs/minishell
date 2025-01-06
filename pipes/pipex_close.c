@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_close.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:42:55 by malourei          #+#    #+#             */
-/*   Updated: 2024/10/04 19:48:06 by malourei         ###   ########.fr       */
+/*   Updated: 2025/01/06 17:33:55 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_close_all_p(t_pipex *pipex)
 	int	i;
 
 	i = 0;
-	while (i < (pipex->argc - 1))
+	while (i < (pipex->cmd_argc - 1))
 	{
 		ft_close(pipex->fds[i].fd[0]);
 		ft_close(pipex->fds[i].fd[1]);

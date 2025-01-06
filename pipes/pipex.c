@@ -44,13 +44,13 @@ static void	start_pipe_1(t_pipex *pipex, \
 
 static void	start_pipe_2(t_pipex *pipex, t_mini *m)
 {
-	pipex->pids[pipex->argc - 1] = fork();
-	if (pipex->pids[pipex->argc - 1] < 0)
+	pipex->pids[pipex->cmd_argc - 1] = fork();
+	if (pipex->pids[pipex->cmd_argc - 1] < 0)
 	{
 		perror("pid2");
 		return ;
 	}
-	if (pipex->pids[pipex->argc - 1] == 0)
+	if (pipex->pids[pipex->cmd_argc - 1] == 0)
 		ft_child_two(pipex, m->super_env, pipex->path2, m->commands);
 }
 
@@ -88,7 +88,7 @@ static void	start_multi_pipe(t_pipex *pipex, t_mini *mini, int argc, t_node *n)
 
 	start_pipe_1(pipex, mini, argc, n);
 	i = 0;
-	j = argc;
+	j = argc - 1;
 	while (++i < j && n)
 	{
 		n = n->next;
@@ -107,13 +107,13 @@ void	pipex(t_mini *mini, t_node *comands)
 
 	pipex = (t_pipex){0};
 	validate_args(comands, &pipex.cmd_argc);
-	count_pids(&pipex, node_len(comands) - pipex.cmd_argc);
+	count_pids(&pipex, node_len(comands));
 	find_full_cmd(&pipex, mini, comands);
 	if (ft_strncmp(comands->entry.key, "here_doc", 8) == 0)
 		start_here_doc(&pipex, comands);
 	else
 		start_in_file(&pipex);
-	pipex.out_file = open(".outfile_pipex", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	pipex.out_file = open(".outfile_pipex", O_CREAT | O_RDONLY | O_WRONLY | O_TRUNC, 0777);
 	if (pipex.out_file < 0)
 	{
 		perror("ErrorOUT");

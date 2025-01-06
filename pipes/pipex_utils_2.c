@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 22:59:58 by malourei          #+#    #+#             */
-/*   Updated: 2024/11/14 17:59:31 by malourei         ###   ########.fr       */
+/*   Updated: 2025/01/06 17:35:21 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	validate_args(t_node *argv, int *cmd_argc)
 		node = node->next;
 		i++;
 	}
+	*cmd_argc = i;
 }
 
 void	count_pids(t_pipex *pipex, int argc)

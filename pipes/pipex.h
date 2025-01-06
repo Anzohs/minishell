@@ -38,7 +38,7 @@ typedef struct s_pipex
 	char	*path2;
 	char	**env;
 	char	**cmd1;
-	char	**cmd2;
+	//char	**cmd2;
 }	t_pipex;
 
 void	validate_args(t_node *argv, int *cmd_argc);
