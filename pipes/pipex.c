@@ -42,7 +42,7 @@ static void	start_pipe_1(t_pipex *pipex, \
 	}
 }
 
-static void	start_pipe_2(t_pipex *pipex, t_mini *m)
+/* static void	start_pipe_2(t_pipex *pipex, t_mini *m)
 {
 	pipex->pids[pipex->cmd_argc - 1] = fork();
 	if (pipex->pids[pipex->cmd_argc - 1] < 0)
@@ -52,7 +52,7 @@ static void	start_pipe_2(t_pipex *pipex, t_mini *m)
 	}
 	if (pipex->pids[pipex->cmd_argc - 1] == 0)
 		ft_child_two(pipex, m->super_env, pipex->path2, m->commands);
-}
+} */
 
 static void	start_multi2_pipe(t_pipex *pipex, \
 				t_mini *mini, int i, char *cmd_path)
@@ -111,18 +111,7 @@ void	pipex(t_mini *mini, t_node *comands)
 	find_full_cmd(&pipex, mini, comands);
 	if (ft_strncmp(comands->entry.key, "here_doc", 8) == 0)
 		start_here_doc(&pipex, comands);
-	else
-		start_in_file(&pipex);
-	pipex.out_file = open(".outfile_pipex", O_CREAT | O_RDONLY | O_WRONLY | O_TRUNC, 0777);
-	if (pipex.out_file < 0)
-	{
-		perror("ErrorOUT");
-		ft_close(pipex.in_file);
-		unlink(".infile_pipex");
-		clean_all(&pipex);
-		return ;
-	}
 	start_multi_pipe(&pipex, mini, node_len(comands), comands);
-	start_pipe_2(&pipex, mini);
+	//start_pipe_2(&pipex, mini);
 	ft_parent(&pipex);
 }

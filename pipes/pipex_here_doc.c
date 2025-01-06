@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_here_doc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:52:43 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/29 17:05:28 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/01/06 20:44:10 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,4 @@ void	start_here_doc(t_pipex *pipex, t_node *n)
 	if (pipex->pids[0] == 0)
 		here_doc(n->entry.value, pipex->fds[0].fd, pipex);
 	ft_close(pipex->fds[0].fd[1]);
-}
-
-void	start_in_file(t_pipex *pipex)
-{
-	pipex->i_multi_argv = 1;
-	pipex->is_doc = 0;
-	pipex->in_file = open(".infile_pipex", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (pipex->in_file < 0)
-	{
-		perror("ErrorIN");
-		clean_all(pipex);
-		return ;
-	}
 }

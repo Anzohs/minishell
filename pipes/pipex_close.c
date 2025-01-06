@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:42:55 by malourei          #+#    #+#             */
-/*   Updated: 2025/01/06 17:33:55 by malourei         ###   ########.fr       */
+/*   Updated: 2025/01/06 20:34:05 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,12 @@ void	ft_close_all_m(t_pipex *pipex, int i)
 		ft_close(pipex->fds[k].fd[1]);
 		k++;
 	}
-	if (pipex->is_doc == 0)
-		ft_close(pipex->in_file);
-	ft_close(pipex->out_file);
 }
 
 void	ft_close_all_1(t_pipex *pipex)
 {
 	ft_close(pipex->fds[0].fd[0]);
 	ft_close(pipex->fds[0].fd[1]);
-	if (pipex->is_doc == 0)
-		ft_close(pipex->in_file);
-	ft_close(pipex->out_file);
 }
 
 void	ft_close_all_p(t_pipex *pipex)
@@ -55,7 +49,4 @@ void	ft_close_all_p(t_pipex *pipex)
 		ft_close(pipex->fds[i].fd[1]);
 		i++;
 	}
-	if (pipex->is_doc == 0)
-		ft_close(pipex->in_file);
-	ft_close(pipex->out_file);
 }

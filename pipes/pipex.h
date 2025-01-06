@@ -26,8 +26,6 @@ typedef struct s_fds
 
 typedef struct s_pipex
 {
-	int		in_file;
-	int		out_file;
 	t_fds	*fds;
 	int		*pids;
 	int		argc;
@@ -58,7 +56,6 @@ void	clean_null_env(t_pipex *pipex);
 void	count_pids(t_pipex *pipex, int argc);
 void	ft_child_doc_one(t_pipex *pipex, char **env, char *cmd_path, t_node *n);
 void	start_here_doc(t_pipex *pipex, t_node *n);
-void	start_in_file(t_pipex *pipex);
 void	pipex(t_mini *mini, t_node *comands);
 
 #endif

@@ -27,11 +27,6 @@ void	execve2(const char *path, t_node *node, char *const envp[])
 
 void	ft_child_one(t_pipex *pipex, char **env, char *cmd_path, t_node *node)
 {
-	if (dup2(pipex->in_file, STDIN_FILENO) < 0)
-	{
-		perror("dup1");
-		return ;
-	}
 	if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
 	{
 		perror("dup2");
@@ -46,11 +41,6 @@ void	ft_child_two(t_pipex *pipex, char **env, char *cmd_path, t_node *node)
 	if (dup2(pipex->fds[pipex->cmd_argc - 1].fd[0], STDIN_FILENO) < 0)
 	{
 		perror("dup3");
-		return ;
-	}
-	if (dup2(pipex->out_file, STDOUT_FILENO) < 0)
-	{
-		perror("dup4");
 		return ;
 	}
 	ft_close_all_p(pipex);
