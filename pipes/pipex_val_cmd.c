@@ -20,8 +20,6 @@ static char	*find_cmd(char *cmd, char **path)
 	char	*tmp2;
 
 	i = 0;
-	printf("PUNHETA: %s\n", path[i]);
-	printf("PUNHETA: %s\n", cmd);
 	while (path[i] && cmd)
 	{
 		tmp = ft_strjoin(path[i], "/");

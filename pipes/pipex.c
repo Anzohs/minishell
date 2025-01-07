@@ -20,6 +20,7 @@ static void	start_pipe_1(t_pipex *pipex, \
 	int	i;
 
 	i = 0;
+	(void)len;
 	if (pipe(pipex->fds[0].fd) < 0)
 	{
 		perror("pipe");
@@ -87,6 +88,7 @@ static void	start_multi_pipe(t_pipex *pipex, t_mini *mini, int argc, t_node *n)
 	int	j;
 
 	start_pipe_1(pipex, mini, argc, n);
+	ft_child_one_martelado(pipex, mini->super_env, pipex->path2, n);
 	i = 0;
 	j = argc - 1;
 	while (++i < j && n)

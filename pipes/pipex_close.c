@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:42:55 by malourei          #+#    #+#             */
-/*   Updated: 2025/01/06 20:34:05 by malourei         ###   ########.fr       */
+/*   Updated: 2025/01/07 21:08:19 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_close_all_m(t_pipex *pipex, int i)
 	int	k;
 
 	k = 0;
-	while (k <= i)
+	while (k <= (i - 1))
 	{
 		ft_close(pipex->fds[k].fd[0]);
 		ft_close(pipex->fds[k].fd[1]);
@@ -43,7 +43,7 @@ void	ft_close_all_p(t_pipex *pipex)
 	int	i;
 
 	i = 0;
-	while (i < (pipex->cmd_argc - 1))
+	while (i < (pipex->cmd_argc - 2))
 	{
 		ft_close(pipex->fds[i].fd[0]);
 		ft_close(pipex->fds[i].fd[1]);
