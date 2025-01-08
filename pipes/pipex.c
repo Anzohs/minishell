@@ -110,7 +110,11 @@ void	pipex(t_mini *mini, t_node *comands)
 	pipex = (t_pipex){0};
 	validate_args(comands, &pipex.cmd_argc);
 	count_pids(&pipex, pipex.cmd_argc);
-	find_full_cmd(&pipex, mini, comands);
+	if (!find_full_cmd(&pipex, mini, comands))
+	{
+		printf("command not found\n");
+		return ;
+	}
 	if (ft_strncmp(comands->entry.key, "here_doc", 8) == 0)
 		start_here_doc(&pipex, comands);
 	start_multi_pipe(&pipex, mini, node_len(comands), comands);

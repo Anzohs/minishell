@@ -12,17 +12,17 @@
 
 #include "../minishell.h"
 
-
-// Estou a ver os processos ft_child_one
-
 void	execve2(const char *path, t_node *node, char *const envp[])
 {
 	char	**argv;
 	char	*str_join;
+	char	*str_join_2;
 
-	str_join = ft_strjoin(node->entry.key, ((char *)node->entry.value));
-	argv = ft_split(str_join, ' ');
+	str_join = ft_strjoin(node->entry.key, " ");
+	str_join_2 = ft_strjoin(str_join, ((char *)node->entry.value));
 	free(str_join);
+	argv = ft_split(str_join_2, ' ');
+	free(str_join_2);
 	if (execve(path, argv, envp) == -1)
 	{
 		printf("Error: Comando invalido %s!\n", path);
@@ -33,7 +33,7 @@ void	execve2(const char *path, t_node *node, char *const envp[])
 
 void	ft_child_one(t_pipex *pipex, char **env, char *cmd_path, t_node *node)
 {
-	if (dup2(pipex->fds[0].fd[0], STDIN_FILENO) < 0)
+	if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
 	{
 		perror("dup1");
 		return ;
@@ -60,7 +60,7 @@ void	ft_child_one_martelado(t_pipex *pipex, char **env, char *cmd_path, t_node *
 	}
 	if (pipex->pids[i] == 0)
 	{
-		if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
+		if (dup2(pipex->fds[0].fd[0], STDIN_FILENO) < 0)
 		{
 			perror("dup2");
 			return ;
@@ -69,6 +69,11 @@ void	ft_child_one_martelado(t_pipex *pipex, char **env, char *cmd_path, t_node *
 		execve2(cmd_path, tmp, env);
 	}
 }
+
+/* void	ft_child_one_cmd(t_pipex *pipex, char **env, char *cmd_path, t_node *n)
+{
+
+} */
 
 
 void	ft_child_two(t_pipex *pipex, char **env, char *cmd_path, t_node *node)

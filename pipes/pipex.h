@@ -44,7 +44,7 @@ void	ft_child_one(t_pipex *pipex, char **env, char *cmd_path, t_node *node);
 void	ft_child_two(t_pipex *pipex, char **env, char *cmd_path, t_node *node);
 void	clean_pointer(char **strs);
 void	ft_close(int fd);
-void	find_full_cmd(t_pipex *pipex, t_mini *mini, t_node *node);
+bool	find_full_cmd(t_pipex *pipex, t_mini *mini, t_node *node);
 void	ft_parent(t_pipex *pipex);
 void	clean_all(t_pipex *pipex);
 void	ft_clean_path(t_pipex *pipex, char *path);

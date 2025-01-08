@@ -26,9 +26,7 @@ static char	*find_cmd(char *cmd, char **path)
 		tmp2 = ft_strjoin(tmp, cmd);
 		free(tmp);
 		if (access(tmp2, F_OK) == 0)
-		{
 			return (tmp2);
-		}
 		free(tmp2);
 		i++;
 	}
@@ -52,7 +50,7 @@ static t_string	get_command(t_node *n, int i)
 	return (tmp->entry.key);
 }
 
-static void	get_all_path(t_pipex *pipex, t_node *node)
+static bool	get_all_path(t_pipex *pipex, t_node *node)
 {
 	int	i;
 	int	n;
@@ -62,15 +60,20 @@ static void	get_all_path(t_pipex *pipex, t_node *node)
 	while (i < n)
 	{
 		pipex->paths[i] = find_cmd(get_command(node, i), pipex->env);
+		if (!pipex->paths[i])
+			return (false);
 		ft_clean_path(pipex, pipex->paths[i]);
 		i++;
 	}
 	pipex->paths[i] = NULL;
 	pipex->path2 = find_cmd(get_command(node, n), pipex->env);
+	if (!pipex->path2)
+		return (false);
 	ft_clean_path(pipex, pipex->path2);
+	return (true);
 }
 
-void	find_full_cmd(t_pipex *pipex, t_mini *mini, t_node *node)
+bool	find_full_cmd(t_pipex *pipex, t_mini *mini, t_node *node)
 {
 	int		i;
 	char	*tmp;
@@ -80,13 +83,13 @@ void	find_full_cmd(t_pipex *pipex, t_mini *mini, t_node *node)
 	{
 		perror("Error: No Path!");
 		clean_null_env(pipex);
-		return ;
+		return (false);
 	}
 	pipex->env = ft_split(mini->super_env[i], ':');
 	tmp = ft_strdup(pipex->env[0] + 5);
 	free(pipex->env[0]);
 	pipex->env[0] = ft_strdup(tmp);
 	free(tmp);
-	get_all_path(pipex, node);
+	return (get_all_path(pipex, node));
 	//pipex->cmd2 = (char **)get_command(node, node_len(node) - 1);
 }
