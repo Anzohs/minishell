@@ -36,6 +36,7 @@ typedef struct s_pipex
 	char	*path2;
 	char	**env;
 	char	**cmd1;
+	int		val_cmd;
 	//char	**cmd2;
 }	t_pipex;
 

@@ -50,7 +50,7 @@ static t_string	get_command(t_node *n, int i)
 	return (tmp->entry.key);
 }
 
-static bool	get_all_path(t_pipex *pipex, t_node *node)
+static void	get_all_path(t_pipex *pipex, t_node *node)
 {
 	int	i;
 	int	n;
@@ -61,7 +61,7 @@ static bool	get_all_path(t_pipex *pipex, t_node *node)
 	{
 		pipex->paths[i] = find_cmd(get_command(node, i), pipex->env);
 		if (!pipex->paths[i])
-			return (false);
+			pipex->val_cmd++;
 		ft_clean_path(pipex, pipex->paths[i]);
 		i++;
 	}
@@ -70,7 +70,6 @@ static bool	get_all_path(t_pipex *pipex, t_node *node)
 	if (!pipex->path2)
 		return (false);
 	ft_clean_path(pipex, pipex->path2);
-	return (true);
 }
 
 bool	find_full_cmd(t_pipex *pipex, t_mini *mini, t_node *node)
@@ -90,6 +89,12 @@ bool	find_full_cmd(t_pipex *pipex, t_mini *mini, t_node *node)
 	free(pipex->env[0]);
 	pipex->env[0] = ft_strdup(tmp);
 	free(tmp);
-	return (get_all_path(pipex, node));
+	get_all_path(pipex, node);
+	return (true);
 	//pipex->cmd2 = (char **)get_command(node, node_len(node) - 1);
 }
+
+/*
+Tenho que estudar uma forma de saber os comandos validos...
+tenho que fazer o pipe e por fim imprimir os cmd invalidos (COMMAND NOT FOUNT)
+*/
