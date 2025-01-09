@@ -36,7 +36,6 @@ typedef struct s_pipex
 	char	*path2;
 	char	**env;
 	char	**cmd1;
-	int		val_cmd;
 	//char	**cmd2;
 }	t_pipex;
 
@@ -49,7 +48,7 @@ bool	find_full_cmd(t_pipex *pipex, t_mini *mini, t_node *node);
 void	ft_parent(t_pipex *pipex);
 void	clean_all(t_pipex *pipex);
 void	ft_clean_path(t_pipex *pipex, char *path);
-void	execve2(const char *path, t_node *node, char *const envp[]);
+void	execve2(const char *path, t_node *node, char *const envp[], t_pipex *pipex);
 void	ft_close_all_p(t_pipex *pipex);
 void	ft_close_all_1(t_pipex *pipex);
 void	ft_close_all_m(t_pipex *pipex, int i);

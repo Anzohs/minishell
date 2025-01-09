@@ -30,7 +30,7 @@ static char	*find_cmd(char *cmd, char **path)
 		free(tmp2);
 		i++;
 	}
-	return (NULL);
+	return (ft_strjoin("usr/bin/", cmd));
 }
 
 static t_string	get_command(t_node *n, int i)
@@ -60,15 +60,15 @@ static void	get_all_path(t_pipex *pipex, t_node *node)
 	while (i < n)
 	{
 		pipex->paths[i] = find_cmd(get_command(node, i), pipex->env);
-		if (!pipex->paths[i])
-			pipex->val_cmd++;
+		//if (!pipex->paths[i])
+			//pipex->val_cmd++;
 		ft_clean_path(pipex, pipex->paths[i]);
 		i++;
 	}
 	pipex->paths[i] = NULL;
 	pipex->path2 = find_cmd(get_command(node, n), pipex->env);
-	if (!pipex->path2)
-		return (false);
+	//if (!pipex->path2)
+		//return ;
 	ft_clean_path(pipex, pipex->path2);
 }
 

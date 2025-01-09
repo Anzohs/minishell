@@ -12,12 +12,13 @@
 
 #include "../minishell.h"
 
-void	execve2(const char *path, t_node *node, char *const envp[])
+void	execve2(const char *path, t_node *node, char *const envp[], t_pipex *pipex)
 {
 	char	**argv;
 	char	*str_join;
 	char	*str_join_2;
 
+	(void)pipex;
 	str_join = ft_strjoin(node->entry.key, " ");
 	str_join_2 = ft_strjoin(str_join, ((char *)node->entry.value));
 	free(str_join);
@@ -25,7 +26,10 @@ void	execve2(const char *path, t_node *node, char *const envp[])
 	free(str_join_2);
 	if (execve(path, argv, envp) == -1)
 	{
-		printf("Error: Comando invalido %s!\n", path);
+		//printf("%s: Command not found\n", node->entry.key);
+		free_env(argv);
+		//ft_close_all_1(pipex);
+		//printf("Error: Comando invalido %s!\n", path);
 		return ;
 	}
 	free_env(argv);
@@ -39,7 +43,7 @@ void	ft_child_one(t_pipex *pipex, char **env, char *cmd_path, t_node *node)
 		return ;
 	}
 	ft_close_all_1(pipex);
-	execve2(cmd_path, node, env);
+	execve2(cmd_path, node, env, pipex);
 }
 
 void	ft_child_one_martelado(t_pipex *pipex, char **env, char *cmd_path, t_node *node)
@@ -60,13 +64,14 @@ void	ft_child_one_martelado(t_pipex *pipex, char **env, char *cmd_path, t_node *
 	}
 	if (pipex->pids[i] == 0)
 	{
-		if (dup2(pipex->fds[0].fd[0], STDIN_FILENO) < 0)
+		/* if (dup2(pipex->fds[0].fd[0], STDIN_FILENO) < 0)
 		{
 			perror("dup2");
+			ft_close_all_1(pipex);
 			return ;
-		}
+		} */
 		ft_close_all_1(pipex);
-		execve2(cmd_path, tmp, env);
+		execve2(cmd_path, tmp, env, pipex);
 	}
 }
 
@@ -84,7 +89,7 @@ void	ft_child_two(t_pipex *pipex, char **env, char *cmd_path, t_node *node)
 		return ;
 	}
 	ft_close_all_1(pipex);
-	execve2(cmd_path, node, env);
+	execve2(cmd_path, node, env, pipex);
 }
 
 void	ft_parent(t_pipex *pipex)
