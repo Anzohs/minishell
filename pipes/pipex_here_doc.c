@@ -30,11 +30,7 @@ void	ft_child_doc_one(t_pipex *pipex, char **env, char *cmd_path, t_node *n)
 	ft_close(pipex->fds[0].fd[1]);
 	ft_close(pipex->fds[1].fd[0]);
 	ft_close(pipex->fds[1].fd[1]);
-<<<<<<< HEAD
-	execve2(cmd_path, n, env, &(t_pipex){0});
-=======
 	execve2(cmd_path, n, env, pipex);
->>>>>>> 96835c661aa5065bb79a56edad928cdb00b4bd7e
 	exit(0);
 }
 
