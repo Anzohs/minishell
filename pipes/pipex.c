@@ -78,7 +78,7 @@ static void	start_multi2_pipe(t_pipex *pipex, \
 			return ;
 		}
 		ft_close_all_m(pipex, i);
-		execve2(cmd_path, mini->commands, mini->super_env, &(t_pipex){0} );
+		execve2(cmd_path, mini->commands, mini->super_env, pipex);
 	}
 }
 

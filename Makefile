@@ -11,7 +11,7 @@ SRC_LIBF = ft_bzero.c ft_calloc.c ft_strcat.c ft_strcpy.c ft_strncmp.c ft_strlen
 SRC_ENV = get_index.c update_oldpwd.c update_pwd.c get_pwd.c get_export.c get_unset.c get_utils.c get_env.c get_echo.c
 SRC_PIP = pipex.c pipex_utils.c pipex_utils_2.c pipex_val_cmd.c pipex_here_doc.c pipex_close.c pipex_clean.c
 SRC_FREE = free_env.c free_node.c free_tmini.c free_singlenode.c
-SRC_CLN = clean_command.c closed_quotes.c
+SRC_CLN = clean_command.c closed_quotes.c clean_node.c
 
 SRCS := main.c parsing.c parse_commands.c
 SRCS += $(addprefix ft_search/, $(SRC_FT))
