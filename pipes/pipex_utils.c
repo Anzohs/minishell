@@ -26,10 +26,10 @@ void	execve2(const char *path, t_node *node, char *const envp[], t_pipex *pipex)
 	free(str_join_2);
 	if (execve(path, argv, envp) == -1)
 	{
+		write(2 ,"MACHO\n", 6);
 		//printf("%s: Command not found\n", node->entry.key);
 		free_env(argv);
 		//ft_close_all_1(pipex);
-		//printf("Error: Comando invalido %s!\n", path);
 		return ;
 	}
 	free_env(argv);
@@ -64,12 +64,12 @@ void	ft_child_one_martelado(t_pipex *pipex, char **env, char *cmd_path, t_node *
 	}
 	if (pipex->pids[i] == 0)
 	{
-		/* if (dup2(pipex->fds[0].fd[0], STDIN_FILENO) < 0)
+		if (dup2(pipex->fds[0].fd[0], STDIN_FILENO) < 0)
 		{
 			perror("dup2");
-			ft_close_all_1(pipex);
-			return ;
-		} */
+			//ft_close_all_1(pipex);
+			//return ;
+		}
 		ft_close_all_1(pipex);
 		execve2(cmd_path, tmp, env, pipex);
 	}

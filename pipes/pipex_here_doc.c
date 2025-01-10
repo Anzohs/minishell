@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:52:43 by malourei          #+#    #+#             */
-/*   Updated: 2025/01/06 20:44:10 by malourei         ###   ########.fr       */
+/*   Updated: 2025/01/10 17:09:24 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_child_doc_one(t_pipex *pipex, char **env, char *cmd_path, t_node *n)
 	ft_close(pipex->fds[0].fd[1]);
 	ft_close(pipex->fds[1].fd[0]);
 	ft_close(pipex->fds[1].fd[1]);
-	execve2(cmd_path, n, env);
+	execve2(cmd_path, n, env, pipex);
 	exit(0);
 }
 

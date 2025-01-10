@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:21:26 by malourei          #+#    #+#             */
-/*   Updated: 2025/01/06 17:32:52 by malourei         ###   ########.fr       */
+/*   Updated: 2025/01/10 18:41:33 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	cd_home(t_mini *m)
 	int			dir;
 	t_string	tmp;
 	t_string	pwd_temp;
+	char		**strs;
 
 	home = get_index(m->super_env, "HOME=", 5);
 	if (home == -1)
@@ -63,6 +64,13 @@ void	cd_home(t_mini *m)
 	}
 	pwd = get_index(m->super_env, "PWD=", 4);
 	old_pwd = get_index(m->super_env, "OLDPWD=", 7);
+	if (old_pwd == -1)
+	{
+		strs = add_env(m->super_env, "OLDPWD=");
+		free_env(m->super_env);
+		m->super_env = strs;
+		old_pwd = get_index(m->super_env, "OLDPWD=", 7);
+	}
 	free(m->super_env[old_pwd]);
 	pwd_temp = ft_strdup(m->super_env[pwd]);
 	m->super_env[old_pwd] = ft_strjoin("OLD", pwd_temp);
@@ -91,7 +99,7 @@ void	parse_commands(t_mini *mini, t_node *commands)
 		{
 			if (ft_strncmp(commands->entry.value, "-", 1) == 0)
 				cd_args(mini);
-			else if (!ft_strncmp(commands->entry.value, "~", 1)
+			else if (!ft_strcmp(commands->entry.value, "~")
 				|| !ft_strcmp(commands->entry.value, "")
 				|| !commands->entry.value)
 				cd_home(mini);
