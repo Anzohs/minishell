@@ -17,7 +17,9 @@
 
 typedef char				*t_string;
 typedef struct s_minishell	t_mini;
+typedef struct s_node		t_node;
 
 bool						clean_command(t_mini *m);
 bool						closed_quotes(t_string str);
+bool						clean_node(t_node *n);
 #endif
