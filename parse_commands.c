@@ -81,7 +81,7 @@ void	parse_commands(t_mini *mini, t_node *commands)
 	t_node	*m;
 
 	m = commands;
-	if (node_len(m) < 1 || !clean_command(mini))
+	if (node_len(m) < 1 || !clean_command(mini) || !clean_node(commands))
 		return ;
 	if (node_len(m) > 1)
 		pipex(mini, m);

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include "pipex.h"
 #include <fcntl.h>
 
 void	ft_child_doc_one(t_pipex *pipex, char **env, char *cmd_path, t_node *n)
@@ -29,7 +30,7 @@ void	ft_child_doc_one(t_pipex *pipex, char **env, char *cmd_path, t_node *n)
 	ft_close(pipex->fds[0].fd[1]);
 	ft_close(pipex->fds[1].fd[0]);
 	ft_close(pipex->fds[1].fd[1]);
-	execve2(cmd_path, n, env);
+	execve2(cmd_path, n, env, &(t_pipex){0});
 	exit(0);
 }
 
