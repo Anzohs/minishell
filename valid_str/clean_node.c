@@ -39,18 +39,38 @@ static bool	cl(t_string s)
 	return (s[c] == 0);
 }
 
+static void	take_spaces(t_string *s)
+{
+	int			j;
+	t_string	str;
+
+	str = *s;
+	j = ft_strlen(str) - 1;
+	while (str[j] && j > 0 && str[j] == ' ')
+	{
+		(*s)[j] = 0;
+		--j;
+	}
+}
+
 bool	clean_node(t_node *n)
 {
 	t_node	*tmp;
 
 	tmp = n;
-	if (cl(n->entry.key))
+	if (cl(n->entry.key) && cl(n->entry.value))
+	{
+		take_spaces((t_string *)&tmp->entry.value);
 		return (true);
+	}
 	while (tmp)
 	{
 		take_quotes(&tmp->entry.key);
 		if (!ft_strcmp(tmp->entry.key, "echo"))
+		{
 			take_quotes((t_string *)&tmp->entry.value);
+			take_spaces((t_string *)&tmp->entry.value);
+		}
 		tmp = tmp->next;
 	}
 	return (true);
