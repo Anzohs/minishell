@@ -24,8 +24,6 @@ struct s_entry
 {
 	t_string	key;
 	void		*value;
-	/*int			*fd;
-	t_string	*file; */
 };
 
 typedef enum s_action

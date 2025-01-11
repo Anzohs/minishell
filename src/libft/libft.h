@@ -43,5 +43,8 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strchr(const char *s, int c);
 char	**ft_split(char *s, char c);
 char	*ft_substr(char *s, unsigned int start, size_t len);
+int		ft_isalpha(int c);
+int		ft_islower(int c);
+int		ft_isupper(int c);
 
 #endif

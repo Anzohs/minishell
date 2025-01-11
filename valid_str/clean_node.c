@@ -1,4 +1,7 @@
 #include "../minishell.h"
+#include "valid_str.h"
+#include <ctype.h>
+#include <stdbool.h>
 
 static void	take_quotes(t_string *str)
 {
@@ -53,6 +56,43 @@ static void	take_spaces(t_string *s)
 	}
 }
 
+static bool	is_expantion(t_string s)
+{
+	int		i;
+	bool	s_quotes;
+	bool	d_quotes;
+
+	i = -1;
+	d_quotes = false;
+	s_quotes = false;
+	while (s[++i])
+	{
+		if (s[i] == '\'' && !d_quotes)
+			s_quotes = !s_quotes;
+		else if (s[i] == '"' && !s_quotes)
+			d_quotes = !d_quotes;
+		else if (s[i] == '$' && !s_quotes)
+		{
+			if (s[i + 1] && (isalnum(s[i + 1])))
+			{
+				s[i] = 2;
+				return (true);
+			}
+		}
+	}
+	return (false);
+}
+
+static void	expantion(t_string *comm, t_string *arg)
+{
+	if (is_expantion(*comm) || is_expantion(*arg))
+	{
+		printf("expantion \n %s", *arg);
+		printf("Expantion alert! \n");
+		exit(0);
+	}
+}
+
 bool	clean_node(t_node *n)
 {
 	t_node	*tmp;
@@ -60,17 +100,16 @@ bool	clean_node(t_node *n)
 	tmp = n;
 	if (cl(n->entry.key) && cl(n->entry.value))
 	{
+		expantion(&n->entry.key, (t_string *)&n->entry.value);
 		take_spaces((t_string *)&tmp->entry.value);
 		return (true);
 	}
 	while (tmp)
 	{
 		take_quotes(&tmp->entry.key);
-		if (!ft_strcmp(tmp->entry.key, "echo"))
-		{
-			take_quotes((t_string *)&tmp->entry.value);
-			take_spaces((t_string *)&tmp->entry.value);
-		}
+		take_quotes(&tmp->entry.key);
+		take_spaces((t_string *)&tmp->entry.value);
+		take_quotes((t_string *)&tmp->entry.value);
 		tmp = tmp->next;
 	}
 	return (true);

@@ -19,7 +19,7 @@ static t_string	extract_arg(const char *input, size_t *index)
 	size_t	len;
 	char	*arguments;
 
-	while (input[*index] && (input[*index] == ' ' || input[*index] == '\t'))
+	while (input[*index] && (input[*index] == ' '))
 		(*index)++;
 	start = *index;
 	in_quotes = 0;
