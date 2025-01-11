@@ -49,7 +49,7 @@ void	ft_child_one_martelado(t_pipex *pipex, char **env, char *cmd_path, t_node *
 	t_node	*tmp;
 
 	tmp = node;
-	while(tmp->next)
+	while (tmp->next)
 		tmp = tmp->next;
 	i = 1;
 	pipex->pids[i] = fork();

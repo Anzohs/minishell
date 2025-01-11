@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libs.h                                             :+:      :+:    :+:   */
+/*   is_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 18:45:14 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/11 16:18:42 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/11 12:37:22 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/01/11 12:37:23 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBS_H
-# define LIBS_H
+#include "../minishell.h"
 
-# include "./src/libft/libft.h"
-# include "bilt_in/biltin.h"
-# include "valid_str/valid_str.h"
-# include <stdio.h>
-# include <stdbool.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <sys/wait.h>
-# include <signal.h>
-# include <fcntl.h>
-# include <stdlib.h>
-# include <unistd.h>
-
-#endif
+bool	is_biltin(t_node *n)
+{
+	return (!ft_strcmp(n->entry.key, "cd") || !ft_strcmp(n->entry.key, "echo")
+		|| !ft_strcmp(n->entry.key, "exit") || !ft_strcmp(n->entry.key, "env")
+		|| !ft_strcmp(n->entry.key, "export") || !ft_strcmp(n->entry.key, "pwd")
+		|| !ft_strcmp(n->entry.key, "unset"));
+}

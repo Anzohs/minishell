@@ -26,12 +26,6 @@ void	free_all(char **strs)
 	free(strs);
 }
 
-t_mini	*mini(void)
-{
-	static t_mini	m;
-
-	return (&m);
-}
 
 int	main(int ac, char **av, char **env)
 {
@@ -57,7 +51,6 @@ int	main(int ac, char **av, char **env)
 		mini()->readline = readline(mini()->prompt);
 	}
 	// rl_clear_history() ;
-
 	free_env(mini()->super_env);
 	hdestroy(mini()->ht);
 	return (0);

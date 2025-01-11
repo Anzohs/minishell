@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libs.h                                             :+:      :+:    :+:   */
+/*   mini.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 18:45:14 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/11 16:18:42 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/11 12:22:52 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/01/11 12:22:57 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBS_H
-# define LIBS_H
+#include "minishell.h"
 
-# include "./src/libft/libft.h"
-# include "bilt_in/biltin.h"
-# include "valid_str/valid_str.h"
-# include <stdio.h>
-# include <stdbool.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <sys/wait.h>
-# include <signal.h>
-# include <fcntl.h>
-# include <stdlib.h>
-# include <unistd.h>
+t_mini	*mini(void)
+{
+	static t_mini	m;
 
-#endif
+	return (&m);
+}
