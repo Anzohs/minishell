@@ -81,6 +81,8 @@ static t_node	*copy(t_mini *m, t_entry *e)
 	return (m->commands);
 }
 
+
+// parse_input(const char *input)
 void	parse_input(t_hash *ht, const char *input, t_mini *m)
 {
 	size_t		index;
@@ -104,7 +106,7 @@ void	parse_input(t_hash *ht, const char *input, t_mini *m)
 		while (input[index] && (input[index] == ' ' || input[index] == '\t'
 				|| input[index] == '|'))
 			index++;
-		m->commands = copy(m, entry);
+		mini()->commands = copy(m, entry);
 		free(command);
 		free(arg);
 	}

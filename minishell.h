@@ -34,5 +34,5 @@ void	ft_free_strs(char **strs, int size);
 void	creat_env(t_mini *mini);
 void	parse_input(t_hash *ht, const char *input, t_mini *m);
 void	parse_commands(t_mini *mini, t_node *commands);
-
+t_mini	*mini(void);
 #endif

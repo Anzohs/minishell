@@ -10,12 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env_variables/envvariables.h"
-#include "ft_clean/ft_clean.h"
 #include "minishell.h"
+#include "src/libft/libft.h"
 #include "valid_str/valid_str.h"
-#include <stdbool.h>
-#include <stdio.h>
 
 void	cd_args(t_mini *m)
 {
@@ -43,7 +40,6 @@ void	cd_args(t_mini *m)
 	dir = chdir(ft_strchr(m->super_env[pwd_i], '='));
 	if (dir == -1)
 		perror("CD -");
-	printf("%s\n", ft_strchr(m->super_env[pwd_i], '='));
 }
 
 void	cd_home(t_mini *m)
@@ -84,6 +80,12 @@ void	cd_home(t_mini *m)
 		perror("CD ~");
 }
 
+
+static bool is_home(char *s)
+{
+	return (!s  || ft_strcmp(s, "~") ||ft_strcmp(s, ""));
+}
+
 void	parse_commands(t_mini *mini, t_node *commands)
 {
 	t_node	*m;
@@ -99,9 +101,7 @@ void	parse_commands(t_mini *mini, t_node *commands)
 		{
 			if (ft_strncmp(commands->entry.value, "-", 1) == 0)
 				cd_args(mini);
-			else if (!ft_strcmp(commands->entry.value, "~")
-				|| !ft_strcmp(commands->entry.value, "")
-				|| !commands->entry.value)
+			else if (is_home(commands->entry.value))
 				cd_home(mini);
 			else if (chdir(m->entry.value) >= 0)
 			{
@@ -121,4 +121,15 @@ void	parse_commands(t_mini *mini, t_node *commands)
 		if (!ft_strcmp(m->entry.key, "echo"))
 			get_echo(mini, m);
 	}
+}
+
+bool is_builtin(t_node *n)
+{
+	return ( !ft_strcmp(n->entry.key, "cd")\
+		|| !ft_strcmp(n->entry.key, "echo")\
+		|| !ft_strcmp(n->entry.key, "exit")\
+		|| !ft_strcmp(n->entry.key, "env")\
+		|| !ft_strcmp(n->entry.key, "export")\
+		|| !ft_strcmp(n->entry.key, "pwd")\
+		|| !ft_strcmp(n->entry.key, "unset"));
 }

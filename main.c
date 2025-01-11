@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_clean/ft_clean.h"
 #include "minishell.h"
+#include <time.h>
 
 void	free_all(char **strs)
 {
@@ -26,35 +26,40 @@ void	free_all(char **strs)
 	free(strs);
 }
 
-int	main(int ac, char **av, char **env)
+t_mini	*mini(void)
 {
 	static t_mini	m;
 
+	return (&m);
+}
+
+int	main(int ac, char **av, char **env)
+{
+	mini()->super_env = NULL;
 	(void)av;
 	if (ac > 1)
 		return (0);
-	m.super_env = NULL;
 	if (*env)
-		copy_env(&m, env);
+		copy_env(mini(), env);
 	else
-		creat_env(&m);
-	m.prompt = "shell > ";
-	m.readline = readline(m.prompt);
-	m.ht = hcreate(10);
-	while (m.readline && ft_strcmp(m.readline, "exit"))
+		creat_env(mini());
+	mini()->prompt = "shell > ";
+	mini()->readline = readline(mini()->prompt);
+	mini()->ht = hcreate(10);
+	while (mini()->readline && ft_strcmp(mini()->readline, "exit"))
 	{
-		parse_input(m.ht, m.readline, &m);
-		add_history(m.readline);
-		parse_commands(&m, m.commands);
-		free_node(m.commands);
-		m.commands = NULL;
-		free(m.readline);
-		m.readline = readline(m.prompt);
+		parse_input(mini()->ht, mini()->readline, mini());
+		add_history(mini()->readline);
+		parse_commands(mini(), mini()->commands);
+		free_node(mini()->commands);
+		mini()->commands = NULL;
+		free(mini()->readline);
+		mini()->readline = readline(mini()->prompt);
 	}
 	// rl_clear_history() ;
-	
-	free_env(m.super_env);
-	hdestroy(m.ht);
+
+	free_env(mini()->super_env);
+	hdestroy(mini()->ht);
 	return (0);
 }
 // valgrind --suppressions=read.supp --show-leak-kinds=all --leak-check=full
