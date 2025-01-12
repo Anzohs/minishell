@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 22:59:58 by malourei          #+#    #+#             */
-/*   Updated: 2025/01/09 19:22:50 by malourei         ###   ########.fr       */
+/*   Updated: 2025/01/12 18:21:37 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ void	validate_args(t_node *argv, int *cmd_argc)
 
 void	count_pids(t_pipex *pipex, int argc)
 {
+	int	i;
+
+	i = argc;
 	pipex->pids = ft_calloc(sizeof(int), (size_t)argc);
 	if (pipex->pids == NULL)
 	{
@@ -44,7 +47,9 @@ void	count_pids(t_pipex *pipex, int argc)
 		free(pipex->pids);
 		return ;
 	}
-	pipex->fds = ft_calloc(sizeof(t_fds), (argc - 1));
+	if (i > 1)
+		i -= 1;
+	pipex->fds = ft_calloc(sizeof(t_fds), i);
 	if (pipex->fds == NULL)
 	{
 		free(pipex->pids);

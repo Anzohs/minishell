@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:42:55 by malourei          #+#    #+#             */
-/*   Updated: 2025/01/08 20:32:21 by malourei         ###   ########.fr       */
+/*   Updated: 2025/01/12 00:30:10 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	ft_close_all_p(t_pipex *pipex)
 	int	i;
 
 	i = 0;
+	if (pipex->cmd_argc == 1)
+		ft_close_all_1(pipex);
 	while (i < (pipex->cmd_argc - 1))
 	{
 		ft_close(pipex->fds[i].fd[0]);
