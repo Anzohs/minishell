@@ -24,6 +24,7 @@ struct s_entry
 {
 	t_string	key;
 	void		*value;
+	t_string	*args;
 	/*int			*fd;
 	t_string	*file; */
 };

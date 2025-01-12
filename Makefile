@@ -2,7 +2,7 @@ NAME = minishell
 
 CC = cc
 OBJ_DIR = obj
-CFLAGS = -Wall -Wextra -Werror -g -I. -Isrc/libf -Ift_search -Ienv_variables -Ipipes
+CFLAGS =  -g -I. -Isrc/libf -Ift_search -Ienv_variables -Ipipes
 CCFLAGS = -lreadline
 SRC_FT = hash.c hcreate.c hdestroy.c hsearch.c node_len.c
 SRC_BLT = cd_biltin.c is_biltin.c
@@ -13,7 +13,7 @@ SRC_LIBF = ft_bzero.c ft_calloc.c ft_strcat.c ft_strcpy.c ft_strncmp.c ft_strlen
 SRC_ENV = get_index.c update_oldpwd.c update_pwd.c get_pwd.c get_export.c get_unset.c get_utils.c get_env.c get_echo.c
 SRC_PIP = pipex.c pipex_utils.c pipex_utils_2.c pipex_val_cmd.c pipex_here_doc.c pipex_close.c pipex_clean.c
 SRC_FREE = free_env.c free_node.c free_tmini.c free_singlenode.c
-SRC_CLN = clean_command.c closed_quotes.c clean_node.c
+SRC_CLN = clean_command.c closed_quotes.c clean_node.c clean_quotes.c expantions.c parse_node.c
 
 SRCS := main.c parsing.c parse_commands.c mini.c
 SRCS += $(addprefix ft_search/, $(SRC_FT))

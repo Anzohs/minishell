@@ -41,12 +41,9 @@ void	get_echo(t_mini *mini, t_node *command)
 		free_env(strs);
 		return ;
 	}
-	i = 0;
-	while (strs[i])
-	{
+	i = -1;
+	while (strs[++i])
 		printf("%s ", strs[i]);
-		i++;
-	}
 	printf("\n");
 	free_env(strs);
 }

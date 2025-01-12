@@ -22,4 +22,8 @@ typedef struct s_node		t_node;
 bool						clean_command(t_mini *m);
 bool						closed_quotes(t_string str);
 bool						clean_node(t_node *n);
+void						expations(t_string *comm, t_string *arg);
+void						clean_quotes(t_string *s);
+void						parse_node(t_node **n);
+
 #endif

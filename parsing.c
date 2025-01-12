@@ -41,16 +41,26 @@ static t_string	extract_command(const char *input, size_t *index)
 {
 	size_t	start;
 	size_t	len;
+	int		c;
 	char	*command;
 
+	c = 0;
 	start = *index;
-	while (input[*index] && input[*index] != ' ' && input[*index] != '\t')
+	while (input[*index] && (input[*index] != ' ' || c))
+	{
+		if ((input[*index] == '\'' || input[*index] == '"') && !c)
+			c = input[*index];
+		else if (c == input[*index])
+			c = 0;
 		(*index)++;
+	}
 	len = *index - start;
 	command = ft_calloc(len + 1, sizeof(char));
 	if (!command)
 		return (NULL);
+	printf("aqui \n");
 	ft_strncpy(command, input + start, len);
+	printf("command %s\n", command);
 	return (command);
 }
 
@@ -81,7 +91,6 @@ static t_node	*copy(t_mini *m, t_entry *e)
 	return (m->commands);
 }
 
-
 // parse_input(const char *input)
 void	parse_input(t_hash *ht, const char *input, t_mini *m)
 {
@@ -93,6 +102,8 @@ void	parse_input(t_hash *ht, const char *input, t_mini *m)
 	index = 0;
 	while (input[index])
 	{
+		while (input[index] == ' ')
+			index++;
 		command = extract_command(input, &index);
 		if (!command)
 			return ;
@@ -102,7 +113,7 @@ void	parse_input(t_hash *ht, const char *input, t_mini *m)
 			free(command);
 			return ;
 		}
-		entry = hsearch(ht, (t_entry){command, arg}, ENTER);
+		entry = hsearch(ht, (t_entry){command, arg, NULL}, ENTER);
 		while (input[index] && (input[index] == ' ' || input[index] == '\t'
 				|| input[index] == '|'))
 			index++;
