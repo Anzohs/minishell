@@ -47,13 +47,13 @@ int	find_space(t_string s)
 	i = -1;
 	while (s[++i])
 	{
-		if (s[i] == ' ')
+		if (s[i] == ' ' || s[i] == 2 || s[i] == '"')
 			return (i);
 	}
 	return (i);
 }
 
-t_string	copy_envvars(t_string s)
+t_string	get_envvars(t_string s)
 {
 	t_string	var;
 	int			i;
@@ -62,24 +62,63 @@ t_string	copy_envvars(t_string s)
 	var = ft_strchr(s, 2);
 	if (!var)
 		return (NULL);
-	j = find_space(var + i);
+	j = find_space(var);
 	var = ft_substr(var, 0, j);
 	i = get_index(mini()->super_env, var, ft_strlen(var));
 	if (i == -1)
-		var = NULL;
+		var = "";
 	else
 		var = ft_strchr(mini()->super_env[i], '=');
+	return (var);
+}
+
+t_string	change_value(t_string s, t_string cmd, t_string n)
+{
+	t_string	new;
+	int			i;
+	int			k;
+	int			u;
+
+	i = 0;
+	k = 0;
+	u = 0;
+	if (n)
+		free(n);
+	new = ft_calloc(ft_strlen(s) + ft_strlen(cmd) + 1, sizeof(char));
+	if (!new)
+		return (NULL);
+	while (cmd[k])
+	{
+		if (cmd[k] == 2)
+		{
+			k++;
+			while (s[u])
+				new[i++] = s[u++];
+			while (cmd[k] && cmd[k] != ' ' && cmd[k] != '"' && cmd[k] != 2)
+				k++;
+		}
+		else
+			new[i++] = cmd[k++];
+	}
+	return (new);
 }
 
 t_string	expand_args(t_string cmd)
 {
-	int	j;
-	int	i;
+	t_string	new;
+	int			j;
+	int			i;
 
 	j = count_expantions(cmd);
+	new = NULL;
 	if (!j)
 		return (cmd);
 	i = -1;
 	while (++i < j)
-		copy_envvars(cmd);
+	{
+		new = change_value(get_envvars(cmd), cmd, new);
+		free(cmd);
+		cmd = ft_strdup(new);
+	}
+	return (cmd);
 }

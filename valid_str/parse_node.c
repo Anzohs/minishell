@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include "valid_str.h"
 
 static int	words_count(t_string str)
 {
@@ -48,8 +49,6 @@ static int	end_word(t_string str, int s)
 	i = s;
 	while (str[i])
 	{
-		while (str[i] == ' ')
-			i++;
 		if (!str[i])
 			return (i);
 		while (str[i] && ((str[i] != ' ' && !c) || (c)))
@@ -90,10 +89,17 @@ static t_string	*split_value(t_string str)
 void	parse_node(t_node **n)
 {
 	t_node	*tmp;
+	int		i;
 
 	tmp = *n;
+	i = -1;
 	expations(&tmp->entry.key, (t_string *)&tmp->entry.value);
 	tmp->entry.args = split_value((t_string)tmp->entry.value);
 	if (is_expantion(tmp->entry.key) && has_quotes(tmp->entry.key))
 		tmp->entry.key = expand_args(tmp->entry.key);
+	while (tmp->entry.args[++i])
+	{
+		if (is_expantion(tmp->entry.args[i]))
+			tmp->entry.args[i] = expand_args(tmp->entry.args[i]);
+	}
 }
