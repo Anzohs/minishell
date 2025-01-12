@@ -29,5 +29,6 @@ t_string					expand_cmd(t_string cmd);
 bool						has_quotes(t_string s);
 bool						is_expantion(t_string s);
 t_string					expand_args(t_string cmd);
+t_string					*split_value(t_string str);
 
 #endif

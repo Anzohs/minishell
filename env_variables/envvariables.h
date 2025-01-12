@@ -29,5 +29,6 @@ void	get_env(t_mini *mini, t_node *command);
 void	get_echo(t_mini *mini, t_node *command);
 int		ft_count(char **strs);
 char	**add_env(char **strs, char *env);
+t_string	get_envvars(t_string s);
 
 #endif

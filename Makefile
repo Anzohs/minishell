@@ -10,10 +10,10 @@ SRC_SRC = copy_env.c create_env.c ft_free_strs.c
 SRC_LIBF = ft_bzero.c ft_calloc.c ft_strcat.c ft_strcpy.c ft_strncmp.c ft_strlen.c ft_strrchr.c ft_strcmp.c \
 			ft_strdup.c ft_strncpy.c ft_strjoin.c ft_strchr.c get_next_line.c get_next_line_utils.c ft_split.c ft_substr.c\
 			ft_isupper.c ft_islower.c ft_isalpha.c
-SRC_ENV = get_index.c update_oldpwd.c update_pwd.c get_pwd.c get_export.c get_unset.c get_utils.c get_env.c get_echo.c
+SRC_ENV = get_index.c update_oldpwd.c update_pwd.c get_pwd.c get_export.c get_unset.c get_utils.c get_env.c get_echo.c get_envvars.c
 SRC_PIP = pipex.c pipex_utils.c pipex_utils_2.c pipex_val_cmd.c pipex_here_doc.c pipex_close.c pipex_clean.c
 SRC_FREE = free_env.c free_node.c free_tmini.c free_singlenode.c
-SRC_CLN = clean_command.c closed_quotes.c clean_node.c clean_quotes.c expantions.c parse_node.c expand_args.c has_quotes.c
+SRC_CLN = clean_command.c closed_quotes.c clean_node.c clean_quotes.c expantions.c parse_node.c expand_args.c has_quotes.c split_value.c
 
 SRCS := main.c parsing.c parse_commands.c mini.c
 SRCS += $(addprefix ft_search/, $(SRC_FT))
