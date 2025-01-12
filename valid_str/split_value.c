@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_value.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 19:03:53 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/12 19:03:54 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/01/12 20:24:37 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_string	*split_value(t_string str)
 	while (++i < words)
 	{
 		start[1] = end_word(str, start[0]);
-		result[i] = ft_substr(str, start[0], start[1]);
+		result[i] = ft_substr(str, start[0], start[1] - start[0]);
 		start[0] = start[1];
 	}
 	result[i] = NULL;

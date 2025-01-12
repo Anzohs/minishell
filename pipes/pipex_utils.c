@@ -52,6 +52,12 @@ void	ft_child_one_martelado(t_pipex *pipex, char **env, char *cmd_path, t_node *
 	while (tmp->next)
 		tmp = tmp->next;
 	i = 1;
+	if (access(cmd_path, F_OK) != 0)
+	{
+		write(2, "command not found\n", 18);
+		pipex->cmd_argc = pipex->cmd_argc - 1;
+		return ;
+	}
 	pipex->pids[i] = fork();
 	if (pipex->pids[i] < 0)
 	{
@@ -71,11 +77,6 @@ void	ft_child_one_martelado(t_pipex *pipex, char **env, char *cmd_path, t_node *
 		execve2(cmd_path, tmp, env, pipex);
 	}
 }
-
-/* void	ft_child_one_cmd(t_pipex *pipex, char **env, char *cmd_path, t_node *n)
-{
-
-} */
 
 
 void	ft_child_two(t_pipex *pipex, char **env, char *cmd_path, t_node *node)

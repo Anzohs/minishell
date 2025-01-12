@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 20:53:15 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/25 22:42:52 by malourei         ###   ########.fr       */
+/*   Updated: 2025/01/12 20:33:32 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,13 +119,11 @@ static void	remove_env(t_mini *mini, t_node *node)
 	if (!new_env)
 	{
 		free(array);
-		free_env(strs);
 		return ;
 	}
 	free_env(mini->super_env);
 	mini->super_env = new_env;
 	free(array);
-	free_env(strs);
 }
 
 void	get_unset(t_mini *mini, t_node *command)
