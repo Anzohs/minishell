@@ -17,7 +17,7 @@ static char	*get_env_var(char *s)
 	int		i;
 	char	*c;
 
-	i = get_index(mini()->super_env, s, ft_strlen(s) -1);
+	i = get_index(mini()->super_env, s, ft_strlen(s) - 1);
 	printf("%i \n", i);
 	if (i == -1)
 		return ("");

@@ -94,4 +94,6 @@ void	parse_node(t_node **n)
 	tmp = *n;
 	expations(&tmp->entry.key, (t_string *)&tmp->entry.value);
 	tmp->entry.args = split_value((t_string)tmp->entry.value);
+	if (is_expantion(tmp->entry.key) && has_quotes(tmp->entry.key))
+		tmp->entry.key = expand_args(tmp->entry.key);
 }

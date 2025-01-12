@@ -108,7 +108,7 @@ static void	remove_env(t_mini *mini, t_node *node)
 	int		i;
 	char	**new_env;
 
-	strs = ft_split(((char *)node->entry.value), ' ');
+	strs = node->entry.args;
 	if (!strs)
 		return ;
 	array = init_array(strs, mini->super_env);

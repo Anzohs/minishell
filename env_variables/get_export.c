@@ -47,10 +47,7 @@ static void	get_export_help(t_mini *mini, char **strs, int *i)
 	{
 		var = ft_strdup(strs[*i]);
 		if (!var)
-		{
-			free_env(strs);
 			return ;
-		}
 		ft_strrchr(var, '=');
 		index = get_index(mini->super_env, var, ft_strlen(var));
 		free(var);

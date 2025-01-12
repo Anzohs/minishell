@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-static bool	is_expantion(t_string *str)
+static bool	mark_expantion(t_string *str)
 {
 	int			i;
 	t_string	s;
@@ -42,6 +42,6 @@ static bool	is_expantion(t_string *str)
 
 void	expations(t_string *comm, t_string *arg)
 {
-	is_expantion(comm);
-	is_expantion(arg);
+	mark_expantion(comm);
+	mark_expantion(arg);
 }
