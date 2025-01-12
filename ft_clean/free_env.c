@@ -17,6 +17,8 @@ void	free_env(char **c)
 	int	i;
 
 	i = 0;
+	if (!c)
+		return ;
 	while (c[i])
 	{
 		free(c[i]);

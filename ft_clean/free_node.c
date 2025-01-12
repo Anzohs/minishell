@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_search/ft_search.h"
+#include "../minishell.h"
 
 void	free_node(t_node *n)
 {
@@ -22,6 +22,7 @@ void	free_node(t_node *n)
 		tmp = n->next;
 		free(n->entry.key);
 		free(n->entry.value);
+		free_env(n->entry.args);
 		free(n);
 		n = tmp;
 	}

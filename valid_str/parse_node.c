@@ -78,6 +78,8 @@ static t_string	*split_value(t_string str)
 	start[0] = 0;
 	while (++i < words)
 	{
+		while (str[start[0]] == ' ')
+			start[0]++;
 		start[1] = end_word(str, start[0]);
 		result[i] = ft_substr(str, start[0], start[1]);
 		start[0] = start[1];

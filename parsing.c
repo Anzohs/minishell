@@ -58,9 +58,7 @@ static t_string	extract_command(const char *input, size_t *index)
 	command = ft_calloc(len + 1, sizeof(char));
 	if (!command)
 		return (NULL);
-	printf("aqui \n");
 	ft_strncpy(command, input + start, len);
-	printf("command %s\n", command);
 	return (command);
 }
 

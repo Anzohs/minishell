@@ -69,7 +69,6 @@ static void	get_export_help(t_mini *mini, char **strs, int *i)
 
 void	get_export(t_mini *mini, t_node *command)
 {
-	char	**strs;
 	int		i;
 
 	if (!ft_strcmp(command->entry.value, ""))
@@ -77,14 +76,7 @@ void	get_export(t_mini *mini, t_node *command)
 		print_env(mini);
 		return ;
 	}
-	strs = ft_split((char *)command->entry.value, ' ');
-	if (!strs)
-		return ;
-	i = 0;
-	while (strs[i])
-	{
-		get_export_help(mini, strs, &i);
-		i++;
-	}
-	free_env(strs);
+	i = -1;
+	while (command->entry.args[++i])
+		get_export_help(mini, command->entry.args, &i);
 }

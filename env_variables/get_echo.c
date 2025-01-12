@@ -16,34 +16,23 @@ void	get_echo(t_mini *mini, t_node *command)
 {
 	int		i;
 	char	*str;
-	char	**strs;
 
 	(void)mini;
-	str = command->entry.value;
-	strs = ft_split(str, ' ');
-	if (!strs || !(*strs))
-	{
-		if (strs)
-			free(strs);
-		return ;
-	}
-	if (!ft_strcmp(strs[0], "-n"))
+	if (!ft_strcmp(command->entry.args[0], "-n"))
 	{
 		i = 1;
-		while (strs[i])
+		while (command->entry.args[0][i])
 		{
-			if (strs[i + 1] == NULL)
-				printf("%s", strs[i]);
+			if (command->entry.args[i + 1] == NULL)
+				printf("%s", command->entry.args[i]);
 			else
-				printf("%s ", strs[i]);
+				printf("%s ", command->entry.args[i]);
 			i++;
 		}
-		free_env(strs);
 		return ;
 	}
 	i = -1;
-	while (strs[++i])
-		printf("%s ", strs[i]);
+	while (command->entry.args[++i])
+		printf("%s ", command->entry.args[i]);
 	printf("\n");
-	free_env(strs);
 }

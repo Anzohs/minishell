@@ -78,15 +78,15 @@ static void	update_env(void)
 
 void	cd_biltin(void)
 {
-	if (is_home(mini()->commands->entry.value))
+	if (is_home(mini()->commands->entry.args[0]))
 		(cd_home());
-	else if (!ft_strcmp(mini()->commands->entry.value, "-"))
+	else if (!ft_strcmp(mini()->commands->entry.args[0], "-"))
 		(cd_args());
-	else if (chdir(mini()->commands->entry.value) >= 0)
+	else if (chdir(mini()->commands->entry.args[0]) >= 0)
 		(update_env());
-	else if (chdir(mini()->commands->entry.value) < 0)
+	else if (chdir(mini()->commands->entry.args[0]) < 0)
 	{
-		perror((t_string)mini()->commands->entry.value);
+		perror((t_string)mini()->commands->entry.args[0]);
 		return;
 	}
 	get_pwd(getcwd(NULL, 0), 0);
