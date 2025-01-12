@@ -12,22 +12,6 @@
 
 #include "../minishell.h"
 
-static char	*get_env_var(char *s)
-{
-	int		i;
-	char	*c;
-
-	i = get_index(mini()->super_env, s, ft_strlen(s) - 1);
-	printf("%i \n", i);
-	if (i == -1)
-		return ("");
-	c = mini()->super_env[i];
-	while (c && *c != '=')
-		c++;
-	printf("%s \n", c);
-	return (c + 1);
-}
-
 bool	clean_node(t_node *n)
 {
 	t_node	*tmp;

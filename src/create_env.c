@@ -19,7 +19,7 @@ static void	create_pwd(char **strs, char *pwd)
 	{
 		ft_free_strs(strs, 1);
 		free(pwd);
-		exit (1);
+		exit(1);
 	}
 	ft_strcpy(strs[0], "PWD=");
 	ft_strcat(strs[0], pwd);
@@ -35,7 +35,7 @@ static void	create_old_pwd(char **strs, char *pwd)
 	{
 		ft_free_strs(strs, 2);
 		free(pwd);
-		exit (1);
+		exit(1);
 	}
 	ft_strcpy(temp2, pwd);
 	temp = ft_strrchr(temp2, '/');
@@ -45,7 +45,7 @@ static void	create_old_pwd(char **strs, char *pwd)
 		ft_free_strs(strs, 2);
 		free(pwd);
 		free(temp2);
-		exit (1);
+		exit(1);
 	}
 	ft_strcpy(strs[1], "OLDPWD=");
 	ft_strcat(strs[1], temp);
@@ -59,7 +59,7 @@ static void	create_shlvl(char **strs, char *pwd)
 	{
 		ft_free_strs(strs, 3);
 		free(pwd);
-		exit (1);
+		exit(1);
 	}
 	ft_strcpy(strs[2], "SHLVL=1");
 }
@@ -71,7 +71,7 @@ static void	create_under(char **strs, char *pwd)
 	{
 		ft_free_strs(strs, 4);
 		free(pwd);
-		exit (1);
+		exit(1);
 	}
 	ft_strcpy(strs[3], "_=");
 	ft_strcat(strs[3], pwd);
@@ -90,7 +90,7 @@ void	creat_env(t_mini *mini)
 		{
 			free(mini->super_env);
 			free(pwd);
-			exit (1);
+			exit(1);
 		}
 		create_pwd(mini->super_env, pwd);
 		create_old_pwd(mini->super_env, pwd);

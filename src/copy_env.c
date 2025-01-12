@@ -31,7 +31,7 @@ void	copy_env(t_mini *mini, char **env)
 	if (!mini->super_env)
 	{
 		free(mini->super_env);
-		exit (1);
+		exit(1);
 	}
 	while (env[i])
 	{
@@ -39,7 +39,7 @@ void	copy_env(t_mini *mini, char **env)
 		if (!mini->super_env[i])
 		{
 			ft_free_strs(mini->super_env, i);
-			exit (1);
+			exit(1);
 		}
 		i++;
 	}
