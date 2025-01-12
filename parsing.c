@@ -72,6 +72,7 @@ static t_node	*new_node(t_entry *e)
 	n->entry = (t_entry){0};
 	n->entry.key = ft_strdup(e->key);
 	n->entry.value = ft_strdup(e->value);
+	n->entry.args = NULL;
 	n->next = NULL;
 	return (n);
 }

@@ -46,21 +46,17 @@ static int	end_word(t_string str, int s)
 	int	c;
 
 	i = s;
-	if (!str)
+	if (!str || !*str)
 		return (0);
 	while (str[i])
 	{
-		if (!str[i])
-			return (i);
-		while (str[i] && ((str[i] != ' ' && !c) || (c)))
-		{
-			if ((str[i] == '\'' || str[i] == '"') && !c)
-				c = str[i];
-			else if (str[i] == c)
-				c = 0;
-			i++;
-		}
-		return (i);
+		if (str[i] == ' ' && !c)
+			break ;
+		if ((str[i] == '\'' || str[i] == '"') && !c)
+			c = str[i];
+		else if (str[i] == c)
+			c = 0;
+		i++;
 	}
 	return (i);
 }
@@ -86,5 +82,6 @@ t_string	*split_value(t_string str)
 		result[i] = ft_substr(str, start[0], start[1]);
 		start[0] = start[1];
 	}
+	result[i] = NULL;
 	return (result);
 }
