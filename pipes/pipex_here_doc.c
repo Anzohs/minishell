@@ -12,7 +12,6 @@
 
 #include "../minishell.h"
 #include "pipex.h"
-#include <fcntl.h>
 
 void	ft_child_doc_one(t_pipex *pipex, char **env, char *cmd_path, t_node *n)
 {

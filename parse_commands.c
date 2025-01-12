@@ -12,6 +12,16 @@
 
 #include "minishell.h"
 
+
+void	print(char **s)
+{
+	int i = -1;
+
+	while (s[++i])
+		printf("%s \n", s[i]);
+}
+
+
 void	parse_commands(t_mini *mini, t_node *commands)
 {
 	t_node	*m;
@@ -19,6 +29,7 @@ void	parse_commands(t_mini *mini, t_node *commands)
 	m = commands;
 	if (node_len(m) < 1 || !clean_command(mini) || !clean_node(commands))
 		return ;
+	print(commands->entry.args);
 	if (is_biltin(commands) && node_len(commands) == 1)
 	{
 		if (!ft_strcmp(m->entry.key, "cd"))

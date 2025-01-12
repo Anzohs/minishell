@@ -10,7 +10,6 @@ static bool	has_space(t_string s)
 	return (s[i] == ' ');
 }
 
-
 void	expand_cmd(t_string cmd, t_string *args)
 {
 	t_string	new;
@@ -21,8 +20,9 @@ void	expand_cmd(t_string cmd, t_string *args)
 		cmd = new;
 	else
 	{
-		matrix = ft_split(new, ' ');
+		matrix = ft_mysplit(new, ' ');
 		cmd = ft_strdup(matrix[0]);
+		args = join_matrix(matrix, NULL);
 		args = join_matrix(matrix, args);
 	}
 }

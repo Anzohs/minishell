@@ -47,5 +47,6 @@ int			ft_isalpha(int c);
 int			ft_islower(int c);
 int			ft_isupper(int c);
 char		**join_matrix(char **m1, char **m2);
+char		**ft_mysplit(char const *s, char c);
 
 #endif

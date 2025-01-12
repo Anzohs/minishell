@@ -16,11 +16,12 @@ static void	free_matrix(char **s)
 {
 	int	i;
 
+	i = -1;
 	if (!s || !*s)
 		return ;
-	while (s[i])
+	while (s[++i] != NULL)
 		free(s[i]);
-	free(s[i]);
+	free(s);
 }
 
 static int	matrix_len(char **s)
@@ -44,13 +45,14 @@ char	**join_matrix(char **m1, char **m2)
 	s = ft_calloc(matrix_len(m1) + matrix_len(m2), sizeof(char *));
 	i = 0;
 	j = -1;
-	while (m1[++i] != NULL)
+	while (m1 && m1[++i] != NULL)
 		s[++j] = ft_strdup(m1[i]);
 	i = -1;
-	while (m2 && m2[++i])
+	while (m2 && m2[++i] != NULL)
 		s[++j] = ft_strdup(m2[i]);
-	free_matrix(m1);
-	if (m2)
+	if (m1)
+		free_matrix(m1);
+	if (m2 && *m2)
 		free_matrix(m2);
 	s[j] = NULL;
 	return (s);

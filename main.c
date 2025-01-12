@@ -26,7 +26,6 @@ void	free_all(char **strs)
 	free(strs);
 }
 
-
 int	main(int ac, char **av, char **env)
 {
 	mini()->super_env = NULL;
