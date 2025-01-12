@@ -33,12 +33,6 @@ static void	start_pipe_1(t_pipex *pipex, \
 		return ;
 	}
 	pipex->pids[i] = fork();
-	if (pipex->pids[i] < 0)
-	{
-		perror("pid");
-		free(pipex->pids);
-		return ;
-	}
 	if (pipex->pids[i] == 0)
 	{
 		if (pipex->is_doc == 0)
@@ -46,6 +40,12 @@ static void	start_pipe_1(t_pipex *pipex, \
 		else
 			ft_child_doc_one(pipex, mini->super_env, \
 							pipex->paths[0], mini->commands);
+	}
+	if (pipex->pids[i] < 0)
+	{
+		perror("pid");
+		free(pipex->pids);
+		return ;
 	}
 }
 
@@ -90,7 +90,8 @@ static void	start_multi2_pipe(t_pipex *pipex, \
 
 static void	one_cmd(t_pipex *pipex, t_mini *mini)
 {
-/* 	if (access(pipex->paths[0], F_OK) != 0)
+/* 	printf("PATH: %s\n", pipex->paths[0]);
+	if (access(pipex->paths[0], F_OK) != 0)
 	{
 		pipex->cmd_argc -= 1;
 		write(2, "command not found\n", 18);

@@ -12,6 +12,23 @@
 
 #include "../minishell.h"
 
+t_string	*fusion_strs(void)
+{
+	t_string	*matrix;
+	int			i;
+
+	matrix = ft_calloc(ft_count(mini()->commands->entry.args) + 2, sizeof(t_string));
+	matrix[0] = ft_strdup(mini()->commands->entry.key);
+	i = 0;
+	while (mini()->commands->entry.args[i])
+	{
+		matrix[i + 1] = ft_strdup(mini()->commands->entry.args[i]);
+		i++;
+	}
+	matrix[i + 1] = NULL;
+	return (matrix);
+}
+
 void	execve2(const char *path, t_node *node, char *const envp[], t_pipex *pipex)
 {
 	char	**argv;
@@ -19,11 +36,7 @@ void	execve2(const char *path, t_node *node, char *const envp[], t_pipex *pipex)
 	char	*str_join_2;
 
 	(void)pipex;
-	str_join = ft_strjoin(node->entry.key, " ");
-	str_join_2 = ft_strjoin(str_join, ((char *)node->entry.value));
-	free(str_join);
-	argv = ft_split(str_join_2, ' ');
-	free(str_join_2);
+	argv = fusion_strs();
 	if (execve(path, argv, envp) == -1)
 	{
 		free_env(argv);
