@@ -83,8 +83,10 @@ static void	copy(t_mini *m, t_entry *e)
 {
 	t_node	*n;
 
-	if (!mini()->commands)
+	if (!mini()->commands) {
 		mini()->commands = new_node(e);
+		return;
+	}
 	n = mini()->commands;
 	while (n->next)
 		n = n->next;
