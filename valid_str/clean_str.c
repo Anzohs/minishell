@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_node.c                                       :+:      :+:    :+:   */
+/*   clean_str.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/12 14:53:19 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/12 14:53:21 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/02 20:34:34 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/01/02 21:38:20 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
-
-bool	clean_node(t_node *n)
+void	clean_str(char *str)
 {
-	t_node	*tmp;
-	int		i;
+	int	length;
 
-	tmp = mini()->commands;
-	i = -1;
-	while (tmp)
+	length = strlen(str);
+	if (str[0] == '"' || str[0] == '\'')
 	{
-		parse_node(&n);
-		clean_quotes(&tmp->entry.key);
-		while (tmp->entry.args && tmp->entry.args[++i])
-			clean_quotes(&tmp->entry.args[i]);
-		tmp = tmp->next;
+		memmove(str, str + 1, length - 1);
+		length--;
 	}
-	return (true);
+	if ((str[length - 1] == '"' || str[length - 1] == '\'') && length > 0)
+	{
+		str[length - 1] = '\0';
+			// Null-terminate the string to remove the last character
+	}
 }

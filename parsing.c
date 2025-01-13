@@ -30,6 +30,8 @@ static t_string	extract_arg(const char *input, size_t *index)
 		(*index)++;
 	}
 	len = *index - start;
+	if (len == 0)
+		return (ft_strdup(""));
 	arguments = (char *)ft_calloc(len + 1, sizeof(char));
 	if (!arguments)
 		return (NULL);
@@ -77,17 +79,16 @@ static t_node	*new_node(t_entry *e)
 	return (n);
 }
 
-static t_node	*copy(t_mini *m, t_entry *e)
+static void	copy(t_mini *m, t_entry *e)
 {
 	t_node	*n;
 
-	if (!m->commands)
-		return (new_node(e));
-	n = m->commands;
+	if (!mini()->commands)
+		mini()->commands = new_node(e);
+	n = mini()->commands;
 	while (n->next)
 		n = n->next;
 	n->next = new_node(e);
-	return (m->commands);
 }
 
 // parse_input(const char *input)
@@ -116,7 +117,7 @@ void	parse_input(t_hash *ht, const char *input, t_mini *m)
 		while (input[index] && (input[index] == ' ' || input[index] == '\t'
 				|| input[index] == '|'))
 			index++;
-		mini()->commands = copy(m, entry);
+		copy(m, entry);
 		free(command);
 		free(arg);
 	}
