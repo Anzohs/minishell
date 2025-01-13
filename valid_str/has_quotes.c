@@ -29,6 +29,7 @@ bool	is_expantion(t_string s)
 {
 	int	i;
 
+
 	i = -1;
 	while (s[++i])
 	{

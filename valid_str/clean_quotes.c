@@ -20,7 +20,7 @@ static void	take_quotes(t_string *str)
 	int			y;
 	int			j;
 
-	if (!str || !*str)
+	if (!*str)
 		return ;
 	string = *str;
 	c = 0;
@@ -45,16 +45,18 @@ static bool	have_quotes(t_string s)
 {
 	int	c;
 
-	c = -1;
-	if (!s || *s)
+	c = 0;
+	if (!s || !*s)
 		return (true);
-	while (s[++c] && s[c] != '\'' && s[c] != '"')
-		;
-	return (s[c] == 0);
+	while (s[c] && (s[c] != '\'' && s[c] != '"'))
+		c++;
+	return (s[c] != 0);
 }
 
 void	clean_quotes(t_string *s)
 {
+	if (!s || !*s)
+		return;
 	if (have_quotes(*s))
 		take_quotes(s);
 }

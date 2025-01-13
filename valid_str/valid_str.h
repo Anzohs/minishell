@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+	/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   valid_str.h                                        :+:      :+:    :+:   */
@@ -25,7 +25,7 @@ bool						clean_node(t_node *n);
 void						expations(t_string *comm, t_string *arg);
 void						clean_quotes(t_string *s);
 void						parse_node(t_node **n);
-void					expand_cmd(t_string cmd, t_string *args);
+void					expand_cmd(t_string *cmd, t_string **args);
 bool						has_quotes(t_string s);
 bool						is_expantion(t_string s);
 t_string					expand_args(t_string cmd);

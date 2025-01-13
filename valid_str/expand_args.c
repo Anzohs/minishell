@@ -46,27 +46,30 @@ t_string	change_value(t_string s, t_string cmd, t_string n)
 	int			i;
 	int			k;
 	int			u;
+	int			flag;
 
 	i = 0;
-	k = 0;
-	u = 0;
+	k = -1;
+	u = -1;
+	flag = 0;
 	if (n)
 		free(n);
 	new = ft_calloc(ft_strlen(s) + ft_strlen(cmd) + 1, sizeof(char));
 	if (!new)
 		return (NULL);
-	while (cmd[k])
+	while (cmd[++k])
 	{
-		if (cmd[k] == 2)
+		if (cmd[k] == 2 && !flag)
 		{
 			k++;
-			while (s[u])
-				new[i++] = s[u++];
-			while (cmd[k] && cmd[k] != ' ' && cmd[k] != '"' && cmd[k] != 2)
+			flag = 1;
+			while (s[++u])
+				new[i++] = s[u];
+			while (cmd[k] && cmd[k] != ' ' && cmd[k] != '"' && cmd[k] != '\'' && cmd[k] != 2)
 				k++;
 		}
-		else
-			new[i++] = cmd[k++];
+		new[i] = cmd[k];
+		i++;
 	}
 	return (new);
 }

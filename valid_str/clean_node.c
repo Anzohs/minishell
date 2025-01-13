@@ -25,9 +25,10 @@ bool	clean_node(t_node *n)
 	{
 		parse_node(&tmp);
 		clean_quotes(&tmp->entry.key);
-		while (tmp->entry.args && tmp->entry.args[++i])
+		while (tmp->entry.args[++i])
 			clean_quotes(&tmp->entry.args[i]);
 		tmp = tmp->next;
+		i = 0;
 	}
 	return (true);
 }

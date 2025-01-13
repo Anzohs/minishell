@@ -20,9 +20,12 @@ void	free_node(t_node *n)
 	while (tmp)
 	{
 		tmp = n->next;
-		free(n->entry.key);
-		free(n->entry.value);
-		free_env(n->entry.args);
+		if (n->entry.key)
+			free(n->entry.key);
+		if (n->entry.value)
+			free(n->entry.value);
+		if (n->entry.args)
+			free_env(n->entry.args);
 		free(n);
 		n = tmp;
 	}

@@ -16,27 +16,26 @@ static bool	mark_expantion(t_string *str)
 {
 	int			i;
 	t_string	s;
-	bool		s_quotes;
-	bool		d_quotes;
+	char			c;
 	bool		f;
 
 	i = -1;
 	s = *str;
-	d_quotes = false;
-	s_quotes = false;
 	f = false;
+	c = 0;
 	while (s[++i])
 	{
-		if (s[i] == '\'' && !d_quotes)
-			s_quotes = !s_quotes;
-		else if (s[i] == '"' && !s_quotes)
-			d_quotes = !d_quotes;
-		else if (s[i] == '$' && !s_quotes && s[i + 1] && ft_isalpha(s[i + 1]))
+		if ((s[i] == '"' || s[i] == '\'') && !c)
+			c = s[i];
+		else if (s[i] == c)
+			c = 0;
+		else if (s[i] == '$' && (!c || c == '"') && s[i + 1] && ft_isalpha(s[i + 1]))
 		{
 			s[i] = 2;
 			f = true;
 		}
 	}
+	printf("%s\n", *str);
 	return (f);
 }
 

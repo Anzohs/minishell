@@ -7,7 +7,7 @@ static int	find_space(t_string s)
 	i = -1;
 	while (s[++i])
 	{
-		if (s[i] == ' ' || s[i] == 2 || s[i] == '"')
+		if (s[i] == ' ' || s[i] == 2 || s[i] == '"' || s[i] == '\'')
 			return (i);
 	}
 	return (i);
