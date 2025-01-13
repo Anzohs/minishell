@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_search.h"
+#include "../ft_clean/ft_clean.h"
 
 void	free_node(t_node *node)
 {
@@ -22,6 +23,7 @@ void	free_node(t_node *node)
 		tmp = tmp->next;
 		free(node->entry.key);
 		free(node->entry.value);
+		free_env(node->entry.args);
 		free(node);
 		node = tmp;
 	}

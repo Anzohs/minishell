@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_search.h"
+#include "../ft_clean/ft_clean.h"
 
 static void	free_n(t_node *node)
 {
@@ -18,17 +19,15 @@ static void	free_n(t_node *node)
 
 	if (!node)
 		return ;
-	while (node->next)
+	while (node)
 	{
 		temp = node->next;
 		free(node->entry.key);
 		free(node->entry.value);
+		free_env(node->entry.args);
 		free(node);
 		node = temp;
 	}
-	free(node->entry.key);
-	free(node->entry.value);
-	free(node);
 }
 
 void	hdestroy(t_hash *ht)

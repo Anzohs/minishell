@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_search.h"
-#include <stdlib.h>
+#include "../ft_clean/ft_clean.h"
 
 static	t_entry	*hash_search(t_node *n, t_entry item)
 {
@@ -34,6 +34,8 @@ static	t_entry	*hash_add(t_hash *ht, t_entry item, unsigned int i)
 	{
 		free(entry->value);
 		entry->value = ft_strdup((t_string)item.value);
+		free_env(ht->node[i]->entry.args);
+		entry->args = NULL;
 		return (entry);
 	}
 	new = ft_calloc(1, sizeof(t_node));
@@ -41,10 +43,10 @@ static	t_entry	*hash_add(t_hash *ht, t_entry item, unsigned int i)
 		return (NULL);
 	new->entry.key = ft_strdup(item.key);
 	new->entry.value = ft_strdup((t_string)item.value);
+	new->entry.args = NULL;
 	if (ht->node[i])
 	{
-		free(ht->node[i]->entry.key);
-		free(ht->node[i]->entry.value);
+		free_node(ht->node[i]);
 		free(ht->node[i]);
 	}
 	ht->node[i] = new;
