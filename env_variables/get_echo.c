@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 21:27:06 by malourei          #+#    #+#             */
-/*   Updated: 2025/01/12 20:28:30 by malourei         ###   ########.fr       */
+/*   Updated: 2025/01/13 19:15:03 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	get_echo(t_mini *mini, t_node *command)
 	char	*str;
 
 	(void)mini;
-	if (!ft_strcmp(command->entry.args[0], "-n"))
+	if (command->entry.args[0] && !ft_strcmp(command->entry.args[0], "-n"))
 	{
 		i = 1;
 		while (command->entry.args[i])

@@ -90,13 +90,12 @@ static void	start_multi2_pipe(t_pipex *pipex, \
 
 static void	one_cmd(t_pipex *pipex, t_mini *mini)
 {
-/* 	printf("PATH: %s\n", pipex->paths[0]);
-	if (access(pipex->paths[0], F_OK) != 0)
+	if (access(pipex->path2, F_OK) != 0)
 	{
 		pipex->cmd_argc -= 1;
-		write(2, "command not found\n", 18);
+		printf("command not found: %s\n", mini->commands->entry.key);
 		return ;
-	} */
+	}
 	if (pipe(pipex->fds[0].fd) < 0)
 	{
 		perror("pipe");
