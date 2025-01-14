@@ -48,7 +48,10 @@ static t_string	extract_command(const char *input, size_t *index)
 
 	c = 0;
 	start = *index;
-	while (input[*index] && (input[*index] != ' ' || c))
+	if (!input || !*input || !input[*index])
+		return (ft_strdup(""));
+	while (input[*index] && (input[*index] != ' ' || c) \
+		&& input[*input] != '|')
 	{
 		if ((input[*index] == '\'' || input[*index] == '"') && !c)
 			c = input[*index];
@@ -57,6 +60,8 @@ static t_string	extract_command(const char *input, size_t *index)
 		(*index)++;
 	}
 	len = *index - start;
+	if (len == 0)
+		return (ft_strdup(""));
 	command = ft_calloc(len + 1, sizeof(char));
 	if (!command)
 		return (NULL);
@@ -116,8 +121,7 @@ void	parse_input(t_hash *ht, const char *input, t_mini *m)
 			return ;
 		}
 		entry = hsearch(ht, (t_entry){command, arg, NULL}, ENTER);
-		while (input[index] && (input[index] == ' ' || input[index] == '\t'
-				|| input[index] == '|'))
+		if (input[index])
 			index++;
 		copy(m, entry);
 		free(command);

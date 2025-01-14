@@ -19,9 +19,13 @@ bool	clean_command(t_mini *m)
 	tmp = m->commands;
 	while (tmp)
 	{
-		if (!closed_quotes(tmp->entry.key) || !closed_quotes(tmp->entry.value))
+		if (!closed_quotes(tmp->entry.key) || !closed_quotes(tmp->entry.value) \
+			|| !*tmp->entry.key)
 		{
-			printf("Error: open quotes!\n");
+			if (!*tmp->entry.key)
+				perror("sintax erro |");
+			else
+				printf("Error: open quotes!\n");
 			return (false);
 		}
 		tmp = tmp->next;
