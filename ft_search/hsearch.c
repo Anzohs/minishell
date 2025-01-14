@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 18:46:45 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/11/25 22:07:43 by malourei         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:05:28 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,7 @@ static	t_entry	*hash_add(t_hash *ht, t_entry item, unsigned int i)
 	new->entry.value = ft_strdup((t_string)item.value);
 	new->entry.args = NULL;
 	if (ht->node[i])
-	{
 		free_node(ht->node[i]);
-		free(ht->node[i]);
-	}
 	ht->node[i] = new;
 	return (&new->entry);
 }

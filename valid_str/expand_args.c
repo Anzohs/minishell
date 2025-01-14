@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_cmd.c                                       :+:      :+:    :+:   */
+/*   expand_args.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:02:58 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/12 17:02:59 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:18:34 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,17 @@ t_string	change_value(t_string s, t_string cmd, t_string n)
 	new = ft_calloc(ft_strlen(s) + ft_strlen(cmd) + 1, sizeof(char));
 	if (!new)
 		return (NULL);
-	while (cmd[++k])
+	while (cmd[++k] != 0)
 	{
+			printf("%c char line 63 \n", cmd[k]);
 		if (cmd[k] == 2 && !flag)
 		{
 			k++;
 			flag = 1;
 			while (s[++u])
 				new[i++] = s[u];
+			if (!cmd[k])
+					return (new);
 			while (cmd[k] && cmd[k] != ' ' && cmd[k] != '"' && cmd[k] != '\'' && cmd[k] != 2)
 				k++;
 		}

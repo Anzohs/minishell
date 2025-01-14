@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 14:53:19 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/12 14:53:21 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:04:33 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ bool	clean_node(t_node *n)
 		while (tmp->entry.args[++i])
 			clean_quotes(&tmp->entry.args[i]);
 		tmp = tmp->next;
-		i = 0;
+		i = -1;
 	}
 	return (true);
 }
