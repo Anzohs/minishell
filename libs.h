@@ -17,6 +17,7 @@
 # include <readline/readline.h>
 # include <stdbool.h>
 # include <signal.h>
+# include <stdio.h>
 
 typedef char			*t_string;
 

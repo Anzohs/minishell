@@ -38,4 +38,7 @@ t_mini				*mini(void);
 // env-exp list functions
 // env-exp
 t_string			create_pwd(t_string s);
+void				m_copy_env(t_string env[]);
+void				init_pwd(void);
+
 #endif

@@ -14,20 +14,9 @@
 
 static void	create_env(void)
 {
-	t_list		*lst;
-	t_string	var;
-
-	var = create_pwd(getcwd(NULL, 0));
-	if (!var)
-		exit(0);
-	lst = ft_lstnew(var);
-	if (!lst)
-	{
-		free(var);
-		//t_exit(0);
-		exit(0);
-	}
-	ft_lstadd_back(&mini()->env, lst);
+	init_pwd();
+   	//_=usr/bin/env
+    //SHELLVL
 }
 
 static void	copy_env(t_string env[])
