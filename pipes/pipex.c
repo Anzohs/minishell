@@ -54,7 +54,6 @@ static void	start_multi2_pipe(t_pipex *pipex, \
 	if (access(cmd_path, F_OK) != 0)
 	{
 		printf("command not found\n");
-		ft_close_all_m(pipex, i - 1);
 		return ;
 	}
 	pipex->pids[i] = fork();
