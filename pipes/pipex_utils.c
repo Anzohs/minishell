@@ -88,8 +88,7 @@ void	ft_child_one_martelado(t_pipex *pipex, char **env, char *cmd_path, t_node *
 		if (dup2(pipex->fds[i].fd[0], STDIN_FILENO) < 0)
 		{
 			perror("dup2");
-			//ft_close_all_1(pipex);
-			//return ;
+			return ;
 		}
 		ft_close_all_p(pipex);
 		execve2(cmd_path, tmp, env, pipex);

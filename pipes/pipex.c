@@ -28,7 +28,6 @@ static void	start_pipe_1(t_pipex *pipex, \
 	}
 	if (access(pipex->paths[0], F_OK) != 0)
 	{
-		pipex->cmd_argc -= 1;
 		write(2, "command not found\n", 18);
 		return ;
 	}
@@ -52,10 +51,12 @@ static void	start_pipe_1(t_pipex *pipex, \
 static void	start_multi2_pipe(t_pipex *pipex, \
 				t_mini *mini, int i, char *cmd_path, t_node *node)
 {
-	t_node	*n;
-
-	n = node;
-	n = n->next;
+	if (access(cmd_path, F_OK) != 0)
+	{
+		printf("command not found\n");
+		ft_close_all_m(pipex, i - 1);
+		return ;
+	}
 	pipex->pids[i] = fork();
 	if (pipex->pids[i] < 0)
 	{
@@ -65,10 +66,13 @@ static void	start_multi2_pipe(t_pipex *pipex, \
 	}
 	if (pipex->pids[i] == 0)
 	{
-		if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
+		if (pipex->pids[i - 1])
 		{
-			perror("dup5");
-			return ;
+			if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
+			{
+				perror("dup5");
+				return ;
+			}
 		}
 		if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
 		{
