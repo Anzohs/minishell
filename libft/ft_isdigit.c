@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hash.c                                             :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: hladeiro <hladeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:54:49 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/10 13:54:50 by hladeiro         ###   ########.fr       */
+/*   Created: 2024/04/18 19:13:09 by hladeiro          #+#    #+#             */
+/*   Updated: 2024/04/18 19:13:11 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search.h"
+#include "libft.h"
 
-unsigned int	hash(const t_string key, size_t nel)
+int	ft_isdigit(int c)
 {
-	unsigned int	hash;
-	t_string		k;
-
-	hash = 0;
-	k = key;
-	while (*k)
-		hash = (hash << 5) + *k++;
-	return (hash % nel);
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
 }

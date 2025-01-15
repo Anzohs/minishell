@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hash.c                                             :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: hladeiro <hladeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:54:49 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/10 13:54:50 by hladeiro         ###   ########.fr       */
+/*   Created: 2024/04/18 19:17:45 by hladeiro          #+#    #+#             */
+/*   Updated: 2024/04/18 19:17:46 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search.h"
+#include "libft.h"
 
-unsigned int	hash(const t_string key, size_t nel)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	unsigned int	hash;
-	t_string		k;
+	unsigned int	i;
 
-	hash = 0;
-	k = key;
-	while (*k)
-		hash = (hash << 5) + *k++;
-	return (hash % nel);
+	i = -1;
+	while (s[++i])
+		(f)(i, (s + i));
 }

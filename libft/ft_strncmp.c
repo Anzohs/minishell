@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hash.c                                             :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: hladeiro <hladeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:54:49 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/10 13:54:50 by hladeiro         ###   ########.fr       */
+/*   Created: 2024/04/18 19:18:27 by hladeiro          #+#    #+#             */
+/*   Updated: 2024/04/18 19:18:28 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search.h"
+#include "libft.h"
 
-unsigned int	hash(const t_string key, size_t nel)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	unsigned int	hash;
-	t_string		k;
+	size_t	i;
 
-	hash = 0;
-	k = key;
-	while (*k)
-		hash = (hash << 5) + *k++;
-	return (hash % nel);
+	i = 0;
+	while (s1[i] == s2[i] && i < n && s1[i] && s2[i])
+		i++;
+	if (i == n)
+		return (0);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

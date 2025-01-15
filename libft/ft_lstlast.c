@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hash.c                                             :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: hladeiro <hladeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:54:49 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/10 13:54:50 by hladeiro         ###   ########.fr       */
+/*   Created: 2024/04/18 19:15:16 by hladeiro          #+#    #+#             */
+/*   Updated: 2024/04/18 19:15:17 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search.h"
+#include "libft.h"
 
-unsigned int	hash(const t_string key, size_t nel)
+t_list	*ft_lstlast(t_list *lst)
 {
-	unsigned int	hash;
-	t_string		k;
-
-	hash = 0;
-	k = key;
-	while (*k)
-		hash = (hash << 5) + *k++;
-	return (hash % nel);
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
 }

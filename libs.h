@@ -5,25 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 18:45:14 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/11 16:18:42 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/14 22:48:20 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/01/14 22:48:21 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBS_H
 # define LIBS_H
 
-# include "./src/libft/libft.h"
-# include "bilt_in/biltin.h"
-# include "valid_str/valid_str.h"
-# include <stdio.h>
-# include <stdbool.h>
+# include "libft/libft.h"
 # include <readline/readline.h>
-# include <readline/history.h>
-# include <sys/wait.h>
+# include <stdbool.h>
 # include <signal.h>
-# include <fcntl.h>
-# include <stdlib.h>
-# include <unistd.h>
+
+typedef char			*t_string;
 
 #endif

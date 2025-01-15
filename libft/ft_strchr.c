@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hash.c                                             :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: hladeiro <hladeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:54:49 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/10 13:54:50 by hladeiro         ###   ########.fr       */
+/*   Created: 2024/04/18 19:17:33 by hladeiro          #+#    #+#             */
+/*   Updated: 2024/04/18 19:17:34 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search.h"
+#include "libft.h"
 
-unsigned int	hash(const t_string key, size_t nel)
+char	*ft_strchr(const char *s, int c)
 {
-	unsigned int	hash;
-	t_string		k;
+	unsigned int	i;
+	char			l;
 
-	hash = 0;
-	k = key;
-	while (*k)
-		hash = (hash << 5) + *k++;
-	return (hash % nel);
+	i = 0;
+	l = (char) c;
+	while (s[i])
+	{
+		if (s[i] == l)
+			return ((char *) s + i);
+		i++;
+	}
+	if (s[i] == l)
+		return ((char *) s + i);
+	return (NULL);
 }

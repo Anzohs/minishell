@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hcreate.c                                          :+:      :+:    :+:   */
+/*   create_pwd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:55:04 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/10 13:55:05 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/15 01:11:23 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/01/15 01:11:24 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search.h"
+#include "mini.h"
 
-t_hash	*hcreate(size_t nel)
+t_string	create_pwd(t_string s)
 {
-	t_hash	*hash;
-	size_t	l;
+	t_string	pwd;
 
-	hash = ft_calloc(sizeof(t_hash), nel);
-	if (!hash)
+	if (!s)
 		return (NULL);
-	hash->node = (t_node **)ft_calloc(sizeof(t_node *), nel);
-	if (!hash->node)
-	{
-		free(hash);
+	pwd = ft_calloc(sizeof(char), (ft_strlen(s) + 5));
+	if (!pwd)
 		return (NULL);
-	}
-	l = 0;
-	while (l < nel)
-		hash->node[l++] = NULL;
-	hash->len = nel;
-	return (hash);
+	ft_strcpy(pwd, "PWD=");
+	ft_strcat(pwd, s);
+	return (pwd);
 }

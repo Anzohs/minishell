@@ -1,34 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hcreate.c                                          :+:      :+:    :+:   */
+/*   mini.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:55:04 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/10 13:55:05 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/14 23:34:59 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/01/14 23:42:46 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search.h"
+#ifndef MINI_H
+# define MINI_H
 
-t_hash	*hcreate(size_t nel)
+# include "../minishell.h"
+
+typedef struct s_cmd
 {
-	t_hash	*hash;
-	size_t	l;
+	t_string		cmd;
+	t_string		*arg;
+	struct s_cmd	*next;
+}					t_cmd;
 
-	hash = ft_calloc(sizeof(t_hash), nel);
-	if (!hash)
-		return (NULL);
-	hash->node = (t_node **)ft_calloc(sizeof(t_node *), nel);
-	if (!hash->node)
-	{
-		free(hash);
-		return (NULL);
-	}
-	l = 0;
-	while (l < nel)
-		hash->node[l++] = NULL;
-	hash->len = nel;
-	return (hash);
-}
+
+typedef struct s_minishell
+{
+	char			*readline;
+	char			*prompt;
+	t_list			*env;
+	t_list			*exp;
+	t_hash			*ht;
+	t_cmd			**cmd;
+	int				pipes;
+}					t_mini;
+
+t_mini				*mini(void);
+// env-exp list functions
+// env-exp
+t_string			create_pwd(t_string s);
+#endif
