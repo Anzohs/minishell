@@ -29,12 +29,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="100c3a4f-f989-4d26-aed2-81c19c8c6917" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/libft/libft.h" beforeDir="false" afterPath="$PROJECT_DIR$/libft/libft.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libs.h" beforeDir="false" afterPath="$PROJECT_DIR$/libs.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mini_struct/create_pwd.c" beforeDir="false" afterPath="$PROJECT_DIR$/mini_struct/create_pwd.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mini_struct/m_copy_env.c" beforeDir="false" afterPath="$PROJECT_DIR$/mini_struct/m_copy_env.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mini_struct/mini.h" beforeDir="false" afterPath="$PROJECT_DIR$/mini_struct/mini.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libft/ft_strdup.c" beforeDir="false" afterPath="$PROJECT_DIR$/libft/ft_strdup.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,7 +173,7 @@
       <workItem from="1736373075843" duration="95000" />
       <workItem from="1736797523721" duration="6567000" />
       <workItem from="1736887220103" duration="2309000" />
-      <workItem from="1736972519580" duration="3812000" />
+      <workItem from="1736972519580" duration="3864000" />
     </task>
     <servers />
   </component>
