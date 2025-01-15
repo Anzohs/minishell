@@ -22,6 +22,7 @@ t_string	*fusion_strs(void)
 	i = 0;
 	while (mini()->commands->entry.args[i])
 	{
+		printf("arg[%d]: %s\n",i , mini()->commands->entry.args[i]);
 		matrix[i + 1] = ft_strdup(mini()->commands->entry.args[i]);
 		i++;
 	}
@@ -37,12 +38,13 @@ void	execve2(const char *path, t_node *node, char *const envp[], t_pipex *pipex)
 
 	(void)pipex;
 	argv = fusion_strs();
+	execve(path, argv, envp);
 	if (execve(path, argv, envp) == -1)
 	{
 		free_env(argv);
 		return ;
 	}
-	free_env(argv);
+	//free_env(argv);
 }
 
 void	ft_child_one(t_pipex *pipex, char **env, char *cmd_path, t_node *node)
@@ -62,9 +64,12 @@ void	ft_child_one_martelado(t_pipex *pipex, char **env, char *cmd_path, t_node *
 	t_node	*tmp;
 
 	tmp = node;
+	i = -1;
 	while (tmp->next)
+	{
+		i++;
 		tmp = tmp->next;
-	i = 1;
+	}
 	if (access(cmd_path, F_OK) != 0)
 	{
 		write(2, "command not found\n", 18);
@@ -80,27 +85,15 @@ void	ft_child_one_martelado(t_pipex *pipex, char **env, char *cmd_path, t_node *
 	}
 	if (pipex->pids[i] == 0)
 	{
-		if (dup2(pipex->fds[0].fd[0], STDIN_FILENO) < 0)
+		if (dup2(pipex->fds[i].fd[0], STDIN_FILENO) < 0)
 		{
 			perror("dup2");
 			//ft_close_all_1(pipex);
 			//return ;
 		}
-		ft_close_all_1(pipex);
+		ft_close_all_p(pipex);
 		execve2(cmd_path, tmp, env, pipex);
 	}
-}
-
-
-void	ft_child_two(t_pipex *pipex, char **env, char *cmd_path, t_node *node)
-{
-	if (dup2(pipex->fds[pipex->cmd_argc - 1].fd[0], STDIN_FILENO) < 0)
-	{
-		perror("dup3");
-		return ;
-	}
-	ft_close_all_1(pipex);
-	execve2(cmd_path, node, env, pipex);
 }
 
 void	ft_parent(t_pipex *pipex)
