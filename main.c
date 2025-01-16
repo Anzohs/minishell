@@ -12,13 +12,24 @@
 
 #include "mini_struct/mini.h"
 
-void	prin_list(t_list *head) {
-	t_list	*lst;
+void	init_minishell(void)
+{
+	mini()->prompt = "shell $ > ";
+	ft_lstdup(&mini()->env, &mini()->exp);
+	mini()->ht = hcreate(10);
+	mini()->readline = readline(mini()->prompt);
+}
 
-	lst = head;
-	while (lst) {
-		printf("%s\n", lst->content);
-		lst = lst->next;
+
+void	run_minishell(void)
+{
+	while (mini()->readline && ft_strcmp(mini()->readline, "exit"))
+	{
+		parse_input();
+		add_history(mini()->readline);
+		free(mini()->readline);
+		mini()->readline = readline(mini()->prompt);
+		write(1, "aqui\n", 1);
 	}
 }
 
@@ -28,10 +39,8 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	(void)ac;
 	m_copy_env(env);
-	ft_lstdup(&mini()->exp, &mini()->env);
-	prin_list(mini()->env);
-	write(1, "\n", 1);
-	prin_list(mini()->exp);
+	init_minishell();
+	run_minishell();
 	ft_lstclear(&mini()->env, free);
 	ft_lstclear(&mini()->exp, free);
 	return (0);

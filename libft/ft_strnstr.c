@@ -37,7 +37,7 @@ static char	*find_c(const char *big, const char *little, size_t len, int j)
 		i++;
 	}
 	if (!little[j])
-		return ((char *) big + (i - k));
+		return ((char *)big + (i - k));
 	return (NULL);
 }
 
@@ -47,6 +47,6 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 
 	i = 0;
 	if (!little)
-		return ((char *) big);
+		return ((char *)big);
 	return (find_c(big, little, len, i));
 }

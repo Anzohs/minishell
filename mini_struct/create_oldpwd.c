@@ -1,44 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_pwd.c                                       :+:      :+:    :+:   */
+/*   create_oldpwd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 01:11:23 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/15 01:11:24 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/16 17:16:10 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/01/16 17:16:11 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-void	init_pwd(void)
+void	update_oldpwd(t_string path, t_list **lst)
 {
-	t_list		*lst;
 	t_string	var;
+	t_list		*new;
 
-	var = create_pwd(getcwd(NULL, 0));
+	if (!path)
+		return ;
+	var = ft_calloc(sizeof(char), ft_strlen(path) + 4);
 	if (!var)
 		exit(0);
-	lst = ft_lstnew(var);
-	if (!lst)
+	ft_strcpy(var, "OLD");
+	ft_strcat(var, path);
+	new = ft_lstnew(var);
+	if (!new)
 	{
 		free(var);
 		exit(0);
 	}
-	ft_lstadd_back(&mini()->env, lst);
-}
-
-t_string	create_pwd(t_string s)
-{
-	t_string	pwd;
-
-	if (!s)
-		return (NULL);
-	pwd = ft_calloc(sizeof(char), (ft_strlen(s) + 5));
-	if (!pwd)
-		return (NULL);
-	ft_strcpy(pwd, "PWD=");
-	ft_strcat(pwd, s);
-	return (pwd);
+	ft_lstadd_back(lst, new);
 }

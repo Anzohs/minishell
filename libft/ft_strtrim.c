@@ -40,7 +40,7 @@ static char	*trim_string(const char *s1, size_t start, size_t len)
 	while (i < len)
 	{
 		str[i] = s1[start + i];
-		i ++;
+		i++;
 	}
 	return (str);
 }

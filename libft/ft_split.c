@@ -12,8 +12,8 @@
 
 #include "libft.h"
 
-char	*ft_substr(const char *s, unsigned int start, size_t len);
-void	*ft_calloc(size_t count, size_t size);
+char		*ft_substr(const char *s, unsigned int start, size_t len);
+void		*ft_calloc(size_t count, size_t size);
 
 static int	count_words(const char *s, char c)
 {
@@ -79,7 +79,7 @@ char	**ft_split(char const *s, char c)
 		while (s[i] == c)
 			i++;
 		pos = find_del((char *)s + i, c);
-		ptr[d] = ft_substr(s, (unsigned int) i, (size_t)pos);
+		ptr[d] = ft_substr(s, (unsigned int)i, (size_t)pos);
 		if (!ptr[d])
 			return (ft_free_malloc(ptr, d));
 		i += pos + 1;

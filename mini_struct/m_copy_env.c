@@ -15,8 +15,8 @@
 static void	create_env(void)
 {
 	init_pwd();
-   	//_=usr/bin/env
-    //SHELLVL
+	//_=usr/bin/env
+	// SHELLVL
 }
 
 static void	copy_env(t_string env[])
@@ -35,7 +35,6 @@ static void	copy_env(t_string env[])
 		if (!lst)
 		{
 			free(var);
-			//t_exit(0);
 			exit(0);
 		}
 		ft_lstadd_back(&mini()->env, lst);

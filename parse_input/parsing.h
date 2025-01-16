@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hladeiro <hladeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 19:17:40 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/04/18 19:17:41 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/16 17:56:50 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/01/16 17:56:51 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef PARSING_H
+# define PARSING_H
 
-char	*ft_strdup(const char *s)
-{
-	int		j;
-	char	*ptr;
+# include "../libs.h"
 
-	j = -1;
-	ptr = ft_calloc(sizeof(char), ft_strlen(s) + 1);
-	if (!ptr)
-		return (NULL);
-	while (s[++j])
-		ptr[j] = s[j];
-	return (ptr);
-}
+void	parse_input(void);
+
+#endif

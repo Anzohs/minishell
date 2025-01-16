@@ -18,10 +18,10 @@
 typedef struct s_cmd
 {
 	t_string		cmd;
-	t_string		*arg;
+	t_string		arg;
+	t_string		*matrix;
 	struct s_cmd	*next;
 }					t_cmd;
-
 
 typedef struct s_minishell
 {
@@ -30,7 +30,7 @@ typedef struct s_minishell
 	t_list			*env;
 	t_list			*exp;
 	t_hash			*ht;
-	t_cmd			**cmd;
+	t_cmd			*cmd;
 	int				pipes;
 }					t_mini;
 
@@ -40,5 +40,7 @@ t_mini				*mini(void);
 t_string			create_pwd(t_string s);
 void				m_copy_env(t_string env[]);
 void				init_pwd(void);
+t_cmd	*ft_cmdlst_new(char *cmd, char *arg);
+void	ft_cmdlstadd_back(t_cmd **lst, t_cmd *n);
 
 #endif
