@@ -73,7 +73,6 @@ void	ft_child_one_martelado(t_pipex *pipex, char **env, char *cmd_path, t_node *
 	if (access(cmd_path, F_OK) != 0)
 	{
 		write(2, "command not found\n", 18);
-		pipex->cmd_argc = pipex->cmd_argc - 1;
 		return ;
 	}
 	pipex->pids[i] = fork();
