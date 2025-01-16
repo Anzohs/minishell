@@ -1,37 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cmdlst_new.c                                    :+:      :+:    :+:   */
+/*   ft_cmdlstclear.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/16 20:45:09 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/16 20:45:15 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/16 21:31:43 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/01/16 21:31:46 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-t_cmd	*ft_cmdlst_new(char *cmd, char *arg)
+void	ft_cmdlstclear(t_cmd **lst, void (*del)(t_cmd **lst))
 {
-	t_cmd	*list;
+	t_cmd	*list_t;
+	t_cmd	*list_temp;
 
-	list = (t_cmd *)ft_calloc(1, sizeof(*list));
-	if (!list)
-		return (NULL);
-	list->cmd = ft_strdup(cmd);
-	if (!list->cmd)
+	list_t = *lst;
+	if (!*lst || !del)
+		return ;
+	while (list_t)
 	{
-		free(list);
-		exit(0);
+		list_temp = list_t->next;
+		del(&list_t);
+		list_t = list_temp;
 	}
-	list->arg = ft_strdup(arg);
-	if (!list->arg)
-	{
-		// delone();
-		exit(0);
-	}
-	list->matrix = NULL;
-	list->next = NULL;
-	return (list);
+	*lst = NULL;
 }

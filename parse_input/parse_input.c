@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:56:40 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/16 17:56:42 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/01/16 20:06:30 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ void	copy_entry(t_entry *entry)
 {
 	t_cmd	*cmd;
 
-	if (!mini()->cmd)
-		exit(0);
 	cmd = ft_cmdlst_new(entry->key, entry->value);
 	if (!cmd)
 		exit(0);
@@ -79,15 +77,15 @@ void	parse_input(void)
 	t_string	arg;
 	t_entry		*entry;
 
-	i = -1;
-	while (mini()->prompt[++i])
+	i = 0;
+	while (mini()->readline[i])
 	{
-		cmd = extract_cmd(mini()->prompt, &i);
-		arg = extract_arg(mini()->prompt, &i);
+		cmd = extract_cmd(mini()->readline, &i);
+		arg = extract_arg(mini()->readline, &i);
 		entry = hsearch(mini()->ht, (t_entry){cmd, arg}, ENTER);
 		if (!entry)
 			exit(0);
-		if (mini()->prompt[i])
+		if (mini()->readline[i] == '|')
 			i++;
 		copy_entry(entry);
 		free(cmd);

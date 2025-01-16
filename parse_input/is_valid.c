@@ -1,37 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cmdlst_new.c                                    :+:      :+:    :+:   */
+/*   is_valid.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/16 20:45:09 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/16 20:45:15 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/16 20:54:17 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/01/16 21:07:26 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini.h"
+#include "../mini_struct/mini.h"
+#include "parsing.h"
 
-t_cmd	*ft_cmdlst_new(char *cmd, char *arg)
+bool	is_valid(void)
 {
-	t_cmd	*list;
+	t_cmd	*lst;
 
-	list = (t_cmd *)ft_calloc(1, sizeof(*list));
-	if (!list)
-		return (NULL);
-	list->cmd = ft_strdup(cmd);
-	if (!list->cmd)
+	lst = mini()->cmd;
+	while (lst)
 	{
-		free(list);
-		exit(0);
+		if (!closed_quotes(lst->cmd) || !closed_quotes(lst->arg))
+		{
+			perror("sintax error quotes");
+			return (false);
+		}
+		if (!lst->cmd || !*lst->cmd)
+		{
+			perror("sintax error |");
+			return (false);
+		}
+		lst = lst->next;
 	}
-	list->arg = ft_strdup(arg);
-	if (!list->arg)
-	{
-		// delone();
-		exit(0);
-	}
-	list->matrix = NULL;
-	list->next = NULL;
-	return (list);
+	return (true);
 }

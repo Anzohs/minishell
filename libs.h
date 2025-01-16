@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 22:48:20 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/14 22:48:21 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/01/16 19:38:10 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft/libft.h"
 # include <readline/readline.h>
+# include <readline/history.h>
 # include <stdbool.h>
 # include <signal.h>
 # include <stdio.h>

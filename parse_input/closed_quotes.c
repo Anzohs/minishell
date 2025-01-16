@@ -1,37 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cmdlst_new.c                                    :+:      :+:    :+:   */
+/*   closed_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/16 20:45:09 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/16 20:45:15 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/16 21:02:44 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/01/16 21:05:24 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini.h"
+#include "../mini_struct/mini.h"
 
-t_cmd	*ft_cmdlst_new(char *cmd, char *arg)
+bool	closed_quotes(t_string s)
 {
-	t_cmd	*list;
+	int		i;
+	char	c;
 
-	list = (t_cmd *)ft_calloc(1, sizeof(*list));
-	if (!list)
-		return (NULL);
-	list->cmd = ft_strdup(cmd);
-	if (!list->cmd)
+	i = -1;
+	c = 0;
+	if (!s)
+		return (true);
+	while (s[++i])
 	{
-		free(list);
-		exit(0);
+		if ((s[i] == '"' || s[i] == '\'') && !c)
+			c = s[i];
+		else if (s[i] == c)
+			c = 0;
 	}
-	list->arg = ft_strdup(arg);
-	if (!list->arg)
-	{
-		// delone();
-		exit(0);
-	}
-	list->matrix = NULL;
-	list->next = NULL;
-	return (list);
+	return (c == 0);
 }

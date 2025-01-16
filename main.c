@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 22:51:00 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/14 22:51:01 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/01/16 20:04:44 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,15 @@ void	run_minishell(void)
 		add_history(mini()->readline);
 		free(mini()->readline);
 		mini()->readline = readline(mini()->prompt);
-		write(1, "aqui\n", 1);
 	}
 }
 
 int	main(int ac, char **av, char **env)
 {
-	//mini()->readline = readline("shell");
 	(void)av;
 	(void)ac;
 	m_copy_env(env);
-	init_minishell();
+	init_minishell();	
 	run_minishell();
 	ft_lstclear(&mini()->env, free);
 	ft_lstclear(&mini()->exp, free);
