@@ -18,9 +18,14 @@ static void	free_matrix(t_string *s)
 
 	if (!s)
 		return ;
+	if (!*s)
+	{
+		free(s);
+		return;
+	}
 	i = -1;
 	while (s[++i])
-		free(s);
+		free(s[i]);
 	free(s);
 }
 
