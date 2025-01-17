@@ -42,5 +42,6 @@ int	main(int ac, char **av, char **env)
 	run_minishell();
 	ft_lstclear(&mini()->env, free);
 	ft_lstclear(&mini()->exp, free);
+	hdestroy(mini()->ht);
 	return (0);
 }
