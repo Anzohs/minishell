@@ -1,38 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cmdlstdelone.c                                  :+:      :+:    :+:   */
+/*   expantions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/16 21:29:51 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/16 21:29:54 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/18 17:22:59 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/01/18 17:23:03 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini.h"
+#include "../mini_struct/mini.h"
 
-static void	free_matrix(t_string *s)
+void	expantions(t_string *s)
 {
-	int	i;
+	int			i;
+	int			c;
+	t_string	str;
 
-	if (!s)
+	if (!s || !*s)
 		return ;
+	str = *s;
 	i = -1;
-	while (s[++i])
-		free(s[i]);
-	free(s);
-}
-
-void	ft_cmdlstdelone(t_cmd **lst)
-{
-	t_cmd	*temp;
-
-	temp = *lst;
-	if (temp->arg)
-		free(temp->arg);
-	if (temp->cmd)
-		free(temp->cmd);
-	free_matrix(temp->matrix);
-	free(temp);
+	c = 0;
+	while (str[++i] != 0)
+	{
+		if ((str[i] == '"' || str[i] == '\'') && !c)
+			c = str[i];
+		else if (str[i] == c)
+			c = 0;
+		else if (str[i] == '$' && (!c || c == '"') && str[i + 1]
+			&& ft_isalpha(str[i + 1]))
+			str[i] = 2;
+	}
 }

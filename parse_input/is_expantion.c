@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   is_expantion.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hladeiro <hladeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 19:18:15 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/04/18 19:18:16 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/18 17:24:59 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/01/18 17:25:03 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "parsing.h"
 
-size_t	ft_strlen(const char *s)
+bool	is_expantion(t_string s)
 {
-	size_t	i;
+	int	i;
 
-	i = 0;
 	if (!s || !*s)
-		return (0);
-	while (s[i])
-		i++;
-	return (i);
+		return (false);
+	i = -1;
+	while (s[++i] && s[i] != 2)
+		;
+	return (s[i] == 2);
 }

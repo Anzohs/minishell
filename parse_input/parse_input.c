@@ -22,7 +22,7 @@ static t_string	extract_arg(t_string s, int *i)
 	while (s[*i] == ' ')
 		(*i)++;
 	start = *i;
-	while (s[*i] && (s[*i] == '|' || c))
+	while (s[*i] && (s[*i] != '|' || c))
 	{
 		if ((s[*i] == '\'' || s[*i] == '"') && !c)
 			c = s[*i];

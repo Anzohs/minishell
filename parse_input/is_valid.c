@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
+#include "parsing.h"
 
 bool	is_valid(void)
 {
@@ -29,6 +30,8 @@ bool	is_valid(void)
 			perror("sintax error |");
 			return (false);
 		}
+		expantions(&lst->cmd);
+		expantions(&lst->arg);
 		lst = lst->next;
 	}
 	return (true);

@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   has_quotes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hladeiro <hladeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 19:18:15 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/04/18 19:18:16 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/18 17:24:45 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/01/18 17:24:48 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "parsing.h"
 
-size_t	ft_strlen(const char *s)
+bool	has_quotes(t_string *s)
 {
-	size_t	i;
+	t_string	str;
+	int			i;
 
-	i = 0;
+	i = -1;
 	if (!s || !*s)
-		return (0);
-	while (s[i])
-		i++;
-	return (i);
+		return (false);
+	str = *s;
+	while (str[++i] && (str[i] != '"' || str[i] != '\''))
+		;
+	return (false);
 }

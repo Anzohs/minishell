@@ -17,11 +17,14 @@
 
 void	parse_input(void);
 bool	is_valid(void);
+void	clean_content(void);
 void	clean_args(void);
 bool	closed_quotes(t_string s);
 void	clean_quotes(t_string *s);
-void	is_expantion(t_string s);
-void	expantios(t_string *s);
-void	has_quotes(t_string *s);
+bool	is_expantion(t_string s);
+void	expantions(t_string *s);
+bool	has_quotes(t_string *s);
+t_string	sub_expantion(t_string s, t_string str);
 void	transform_str(void);
+t_string	*split_value(t_string str);
 #endif
