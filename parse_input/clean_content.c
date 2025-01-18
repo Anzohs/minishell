@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
-#include "parsing.h"
-#include <string.h>
 
 static bool	split_need(t_string s)
 {
