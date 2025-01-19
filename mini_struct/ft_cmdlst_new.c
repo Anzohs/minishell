@@ -28,7 +28,7 @@ t_cmd	*ft_cmdlst_new(char *cmd, char *arg)
 	list->arg = ft_strdup(arg);
 	if (!list->arg)
 	{
-		// delone();
+		ft_cmdlstdelone(&list);
 		exit(0);
 	}
 	list->matrix = NULL;

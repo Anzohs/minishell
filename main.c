@@ -28,6 +28,7 @@ void	run_minishell(void)
 		parse_input();
 		add_history(mini()->readline);
 		transform_str();
+		ft_cmdlstclear(&mini()->cmd, ft_cmdlstdelone);
 		free(mini()->readline);
 		mini()->readline = readline(mini()->prompt);
 	}
@@ -42,7 +43,7 @@ int	main(int ac, char **av, char **env)
 	run_minishell();
 	ft_lstclear(&mini()->env, free);
 	ft_lstclear(&mini()->exp, free);
-	rl_clear_history();
+	clear_history();
 	hdestroy(mini()->ht);
 	return (0);
 }

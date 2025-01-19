@@ -12,6 +12,24 @@
 
 #include "../mini_struct/mini.h"
 
+void	printf_list(t_cmd *lst)
+{
+	t_cmd	*l;
+	int		i;
+
+	l = lst;
+	i = -1;
+	while (l)
+	{
+		printf("cmd : %s \n", l->cmd);
+		printf("arg : %s \n", l->arg);
+		while (l->matrix[++i])
+			printf("matix[%i] : %s\n", i, l->matrix[i]);
+		i = -1;
+		l = l->next;
+	}
+}
+
 void	transform_str(void)
 {
 	if (!is_valid())
@@ -21,5 +39,5 @@ void	transform_str(void)
 		return ;
 	}
 	clean_content();
-	ft_cmdlstclear(&mini()->cmd, ft_cmdlstdelone);
+	execute();
 }

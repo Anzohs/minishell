@@ -44,5 +44,6 @@ t_cmd	*ft_cmdlst_new(char *cmd, char *arg);
 void	ft_cmdlstadd_back(t_cmd **lst, t_cmd *n);
 void	ft_cmdlstclear(t_cmd **lst, void (*del)(t_cmd **lst));
 void	ft_cmdlstdelone(t_cmd **lst);
+int		ft_cmdlst_len(t_cmd **lst);
 
 #endif

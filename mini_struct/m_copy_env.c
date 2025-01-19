@@ -15,8 +15,9 @@
 static void	create_env(void)
 {
 	init_pwd();
-	//_=usr/bin/env
-	// SHELLVL
+	ft_lstadd_back(&mini()->env, ft_lstnew(ft_strdup("SHLVL=1")));
+	ft_lstadd_back(&mini()->env, ft_lstnew(ft_strdup("_=usr/bin/env")));
+	ft_lstadd_back(&mini()->exp, ft_lstnew(ft_strdup("OLDPWD")));
 }
 
 static void	copy_env(t_string env[])
