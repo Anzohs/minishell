@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   transform_str.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hladeiro <hladeiro@student.42lisboa.c      +#+  +:+       +#+        */
+/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/18 15:51:41 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/18 15:51:42 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/19 14:51:34 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/01/19 15:11:10 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ void	transform_str(void)
 		return ;
 	}
 	clean_content();
-	execute();
+	if (mini()->cmd->cmd && *mini()->cmd->cmd)
+		execute();
 }

@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 22:51:00 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/16 20:04:44 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/01/19 15:01:19 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ void	init_minishell(void)
 	ft_lstdup(&mini()->env, &mini()->exp);
 	mini()->ht = hcreate(10);
 	mini()->readline = readline(mini()->prompt);
+	while (!*mini()->readline)
+		mini()->readline = readline(mini()->prompt);
 }
-
 
 void	run_minishell(void)
 {
@@ -31,6 +32,8 @@ void	run_minishell(void)
 		ft_cmdlstclear(&mini()->cmd, ft_cmdlstdelone);
 		free(mini()->readline);
 		mini()->readline = readline(mini()->prompt);
+		while (!*mini()->readline)
+			mini()->readline = readline(mini()->prompt);
 	}
 }
 

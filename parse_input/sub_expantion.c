@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sub_expantion.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/19 14:51:34 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/01/19 15:06:24 by hladeiro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parsing.h"
 
 t_string	sub_expantion(t_string s, t_string str)
@@ -27,7 +39,7 @@ t_string	sub_expantion(t_string s, t_string str)
 		else
 			new[j++] = s[i++];
 	}
-	while(s[i])
+	while (s[i])
 		new[j++] = s[i++];
 	free(s);
 	return (new);

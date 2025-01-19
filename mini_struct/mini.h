@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 23:34:59 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/14 23:42:46 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/01/19 15:12:40 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ void	ft_cmdlstadd_back(t_cmd **lst, t_cmd *n);
 void	ft_cmdlstclear(t_cmd **lst, void (*del)(t_cmd **lst));
 void	ft_cmdlstdelone(t_cmd **lst);
 int		ft_cmdlst_len(t_cmd **lst);
+t_string	get_var(t_string s);
 
 #endif
