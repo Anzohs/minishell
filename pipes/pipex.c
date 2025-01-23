@@ -36,9 +36,6 @@ static void	start_pipe_1(t_pipex *pipex, \
 	{
 		if (pipex->is_doc == 0)
 			ft_child_one(pipex, mini->super_env, pipex->paths[0], argv2);
-		else
-			ft_child_doc_one(pipex, mini->super_env, \
-							pipex->paths[0], mini->commands);
 	}
 	if (pipex->pids[i] < 0)
 	{
@@ -157,8 +154,8 @@ void	pipex(t_mini *mini, t_node *comands)
 		clean_all(&pipex);
 		return ;
 	}
-	if (ft_strncmp(comands->entry.key, "here_doc", 8) == 0)
-		start_here_doc(&pipex, comands);
+/* 	if (ft_strncmp(comands->entry.key, "here_doc", 8) == 0)
+		start_here_doc(&pipex, comands); */
 	start_multi_pipe(&pipex, mini, node_len(comands), comands);
 	ft_parent(&pipex);
 }

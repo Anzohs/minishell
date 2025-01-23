@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:21:26 by malourei          #+#    #+#             */
-/*   Updated: 2025/01/10 18:41:33 by malourei         ###   ########.fr       */
+/*   Updated: 2025/01/23 21:57:53 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	parse_commands(t_mini *mini, t_node *commands)
 	m = commands;
 	if (node_len(m) < 1 || !clean_command(mini) || !clean_node(commands))
 		return ;
-	if (is_biltin(commands) && node_len(commands) == 1)
+	//printf("MACHO: %s\n", commands->entry.args[0]);
+	if (commands->entry.args[0] && !ft_strcmp(commands->entry.args[0], "<<"))
+		start_here_doc(m->entry.key, commands->entry.args, mini->super_env);
+	else if (is_biltin(commands) && node_len(commands) == 1)
 	{
 		if (!ft_strcmp(m->entry.key, "cd"))
 			cd_biltin();

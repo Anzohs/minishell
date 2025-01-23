@@ -3,41 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_here_doc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: essmpt <essmpt@student.42.fr>              +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:52:43 by malourei          #+#    #+#             */
-/*   Updated: 2025/01/19 23:02:40 by essmpt           ###   ########.fr       */
+/*   Updated: 2025/01/23 23:03:11 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "pipex.h"
 
-void	ft_child_doc_one(t_pipex *pipex, char **env, char *cmd_path, t_node *n)
-{
-	if (dup2(pipex->fds[0].fd[0], STDIN_FILENO) < 0)
-	{
-		perror("dup1");
-		exit(1);
-	}
-	if (dup2(pipex->fds[1].fd[1], STDOUT_FILENO) < 0)
-	{
-		perror("dup2");
-		exit(1);
-	}
-	ft_close(pipex->fds[0].fd[0]);
-	ft_close(pipex->fds[0].fd[1]);
-	ft_close(pipex->fds[1].fd[0]);
-	ft_close(pipex->fds[1].fd[1]);
-	execve2(cmd_path, n, env, pipex);
-	exit(0);
-}
-
-static void	here_doc(char *limiter, int fd[2])
+static void	here_doc(char *limiter, int fd[2], int pid)
 {
 	char	*line;
 
-	ft_close(fd[0]);
 	while (1)
 	{
 		write(1, "> ", 2);
@@ -54,30 +33,77 @@ static void	here_doc(char *limiter, int fd[2])
 		free(line);
 	}
 	ft_close(fd[1]);
+	return ;
 }
 
-int	start_here_doc(t_pipex *pipex, t_node *n)
+static void	parent(int fd[2], int pid)
 {
-	int pidefd[2];
-	int	pid;
+	ft_close(fd[0]);
+	ft_close(fd[1]);
+	waitpid(pid, NULL, 0);
+	return ;
+}
 
-	if (pipe(pidefd) < 0)
+static void	clear_pipe(int fd[2])
+{
+	char buffer[1024];
+	while (read(fd[0], buffer, sizeof(buffer)) > 0)
+		;
+}
+
+static void	start_cmd(char **args, char **env, int fd[2], int pid)
+{
+	char	*cmd;
+
+	cmd = ft_strjoin("/usr/bin/", mini()->commands->entry.key);
+	if (dup2(fd[0], STDIN_FILENO) < 0)
 	{
-		perror("pipe1");
+		write(2, "Deu merda\n", 10);
 		return ;
 	}
-	pid = fork();
-	if (pid < 0)
+	if (access(cmd, F_OK) != 0)
+	{
+		write(2, "command not found\n", 18);
+		clear_pipe(fd);
+		free(cmd);
+		ft_close(fd[0]);
+		ft_close(fd[1]);
+		return ;
+	}
+	ft_close(fd[0]);
+	ft_close(fd[1]);
+	execve(cmd, args, env);
+}
+
+void ft_here_one(int fd[2], int *pid, char **n, char **env)
+{
+	char *strs[] = {mini()->commands->entry.key, NULL};
+	//char *strs = fusion_strs();
+
+	*pid = fork();
+	if (*pid < 0)
 	{
 		perror("pid3");
 		return ;
 	}
-	if (pid == 0)
-		here_doc(n->entry.value, pidefd);
-	else
+	if (*pid == 0)
 	{
-		ft_close(pidefd[1]);
-		waitpid(pid, NULL , 0);
-		return (pidefd[0]);
+		here_doc(n[1], fd, *pid);
+		start_cmd(strs, env, fd, *pid);
 	}
+}
+
+void	start_here_doc(char *key, char **n, char **env)
+{
+	int	pipefd[2];
+	int	pid;
+
+	if (pipe(pipefd) < 0)
+	{
+		perror("pipe1");
+		return ;
+	}
+	ft_here_one(pipefd, &pid, n, env);
+	parent(pipefd, pid);
+	return ;
 }
