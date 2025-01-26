@@ -6,7 +6,7 @@
 /*   By: essmpt <essmpt@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 20:15:07 by essmpt            #+#    #+#             */
-/*   Updated: 2025/01/26 00:21:27 by essmpt           ###   ########.fr       */
+/*   Updated: 2025/01/26 23:25:16 by essmpt           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	two_arrow()
 {
 	int		pid;
-	int		fd[2];
 	int		file;
 	char	*cmd;
 	char	*strs[] = {mini()->commands->entry.key, NULL};
@@ -58,12 +57,6 @@ void	two_arrow()
 		free(cmd);
 		return ;
 	}
-	printf("MACHO\n");
-	if (pipe(fd) < 0)
-	{
-		write(2, "pipe_open\n", 10);
-		return ;
-	}
 	pid = fork();
 	if (pid < 0)
 	{
@@ -72,25 +65,16 @@ void	two_arrow()
 	}
 	if (pid == 0)
 	{
-		if (dup2(fd[0], STDIN_FILENO) < 0)
-		{
-			write(2, "file_dup1\n", 10);
-			return ;
-		}
 		if (dup2(file, STDOUT_FILENO) < 0)
 		{
 			write(2, "file_file\n", 10);
 			return ;
 		}
-		ft_close(fd[0]);
-		ft_close(fd[1]);
 		ft_close(file);
 		execve(cmd, strs, mini()->super_env);
 		write(2, "EXECVE_FILE\n", 12);
 	}
 	free(cmd);
-	ft_close(fd[0]);
-	ft_close(fd[1]);
 	ft_close(file);
 	waitpid(pid, NULL, 0);
 }
