@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: essmpt <essmpt@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 18:46:45 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/14 20:08:34 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/01/25 22:38:36 by essmpt           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static t_string	extract_command(const char *input, size_t *index)
 	if (!input || !*input || !input[*index])
 		return (ft_strdup(""));
 	while (input[*index] && (input[*index] != ' ' || c) \
-		&& input[*input] != '|')
+		&& input[*index] != '|')
 	{
 		if ((input[*index] == '\'' || input[*index] == '"') && !c)
 			c = input[*index];

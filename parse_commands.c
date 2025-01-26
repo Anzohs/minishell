@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
+/*   By: essmpt <essmpt@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:21:26 by malourei          #+#    #+#             */
-/*   Updated: 2025/01/23 21:57:53 by malourei         ###   ########.fr       */
+/*   Updated: 2025/01/26 00:04:53 by essmpt           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ void	parse_commands(t_mini *mini, t_node *commands)
 	//printf("MACHO: %s\n", commands->entry.args[0]);
 	if (commands->entry.args[0] && !ft_strcmp(commands->entry.args[0], "<<"))
 		start_here_doc(m->entry.key, commands->entry.args, mini->super_env);
+	else if(!ft_strcmp(commands->entry.key, ">") || (commands->entry.args[0] && !ft_strcmp(commands->entry.args[0], ">")))
+		one_arrow();
+	else if(!ft_strcmp(commands->entry.key, ">>") || (commands->entry.args[0] && !ft_strcmp(commands->entry.args[0], ">>")))
+		two_arrow();
 	else if (is_biltin(commands) && node_len(commands) == 1)
 	{
 		if (!ft_strcmp(m->entry.key, "cd"))
