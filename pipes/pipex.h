@@ -59,5 +59,6 @@ void	ft_child_one_martelado(t_pipex *pipex, char **env, char *cmd_path, t_node *
 t_string	*fusion_strs(void);
 void	one_arrow();
 void	two_arrow();
+void	one_arrow_reverse();
 
 #endif

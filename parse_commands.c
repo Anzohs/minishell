@@ -6,7 +6,7 @@
 /*   By: essmpt <essmpt@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:21:26 by malourei          #+#    #+#             */
-/*   Updated: 2025/01/26 00:04:53 by essmpt           ###   ########.fr       */
+/*   Updated: 2025/01/27 00:15:20 by essmpt           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	parse_commands(t_mini *mini, t_node *commands)
 		one_arrow();
 	else if(!ft_strcmp(commands->entry.key, ">>") || (commands->entry.args[0] && !ft_strcmp(commands->entry.args[0], ">>")))
 		two_arrow();
+	else if(!ft_strcmp(commands->entry.key, "<") || (commands->entry.args[0] && !ft_strcmp(commands->entry.args[0], "<")))
+		one_arrow_reverse();
 	else if (is_biltin(commands) && node_len(commands) == 1)
 	{
 		if (!ft_strcmp(m->entry.key, "cd"))
