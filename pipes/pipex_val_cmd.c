@@ -30,7 +30,7 @@ static char	*find_cmd(char *cmd, char **path)
 		free(tmp2);
 		i++;
 	}
-	return (ft_strjoin("usr/bin/", cmd));
+	return (ft_strdup(cmd));
 }
 
 static t_string	get_command(t_node *n, int i)
