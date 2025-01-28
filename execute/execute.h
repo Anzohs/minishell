@@ -17,5 +17,6 @@
 
 void	execute(void);
 void	cd_execute(void);
+void	pwd_execute(void);
 
 #endif

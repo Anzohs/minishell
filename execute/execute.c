@@ -29,7 +29,9 @@ void	execute(void)
 	if (ft_cmdlst_len(&mini()->cmd) == 1 && is_builtin(mini()->cmd->cmd))
 	{
 		if (!ft_strcmp(mini()->cmd->cmd, "cd"))
-			cd_execute();
+			return (cd_execute());
+		if (!ft_strcmp(mini()->cmd->cmd, "pwd"))
+			return (pwd_execute());
 		else
 			printf("nao e cd\n");
 	}

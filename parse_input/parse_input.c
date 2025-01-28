@@ -12,6 +12,18 @@
 
 #include "../mini_struct/mini.h"
 
+static t_string	trim_spaces(t_string str)
+{
+	int	start;
+	int	end;
+
+	end = ft_strlen(str) - 1;
+	start = 0;
+	while (end > start && str[end] == ' ')
+		end--;
+	return (ft_substr(str, start, end - start + 1));
+}
+
 static t_string	extract_arg(t_string s, int *i)
 {
 	t_string	arg;
@@ -32,7 +44,7 @@ static t_string	extract_arg(t_string s, int *i)
 	}
 	if (start == *i)
 		return (ft_strdup(""));
-	arg = ft_substr(s, start, *i - start);
+	arg = trim_spaces(ft_substr(s, start, *i - start));
 	return (arg);
 }
 
