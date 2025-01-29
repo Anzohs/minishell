@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_search.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 18:45:14 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/11/24 19:11:01 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/01/29 18:15:36 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ struct s_entry
 	t_string	key;
 	void		*value;
 	t_string	*args;
+	t_string	*arrow;
 };
 
 typedef enum s_action

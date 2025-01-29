@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_one_arrow.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: essmpt <essmpt@student.42.fr>              +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 20:15:07 by essmpt            #+#    #+#             */
-/*   Updated: 2025/01/26 23:24:21 by essmpt           ###   ########.fr       */
+/*   Updated: 2025/01/29 21:34:26 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	one_arrow()
 	int		pid;
 	int		file;
 	char	*cmd;
-	char	*strs[] = {mini()->commands->entry.key, NULL};
+	char	**strs;
 
-	if (!mini()->commands->entry.args[0])
+	if (!ft_strcmp(mini()->commands->entry.key, ">") && !mini()->commands->entry.args[0])
 	{
 		write(2, "error near \"newline\" found\n", 27);
 		return ;
@@ -44,13 +44,13 @@ void	one_arrow()
 		free(cmd);
 		return ;
 	}
-	if (!mini()->commands->entry.args[1])
+	if (!mini()->commands->entry.arrow[1])
 	{
 		write(2, "error near \"newline\" found2\n", 28);
 		free(cmd);
 		return ;
 	}
-	file = open(mini()->commands->entry.args[1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	file = open(mini()->commands->entry.arrow[1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (file < 0)
 	{
 		perror("file");
@@ -71,6 +71,7 @@ void	one_arrow()
 			return ;
 		}
 		ft_close(file);
+		strs = fusion_strs();
 		execve(cmd, strs, mini()->super_env);
 		write(2, "EXECVE_FILE\n", 12);
 	}
