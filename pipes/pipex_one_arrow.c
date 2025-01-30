@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 20:15:07 by essmpt            #+#    #+#             */
-/*   Updated: 2025/01/29 21:34:26 by malourei         ###   ########.fr       */
+/*   Updated: 2025/01/30 21:28:06 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,6 @@ void	one_arrow()
 	cmd = ft_strjoin("/usr/bin/", mini()->commands->entry.key);
 	if (cmd == NULL)
 		return;
-	if (access(cmd, F_OK) != 0)
-	{
-		write(2, "FILE: cmd not found\n", 20);
-		free(cmd);
-		return ;
-	}
 	if (!mini()->commands->entry.arrow[1])
 	{
 		write(2, "error near \"newline\" found2\n", 28);
@@ -55,6 +49,13 @@ void	one_arrow()
 	{
 		perror("file");
 		free(cmd);
+		return ;
+	}
+	if (access(cmd, F_OK) != 0)
+	{
+		write(2, "ARROW >: cmd not found\n", 23);
+		free(cmd);
+		ft_close(file);
 		return ;
 	}
 	pid = fork();

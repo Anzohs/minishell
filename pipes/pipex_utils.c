@@ -22,7 +22,7 @@ t_string	*fusion_strs(void)
 	i = 0;
 	while (mini()->commands->entry.args[i])
 	{
-		printf("arg[%d]: %s\n",i , mini()->commands->entry.args[i]);
+		//printf("arg[%d]: %s\n",i , mini()->commands->entry.args[i]);
 		matrix[i + 1] = ft_strdup(mini()->commands->entry.args[i]);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:21:26 by malourei          #+#    #+#             */
-/*   Updated: 2025/01/29 21:31:30 by malourei         ###   ########.fr       */
+/*   Updated: 2025/01/30 21:16:20 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**new_args(char **strs, int index)
 	}
 	while (i < index)
 	{
-		printf("ARG[%d]: %s\n", i, strs[i]);
+		printf("ARG1[%d]: %s\n", i, strs[i]);
 		new_strs[i] = ft_strdup(strs[i]);
 		if (!new_strs[i])
 		{
@@ -95,7 +95,7 @@ void	create_arrow(t_node *node)
 		return ;
 	while (node->entry.args[i] != NULL)
 	{
-		if (is_arrow(node->entry.args[i], i) > 0)
+		if (is_arrow(node->entry.args[i], i) >= 0)
 		{
 			new_arg = new_args(node->entry.args, i);
 			arrow = new_arrows(node->entry.args, i);
@@ -123,7 +123,8 @@ void	parse_commands(t_mini *mini, t_node *commands)
 	if (!ft_strcmp(commands->entry.key, ">") || (m->entry.arrow != NULL && m->entry.arrow[0]))
 	{
 		one_arrow();
-		return ;
+		free_env(m->entry.arrow);
+		//return ;
 	}
 /* 	if (commands->entry.arrow[0] && !ft_strcmp(commands->entry.arrow[0], "<<"))
 		start_here_doc(m->entry.key, commands->entry.args, mini->super_env);
