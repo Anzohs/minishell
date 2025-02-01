@@ -57,8 +57,8 @@ void	start_here_doc(char *key, char **commands, char **env);
 void	pipex(t_mini *mini, t_node *comands);
 void	ft_child_one_martelado(t_pipex *pipex, char **env, char *cmd_path, t_node *node);
 t_string	*fusion_strs(void);
-void	one_arrow();
-void	two_arrow();
-void	one_arrow_reverse();
+void	one_arrow(t_node *m);
+void	two_arrow(t_node *m);
+void	one_arrow_reverse(t_node *m);
 
 #endif

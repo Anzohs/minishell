@@ -6,27 +6,27 @@
 /*   By: essmpt <essmpt@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 00:03:50 by essmpt            #+#    #+#             */
-/*   Updated: 2025/01/27 00:14:39 by essmpt           ###   ########.fr       */
+/*   Updated: 2025/02/01 00:02:11 by essmpt           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	one_arrow_reverse()
+void	one_arrow_reverse(t_node *m)
 {
 	int		pid;
 	int		file;
 	char	*cmd;
-	char	*strs[] = {mini()->commands->entry.key, NULL};
+	char	**strs;
 
-	if (!mini()->commands->entry.args[0])
+	if (!ft_strcmp(m->entry.key, "<") && !m->entry.args[0])
 	{
-		write(2, "error near \"newline\" found\n", 27);
+		write(2, "error near \"newline\" found5\n", 28);
 		return ;
 	}
-	if (!ft_strcmp(mini()->commands->entry.key, "<"))
+	if (!ft_strcmp(m->entry.key, "<"))
 	{
-		file = open(mini()->commands->entry.args[0], O_RDONLY);
+		file = open(m->entry.args[0], O_RDONLY);
 		if (file < 0)
 		{
 			perror("file");
@@ -35,26 +35,29 @@ void	one_arrow_reverse()
 		ft_close(file);
 		return ;
 	}
-	cmd = ft_strjoin("/usr/bin/", mini()->commands->entry.key);
+	cmd = ft_strjoin("/usr/bin/", m->entry.key);
 	if (cmd == NULL)
 		return;
 	if (access(cmd, F_OK) != 0)
 	{
-		write(2, "FILE: cmd not found\n", 20);
+		write(2, "ARROW <: cmd not found\n", 23);
+		free_env(m->entry.arrow);
 		free(cmd);
 		return ;
 	}
-	if (!mini()->commands->entry.args[1])
+	if (!m->entry.arrow[1])
 	{
-		write(2, "error near \"newline\" found2\n", 28);
+		write(2, "error near \"newline\" found6\n", 28);
 		free(cmd);
+		free_env(m->entry.arrow);
 		return ;
 	}
-	file = open(mini()->commands->entry.args[1], O_RDONLY);
+	file = open(m->entry.arrow[1], O_RDONLY);
 	if (file < 0)
 	{
 		perror("file");
 		free(cmd);
+		free_env(m->entry.arrow);
 		return ;
 	}
 	pid = fork();
@@ -71,10 +74,12 @@ void	one_arrow_reverse()
 			return ;
 		}
 		ft_close(file);
+		strs = fusion_strs();
 		execve(cmd, strs, mini()->super_env);
 		write(2, "EXECVE_FILE\n", 12);
 	}
 	free(cmd);
+	free_env(m->entry.arrow);
 	ft_close(file);
 	waitpid(pid, NULL, 0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
+/*   By: essmpt <essmpt@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:21:26 by malourei          #+#    #+#             */
-/*   Updated: 2025/01/30 21:16:20 by malourei         ###   ########.fr       */
+/*   Updated: 2025/01/31 23:52:43 by essmpt           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,15 +120,15 @@ void	parse_commands(t_mini *mini, t_node *commands)
 		return ;
 	m->entry.arrow = NULL;
 	create_arrow(m);
-	if (!ft_strcmp(commands->entry.key, ">") || (m->entry.arrow != NULL && m->entry.arrow[0]))
-	{
-		one_arrow();
-		free_env(m->entry.arrow);
-		//return ;
-	}
-/* 	if (commands->entry.arrow[0] && !ft_strcmp(commands->entry.arrow[0], "<<"))
-		start_here_doc(m->entry.key, commands->entry.args, mini->super_env);
-	else if(!ft_strcmp(commands->entry.key, ">") || (commands->entry.arrow[0] && !ft_strcmp(commands->entry.arrow[0], ">")))
+	if (!ft_strcmp(m->entry.key, ">") || (m->entry.arrow != NULL && !ft_strcmp(m->entry.arrow[0], ">")))
+		one_arrow(m);
+	else if(!ft_strcmp(m->entry.key, ">>") || (m->entry.arrow != NULL && !ft_strcmp(m->entry.arrow[0], ">>")))
+		two_arrow(m);
+	else if(!ft_strcmp(m->entry.key, "<") || (m->entry.arrow != NULL && !ft_strcmp(commands->entry.arrow[0], "<")))
+		one_arrow_reverse(m);
+/*	else if (commands->entry.arrow[0] && !ft_strcmp(commands->entry.arrow[0], "<<"))
+		start_here_doc(m->entry.key, commands->entry.args, mini->super_env); */
+/*	else if(!ft_strcmp(commands->entry.key, ">") || (commands->entry.arrow[0] && !ft_strcmp(commands->entry.arrow[0], ">")))
 		one_arrow();
 	else if(!ft_strcmp(commands->entry.key, ">>") || (commands->entry.arrow[0] && !ft_strcmp(commands->entry.arrow[0], ">>")))
 		two_arrow();
