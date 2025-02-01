@@ -53,7 +53,7 @@ void	ft_close_all_1(t_pipex *pipex);
 void	ft_close_all_m(t_pipex *pipex, int i);
 void	clean_null_env(t_pipex *pipex);
 void	count_pids(t_pipex *pipex, int argc);
-void	start_here_doc(char *key, char **commands, char **env);
+void	start_here_doc(t_node *m, char **env);
 void	pipex(t_mini *mini, t_node *comands);
 void	ft_child_one_martelado(t_pipex *pipex, char **env, char *cmd_path, t_node *node);
 t_string	*fusion_strs(void);

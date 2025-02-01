@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_here_doc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
+/*   By: essmpt <essmpt@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:52:43 by malourei          #+#    #+#             */
-/*   Updated: 2025/01/23 23:03:11 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/01 01:13:02 by essmpt           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ static void	here_doc(char *limiter, int fd[2], int pid)
 	return ;
 }
 
-static void	parent(int fd[2], int pid)
+static void	parent(int fd[2], int pid, t_node *m)
 {
+	free_env(m->entry.arrow);
 	ft_close(fd[0]);
 	ft_close(fd[1]);
 	waitpid(pid, NULL, 0);
@@ -75,11 +76,11 @@ static void	start_cmd(char **args, char **env, int fd[2], int pid)
 	execve(cmd, args, env);
 }
 
-void ft_here_one(int fd[2], int *pid, char **n, char **env)
+void ft_here_one(int fd[2], int *pid, char *n, char **env)
 {
-	char *strs[] = {mini()->commands->entry.key, NULL};
-	//char *strs = fusion_strs();
+	char **strs;
 
+	strs = fusion_strs();
 	*pid = fork();
 	if (*pid < 0)
 	{
@@ -88,22 +89,31 @@ void ft_here_one(int fd[2], int *pid, char **n, char **env)
 	}
 	if (*pid == 0)
 	{
-		here_doc(n[1], fd, *pid);
+		here_doc(n, fd, *pid);
 		start_cmd(strs, env, fd, *pid);
 	}
+	free_env(strs);
 }
 
-void	start_here_doc(char *key, char **n, char **env)
+void	start_here_doc(t_node *m, char **env)
 {
 	int	pipefd[2];
 	int	pid;
 
+	if (!ft_strcmp(m->entry.key, "<<") && !m->entry.args[0])
+	{
+		write(2, "error near \"newline\" found5\n", 28);
+		return ;
+	}
 	if (pipe(pipefd) < 0)
 	{
 		perror("pipe1");
 		return ;
 	}
-	ft_here_one(pipefd, &pid, n, env);
-	parent(pipefd, pid);
+	if (!ft_strcmp(m->entry.key, "<<"))
+		ft_here_one(pipefd, &pid, m->entry.args[0], env);
+	else
+		ft_here_one(pipefd, &pid, m->entry.arrow[1], env);
+	parent(pipefd, pid, m);
 	return ;
 }

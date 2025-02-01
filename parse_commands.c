@@ -6,7 +6,7 @@
 /*   By: essmpt <essmpt@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:21:26 by malourei          #+#    #+#             */
-/*   Updated: 2025/01/31 23:52:43 by essmpt           ###   ########.fr       */
+/*   Updated: 2025/02/01 01:16:04 by essmpt           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,14 +126,8 @@ void	parse_commands(t_mini *mini, t_node *commands)
 		two_arrow(m);
 	else if(!ft_strcmp(m->entry.key, "<") || (m->entry.arrow != NULL && !ft_strcmp(commands->entry.arrow[0], "<")))
 		one_arrow_reverse(m);
-/*	else if (commands->entry.arrow[0] && !ft_strcmp(commands->entry.arrow[0], "<<"))
-		start_here_doc(m->entry.key, commands->entry.args, mini->super_env); */
-/*	else if(!ft_strcmp(commands->entry.key, ">") || (commands->entry.arrow[0] && !ft_strcmp(commands->entry.arrow[0], ">")))
-		one_arrow();
-	else if(!ft_strcmp(commands->entry.key, ">>") || (commands->entry.arrow[0] && !ft_strcmp(commands->entry.arrow[0], ">>")))
-		two_arrow();
-	else if(!ft_strcmp(commands->entry.key, "<") || (commands->entry.arrow[0] && !ft_strcmp(commands->entry.arrow[0], "<")))
-		one_arrow_reverse(); */
+	else if (!ft_strcmp(m->entry.key, "<<") || (m->entry.arrow != NULL && !ft_strcmp(commands->entry.arrow[0], "<<")))
+		start_here_doc(m, mini->super_env);
 	else if (is_biltin(commands) && node_len(commands) == 1)
 	{
 		if (!ft_strcmp(m->entry.key, "cd"))
