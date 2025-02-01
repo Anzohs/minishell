@@ -6,11 +6,11 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 17:22:59 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/18 17:23:03 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/01 19:27:06 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../mini_struct/mini.h"
+#include "parsing.h"
 
 void	expantions(t_string *s)
 {

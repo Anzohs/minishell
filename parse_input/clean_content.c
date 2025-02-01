@@ -6,50 +6,11 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 17:22:48 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/19 19:53:25 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/01 18:49:38 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
-
-static bool	split_need(t_string s)
-{
-	int	i;
-	int	c;
-
-	i = -1;
-	if (!s || !*s || *s != 2)
-		return (false);
-	c = 0;
-	while (s[++i])
-	{
-		if ((s[i] == '"' || s[i] == '\'') && !c)
-			c = s[i];
-		else if (s[i] == c)
-			c = 0;
-		else if (s[i] == 2 && !c)
-		{
-			while (ft_isalpha(s[++i]))
-				;
-			if (s[i] != 0 && s[i] != ' ')
-				return (false);
-			return (true);
-		}
-	}
-	return (false);
-}
-
-static void	free_matrix(t_string *s)
-{
-	int	i;
-
-	if (!s)
-		return ;
-	i = -1;
-	while (s[++i])
-		free(s[i]);
-	free(s);
-}
 
 static void	add_matix(t_cmd **lst, t_string *s)
 {
@@ -107,30 +68,6 @@ static void	matrix(t_cmd **lst)
 	free(s[i]);
 	free(s);
 	join_matrix(lst, split_value((*lst)->arg));
-}
-
-static void	take_quotes(t_string *str)
-{
-	t_string	s;
-	int			i;
-	int			y;
-	int			c;
-
-	s = *str;
-	i = -1;
-	y = -1;
-	c = 0;
-	while (s[++i])
-	{
-		if ((s[i] == '"' || s[i] == '\'') && !c)
-			c = s[i];
-		else if (s[i] == c)
-			c = 0;
-		else
-			(*str)[++y] = s[i];
-	}
-	while (y < i)
-		(*str)[++y] = 0;
 }
 
 static void	take_expantions(t_cmd **lst)

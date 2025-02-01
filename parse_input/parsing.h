@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:56:50 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/16 21:08:28 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/01 18:49:47 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,8 @@ bool	has_quotes(t_string *s);
 t_string	sub_expantion(t_string s, t_string str);
 void	transform_str(void);
 t_string	*split_value(t_string str);
+bool	split_need(t_string s);
+void	take_quotes(t_string *str);
+void	free_matrix(t_string *s);
+
 #endif

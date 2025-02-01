@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 14:51:34 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/19 18:47:40 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/01 19:06:10 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,24 @@ static bool	is_builtin(t_string s)
 		!ft_strcmp(s, "unset") || \
 		!ft_strcmp(s, "env") || \
 		!ft_strcmp(s, "pwd"));
+}
+
+static void p(t_string *s)
+{
+	int i = 0;
+
+	while (s[i])
+		printf("%s \n", s[i++]);
+}
+
+static void prin()
+{
+	t_cmd *c = mini()->cmd;
+	while(c)
+	{
+		p(c->matrix);
+		c = c->next;
+	}
 }
 
 void	execute(void)
@@ -36,5 +54,5 @@ void	execute(void)
 			printf("nao e cd\n");
 	}
 	else
-		printf("demasiado grande\n");
+		prin();
 }

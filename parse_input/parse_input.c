@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:56:40 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/19 15:00:38 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/01 18:42:13 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static t_string	trim_spaces(t_string str)
 	end = ft_strlen(str) - 1;
 	start = 0;
 	while (end > start && str[end] == ' ')
-		end--;
-	return (ft_substr(str, start, end - start + 1));
+		str[end--] = 0;
+	return (str);
 }
 
 static t_string	extract_arg(t_string s, int *i)

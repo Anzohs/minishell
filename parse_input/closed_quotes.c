@@ -6,11 +6,11 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 21:02:44 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/16 21:05:24 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/01 18:49:27 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../mini_struct/mini.h"
+#include "parsing.h"
 
 bool	closed_quotes(t_string s)
 {

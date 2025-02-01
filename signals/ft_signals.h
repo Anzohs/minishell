@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_signals.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/14 22:48:40 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/01 20:27:28 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/02/01 20:09:55 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/02/01 20:16:41 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef FT_SIGNALS_H
+# define FT_SIGNALS_H
 
-# include "ft_search/ft_search.h"
-# include "libs.h"
-# include "parse_input/parsing.h"
-# include "execute/execute.h"
-# include "signals/ft_signals.h"
+# include "../libs.h"
 
+void	load_signals(void);
+void	sig_handler(int signum, siginfo_t *sig, void *s);
 #endif

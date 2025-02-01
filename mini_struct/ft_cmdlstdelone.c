@@ -6,23 +6,11 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 21:29:51 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/16 21:29:54 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/01 18:50:35 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
-
-static void	free_matrix(t_string *s)
-{
-	int	i;
-
-	if (!s)
-		return ;
-	i = -1;
-	while (s[++i])
-		free(s[i]);
-	free(s);
-}
 
 void	ft_cmdlstdelone(t_cmd **lst)
 {

@@ -6,24 +6,32 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 22:51:00 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/19 15:01:19 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/01 21:37:36 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_struct/mini.h"
+#include <readline/readline.h>
 
 void	init_minishell(void)
 {
 	mini()->prompt = "shell $ > ";
+	load_signals();
 	ft_lstdup(&mini()->env, &mini()->exp);
 	mini()->ht = hcreate(10);
-	mini()->readline = readline(mini()->prompt);
-	while (!*mini()->readline)
-		mini()->readline = readline(mini()->prompt);
 }
 
 void	run_minishell(void)
 {
+	mini()->readline = readline(mini()->prompt);
+	if (mini()->sig == 1)
+	{
+		mini()->sig = 0;
+		free(mini()->readline);
+		mini()->readline = readline(mini()->prompt);
+	}
+	while (mini()->readline && !*mini()->readline)
+		mini()->readline = readline(mini()->prompt);
 	while (mini()->readline && ft_strcmp(mini()->readline, "exit"))
 	{
 		parse_input();
@@ -32,7 +40,7 @@ void	run_minishell(void)
 		ft_cmdlstclear(&mini()->cmd, ft_cmdlstdelone);
 		free(mini()->readline);
 		mini()->readline = readline(mini()->prompt);
-		while (!*mini()->readline)
+		while (mini()->readline && !*mini()->readline)
 			mini()->readline = readline(mini()->prompt);
 	}
 }
@@ -47,7 +55,7 @@ int	main(int ac, char **av, char **env)
 	run_minishell();
 	ft_lstclear(&mini()->env, free);
 	ft_lstclear(&mini()->exp, free);
-	clear_history();
+	rl_clear_history();
 	hdestroy(mini()->ht);
-	return (0);
+	return (mini()->exit_code);
 }

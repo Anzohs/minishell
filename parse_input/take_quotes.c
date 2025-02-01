@@ -1,22 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   take_quotes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/14 22:48:40 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/01 20:27:28 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/02/01 18:47:11 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/02/01 18:47:45 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "parsing.h"
 
-# include "ft_search/ft_search.h"
-# include "libs.h"
-# include "parse_input/parsing.h"
-# include "execute/execute.h"
-# include "signals/ft_signals.h"
+void	take_quotes(t_string *str)
+{
+	t_string	s;
+	int			i;
+	int			y;
+	int			c;
 
-#endif
+	s = *str;
+	i = -1;
+	y = -1;
+	c = 0;
+	while (s[++i])
+	{
+		if ((s[i] == '"' || s[i] == '\'') && !c)
+			c = s[i];
+		else if (s[i] == c)
+			c = 0;
+		else
+			(*str)[++y] = s[i];
+	}
+	while (y < i)
+		(*str)[++y] = 0;
+}

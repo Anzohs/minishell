@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   free_matrix.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/14 22:48:40 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/01 20:27:28 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/02/01 18:48:40 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/02/01 18:49:07 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "parsing.h"
 
-# include "ft_search/ft_search.h"
-# include "libs.h"
-# include "parse_input/parsing.h"
-# include "execute/execute.h"
-# include "signals/ft_signals.h"
+void	free_matrix(t_string *s)
+{
+	int	i;
 
-#endif
+	if (!s)
+		return ;
+	i = -1;
+	while (s[++i])
+		free(s[i]);
+	free(s);
+}
