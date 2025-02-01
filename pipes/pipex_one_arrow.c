@@ -6,7 +6,7 @@
 /*   By: essmpt <essmpt@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 20:15:07 by essmpt            #+#    #+#             */
-/*   Updated: 2025/01/31 22:46:03 by essmpt           ###   ########.fr       */
+/*   Updated: 2025/02/01 00:21:17 by essmpt           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	one_arrow(t_node *m)
 	{
 		perror("file");
 		free(cmd);
+		free_env(m->entry.arrow);
 		return ;
 	}
 	if (access(cmd, F_OK) != 0)

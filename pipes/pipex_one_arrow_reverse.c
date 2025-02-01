@@ -6,7 +6,7 @@
 /*   By: essmpt <essmpt@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 00:03:50 by essmpt            #+#    #+#             */
-/*   Updated: 2025/02/01 00:02:11 by essmpt           ###   ########.fr       */
+/*   Updated: 2025/02/01 00:31:55 by essmpt           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,6 @@ void	one_arrow_reverse(t_node *m)
 	cmd = ft_strjoin("/usr/bin/", m->entry.key);
 	if (cmd == NULL)
 		return;
-	if (access(cmd, F_OK) != 0)
-	{
-		write(2, "ARROW <: cmd not found\n", 23);
-		free_env(m->entry.arrow);
-		free(cmd);
-		return ;
-	}
 	if (!m->entry.arrow[1])
 	{
 		write(2, "error near \"newline\" found6\n", 28);
@@ -58,6 +51,13 @@ void	one_arrow_reverse(t_node *m)
 		perror("file");
 		free(cmd);
 		free_env(m->entry.arrow);
+		return ;
+	}
+	if (access(cmd, F_OK) != 0)
+	{
+		write(2, "ARROW <: cmd not found\n", 23);
+		free_env(m->entry.arrow);
+		free(cmd);
 		return ;
 	}
 	pid = fork();

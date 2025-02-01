@@ -6,7 +6,7 @@
 /*   By: essmpt <essmpt@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 20:15:07 by essmpt            #+#    #+#             */
-/*   Updated: 2025/01/31 23:48:16 by essmpt           ###   ########.fr       */
+/*   Updated: 2025/02/01 00:16:29 by essmpt           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	two_arrow(t_node *m)
 	}
 	if (!ft_strcmp(m->entry.key, ">>"))
 	{
-		file = open(mini()->commands->entry.args[0], O_CREAT, 0644);
+		file = open(m->entry.args[0], O_CREAT | O_WRONLY | O_APPEND, 0644);
 		if (file < 0)
 		{
 			perror("file");
@@ -50,6 +50,7 @@ void	two_arrow(t_node *m)
 	{
 		perror("file");
 		free(cmd);
+		free_env(m->entry.arrow);
 		return ;
 	}
 	if (access(cmd, F_OK) != 0)
