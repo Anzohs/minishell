@@ -41,6 +41,7 @@ int	main(int ac, char **av, char **env)
 {
 	(void)av;
 	(void)ac;
+	stat(av[0], &mini()->stat);
 	m_copy_env(env);
 	init_minishell();
 	run_minishell();

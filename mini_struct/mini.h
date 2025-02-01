@@ -14,6 +14,7 @@
 # define MINI_H
 
 # include "../minishell.h"
+# include "sys/stat.h"
 
 typedef struct s_cmd
 {
@@ -32,6 +33,9 @@ typedef struct s_minishell
 	t_hash			*ht;
 	t_cmd			*cmd;
 	int				pipes;
+	int				start;
+	int				exit_code;
+	struct stat		stat;
 }					t_mini;
 
 t_mini				*mini(void);

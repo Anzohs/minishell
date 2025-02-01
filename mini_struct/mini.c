@@ -12,9 +12,17 @@
 
 #include "mini.h"
 
+static void	start_tmini(t_mini *mini)
+{
+	mini->start = 1;
+	//rl_catch_signals = 1;
+}
+
 t_mini	*mini(void)
 {
 	static t_mini	m;
 
+	if (!m.start)
+		start_tmini(&m);
 	return (&m);
 }
