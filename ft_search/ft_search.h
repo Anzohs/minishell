@@ -6,11 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 18:45:14 by hladeiro          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/12/10 13:57:24 by hladeiro         ###   ########.fr       */
-=======
 /*   Updated: 2025/01/29 18:15:36 by malourei         ###   ########.fr       */
->>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +21,8 @@ typedef struct s_hash	t_hash;
 
 struct					s_entry
 {
-<<<<<<< HEAD
 	t_string			key;
 	t_string			value;
-=======
-	t_string	key;
-	void		*value;
-	t_string	*args;
-	t_string	*arrow;
->>>>>>> main
 };
 
 typedef enum s_action
