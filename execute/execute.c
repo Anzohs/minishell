@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 14:51:34 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/02 17:46:54 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/02 21:26:34 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ void	execute(void)
 	if (ft_cmdlst_len(&mini()->cmd) == 1 && is_builtin(mini()->cmd->cmd))
 	{
 		if (!ft_strcmp(mini()->cmd->cmd, "cd"))
-			return (cd_execute());
+			return (cd_execute(mini()->cmd->matrix));
 		if (!ft_strcmp(mini()->cmd->cmd, "pwd"))
 			return (pwd_execute());
+		if (!ft_strcmp(mini()->cmd->cmd, "export"))
+			return (export_());
 		else
 			printf("nao e cd\n");
 	}

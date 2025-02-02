@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lsthas.c                                        :+:      :+:    :+:   */
+/*   matrix_len.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/02 19:19:47 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/02 20:10:13 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/02/02 20:54:41 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/02/02 20:56:33 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "mini.h"
 
-char	*ft_lsthas(t_list *lst, const char *str)
+int	matrix_len(t_string *s)
 {
-	t_list	*tmp;
+	int	i;
 
-	tmp = lst;
-	while (tmp)
-	{
-		if (!ft_strncmp(tmp->content, str, ft_strlen(str)))
-			return (ft_strchr(tmp->content, '='));
-		tmp = tmp->next;
-	}
-	return ("");
+	if (!s)
+		return (0);
+	i = -1;
+	while (s[++i])
+		;
+	return (i);
 }

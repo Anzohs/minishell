@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 23:34:59 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/01 20:41:00 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/02 20:56:49 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../minishell.h"
 
+extern	int		g_sig;
 
 typedef struct s_cmd
 {
@@ -34,8 +35,8 @@ typedef struct s_minishell
 	t_cmd			*cmd;
 	int				pipes;
 	int				start;
-	int				exit_code;
 	int				sig;
+	int				exit_code;
 	struct stat		stat;
 }					t_mini;
 
@@ -51,5 +52,6 @@ void				ft_cmdlstclear(t_cmd **lst, void (*del)(t_cmd **lst));
 void				ft_cmdlstdelone(t_cmd **lst);
 int					ft_cmdlst_len(t_cmd **lst);
 t_string			get_var(t_string s);
+int					matrix_len(t_string *s);
 
 #endif
