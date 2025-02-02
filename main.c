@@ -24,24 +24,23 @@ void	init_minishell(void)
 void	run_minishell(void)
 {
 	mini()->readline = readline(mini()->prompt);
-	if (mini()->sig == 1)
-	{
-		mini()->sig = 0;
-		free(mini()->readline);
-		mini()->readline = readline(mini()->prompt);
-	}
-	while (mini()->readline && !*mini()->readline)
-		mini()->readline = readline(mini()->prompt);
 	while (mini()->readline && ft_strcmp(mini()->readline, "exit"))
 	{
-		parse_input();
-		add_history(mini()->readline);
-		transform_str();
-		ft_cmdlstclear(&mini()->cmd, ft_cmdlstdelone);
+		if (mini()->sig == 1)
+		{
+			mini()->sig = 0;
+			free(mini()->readline);
+			mini()->readline = readline(mini()->prompt);
+		}
+		if (mini()->readline && *mini()->readline)
+		{
+			parse_input();
+			add_history(mini()->readline);
+			transform_str();
+			ft_cmdlstclear(&mini()->cmd, ft_cmdlstdelone);
+		}
 		free(mini()->readline);
 		mini()->readline = readline(mini()->prompt);
-		while (mini()->readline && !*mini()->readline)
-			mini()->readline = readline(mini()->prompt);
 	}
 }
 
@@ -55,7 +54,7 @@ int	main(int ac, char **av, char **env)
 	run_minishell();
 	ft_lstclear(&mini()->env, free);
 	ft_lstclear(&mini()->exp, free);
-	rl_clear_history();
+	clear_history();
 	hdestroy(mini()->ht);
 	return (mini()->exit_code);
 }
