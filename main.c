@@ -6,12 +6,11 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 22:51:00 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/01 21:37:36 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/02 17:52:30 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_struct/mini.h"
-#include <readline/readline.h>
 
 void	init_minishell(void)
 {
@@ -32,13 +31,13 @@ void	run_minishell(void)
 			free(mini()->readline);
 			mini()->readline = readline(mini()->prompt);
 		}
+		add_history(mini()->readline);
 		if (mini()->readline && *mini()->readline)
 		{
 			parse_input();
-			add_history(mini()->readline);
 			transform_str();
-			ft_cmdlstclear(&mini()->cmd, ft_cmdlstdelone);
 		}
+		ft_cmdlstclear(&mini()->cmd, ft_cmdlstdelone);
 		free(mini()->readline);
 		mini()->readline = readline(mini()->prompt);
 	}
