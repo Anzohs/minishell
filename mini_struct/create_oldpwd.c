@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hcreate.c                                          :+:      :+:    :+:   */
+/*   create_oldpwd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:55:04 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/10 13:55:05 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/16 17:16:10 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/01/16 17:16:11 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search.h"
+#include "mini.h"
 
-t_hash	*hcreate(size_t nel)
+void	update_oldpwd(t_string path, t_list **lst)
 {
-	t_hash	*hash;
-	size_t	l;
+	t_string	var;
+	t_list		*new;
 
-	hash = ft_calloc(sizeof(t_hash), nel);
-	if (!hash)
-		return (NULL);
-	hash->node = (t_node **)ft_calloc(sizeof(t_node *), nel);
-	if (!hash->node)
+	if (!path)
+		return ;
+	var = ft_calloc(sizeof(char), ft_strlen(path) + 4);
+	if (!var)
+		exit(0);
+	ft_strcpy(var, "OLD");
+	ft_strcat(var, path);
+	new = ft_lstnew(var);
+	if (!new)
 	{
-		free(hash);
-		return (NULL);
+		free(var);
+		exit(0);
 	}
-	l = 0;
-	while (l < nel)
-		hash->node[l++] = NULL;
-	hash->len = nel;
-	return (hash);
+	ft_lstadd_back(lst, new);
 }

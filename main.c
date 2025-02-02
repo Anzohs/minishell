@@ -3,55 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/15 19:57:48 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/14 16:39:12 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/14 22:51:00 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/02/02 17:52:30 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include <time.h>
+#include "mini_struct/mini.h"
 
-void	free_all(char **strs)
+void	init_minishell(void)
 {
-	int	i;
+	mini()->prompt = "shell $ > ";
+	load_signals();
+	ft_lstdup(&mini()->env, &mini()->exp);
+	mini()->ht = hcreate(10);
+}
 
-	i = 0;
-	while (strs[i])
+void	run_minishell(void)
+{
+	mini()->readline = readline(mini()->prompt);
+	while (mini()->readline && ft_strcmp(mini()->readline, "exit"))
 	{
-		free(strs[i]);
-		i++;
+		if (mini()->sig == 1)
+		{
+			mini()->sig = 0;
+			free(mini()->readline);
+			mini()->readline = readline(mini()->prompt);
+		}
+		add_history(mini()->readline);
+		if (mini()->readline && *mini()->readline)
+		{
+			parse_input();
+			transform_str();
+		}
+		ft_cmdlstclear(&mini()->cmd, ft_cmdlstdelone);
+		free(mini()->readline);
+		mini()->readline = readline(mini()->prompt);
 	}
-	free(strs);
 }
 
 int	main(int ac, char **av, char **env)
 {
-	mini()->super_env = NULL;
 	(void)av;
-	if (ac > 1)
-		return (0);
-	if (*env)
-		copy_env(mini(), env);
-	else
-		creat_env(mini());
-	mini()->prompt = "shell > ";
-	mini()->readline = readline(mini()->prompt);
-	mini()->ht = hcreate(10);
-	while (mini()->readline && ft_strcmp(mini()->readline, "exit"))
-	{
-		parse_input(mini()->ht, mini()->readline, mini());
-		add_history(mini()->readline);
-		parse_commands(mini(), mini()->commands);
-		free_node(mini()->commands);
-		mini()->commands = NULL;
-		free(mini()->readline);
-		mini()->readline = readline(mini()->prompt);
-	}
-	// rl_clear_history() ;
-	free_env(mini()->super_env);
+	(void)ac;
+	stat(av[0], &mini()->stat);
+	m_copy_env(env);
+	init_minishell();
+	run_minishell();
+	ft_lstclear(&mini()->env, free);
+	ft_lstclear(&mini()->exp, free);
+	clear_history();
 	hdestroy(mini()->ht);
-	return (0);
+	return (mini()->exit_code);
 }
-// valgrind --suppressions=read.supp --show-leak-kinds=all --leak-check=full

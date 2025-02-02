@@ -1,34 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hcreate.c                                          :+:      :+:    :+:   */
+/*   ft_signals.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:55:04 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/10 13:55:05 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/02/01 20:09:55 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/02/01 20:16:41 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search.h"
+#ifndef FT_SIGNALS_H
+# define FT_SIGNALS_H
 
-t_hash	*hcreate(size_t nel)
-{
-	t_hash	*hash;
-	size_t	l;
+# include "../libs.h"
 
-	hash = ft_calloc(sizeof(t_hash), nel);
-	if (!hash)
-		return (NULL);
-	hash->node = (t_node **)ft_calloc(sizeof(t_node *), nel);
-	if (!hash->node)
-	{
-		free(hash);
-		return (NULL);
-	}
-	l = 0;
-	while (l < nel)
-		hash->node[l++] = NULL;
-	hash->len = nel;
-	return (hash);
-}
+void	load_signals(void);
+void	sig_handler(int signum, siginfo_t *sig, void *s);
+void	sig_handler_here(int signum, siginfo_t *sig, void *s);
+#endif

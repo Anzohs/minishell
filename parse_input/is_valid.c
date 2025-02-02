@@ -1,34 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hcreate.c                                          :+:      :+:    :+:   */
+/*   is_valid.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:55:04 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/10 13:55:05 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/16 20:54:17 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/01/16 21:07:26 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search.h"
+#include "../mini_struct/mini.h"
+#include "parsing.h"
 
-t_hash	*hcreate(size_t nel)
+bool	is_valid(void)
 {
-	t_hash	*hash;
-	size_t	l;
+	t_cmd	*lst;
 
-	hash = ft_calloc(sizeof(t_hash), nel);
-	if (!hash)
-		return (NULL);
-	hash->node = (t_node **)ft_calloc(sizeof(t_node *), nel);
-	if (!hash->node)
+	lst = mini()->cmd;
+	while (lst)
 	{
-		free(hash);
-		return (NULL);
+		if (!closed_quotes(lst->cmd) || !closed_quotes(lst->arg))
+		{
+			perror("sintax error quotes");
+			return (false);
+		}
+		if (!lst->cmd || !*lst->cmd)
+		{
+			perror("sintax error |");
+			return (false);
+		}
+		expantions(&lst->cmd);
+		expantions(&lst->arg);
+		lst = lst->next;
 	}
-	l = 0;
-	while (l < nel)
-		hash->node[l++] = NULL;
-	hash->len = nel;
-	return (hash);
+	return (true);
 }

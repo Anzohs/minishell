@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   hsearch.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 18:46:45 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/01/14 20:05:28 by hladeiro         ###   ########.fr       */
+/*   Created: 2024/12/10 13:55:28 by hladeiro          #+#    #+#             */
+/*   Updated: 2024/12/10 13:55:32 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_search.h"
-#include "../ft_clean/ft_clean.h"
 
-static	t_entry	*hash_search(t_node *n, t_entry item)
+static t_entry	*hash_search(t_node *n, t_entry item)
 {
 	while (n)
 	{
@@ -24,7 +23,7 @@ static	t_entry	*hash_search(t_node *n, t_entry item)
 	return (NULL);
 }
 
-static	t_entry	*hash_add(t_hash *ht, t_entry item, unsigned int i)
+static t_entry	*hash_add(t_hash *ht, t_entry item, unsigned int i)
 {
 	t_node	*new;
 	t_entry	*entry;
@@ -34,18 +33,19 @@ static	t_entry	*hash_add(t_hash *ht, t_entry item, unsigned int i)
 	{
 		free(entry->value);
 		entry->value = ft_strdup((t_string)item.value);
-		free_env(ht->node[i]->entry.args);
-		entry->args = NULL;
 		return (entry);
 	}
 	new = ft_calloc(1, sizeof(t_node));
 	if (!new)
 		return (NULL);
 	new->entry.key = ft_strdup(item.key);
-	new->entry.value = ft_strdup((t_string)item.value);
-	new->entry.args = NULL;
+	new->entry.value = ft_strdup(item.value);
 	if (ht->node[i])
-		free_node(ht->node[i]);
+	{
+		free(ht->node[i]->entry.key);
+		free(ht->node[i]->entry.value);
+		free(ht->node[i]);
+	}
 	ht->node[i] = new;
 	return (&new->entry);
 }

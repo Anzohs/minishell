@@ -5,13 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/23 23:31:22 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/11/24 19:02:28 by hladeiro         ###   ########.fr       */
+/*   Created: 2024/12/10 13:55:15 by hladeiro          #+#    #+#             */
+/*   Updated: 2024/12/10 13:55:16 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_search.h"
-#include "../ft_clean/ft_clean.h"
 
 static void	free_n(t_node *node)
 {
@@ -19,15 +18,17 @@ static void	free_n(t_node *node)
 
 	if (!node)
 		return ;
-	while (node)
+	while (node->next)
 	{
 		temp = node->next;
 		free(node->entry.key);
 		free(node->entry.value);
-		free_env(node->entry.args);
 		free(node);
 		node = temp;
 	}
+	free(node->entry.key);
+	free(node->entry.value);
+	free(node);
 }
 
 void	hdestroy(t_hash *ht)

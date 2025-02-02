@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hcreate.c                                          :+:      :+:    :+:   */
+/*   mini.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:55:04 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/10 13:55:05 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/14 22:54:56 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/02/02 17:28:18 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search.h"
+#include "mini.h"
 
-t_hash	*hcreate(size_t nel)
+static void	start_tmini(t_mini *mini)
 {
-	t_hash	*hash;
-	size_t	l;
+	mini->start = 1;
+	rl_catch_signals = 1;
+}
 
-	hash = ft_calloc(sizeof(t_hash), nel);
-	if (!hash)
-		return (NULL);
-	hash->node = (t_node **)ft_calloc(sizeof(t_node *), nel);
-	if (!hash->node)
-	{
-		free(hash);
-		return (NULL);
-	}
-	l = 0;
-	while (l < nel)
-		hash->node[l++] = NULL;
-	hash->len = nel;
-	return (hash);
+t_mini	*mini(void)
+{
+	static t_mini	m;
+
+	if (!m.start)
+		start_tmini(&m);
+	return (&m);
 }

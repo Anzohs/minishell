@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hcreate.c                                          :+:      :+:    :+:   */
+/*   ft_cmdlst_len.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:55:04 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/10 13:55:05 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/19 14:51:34 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/02/01 19:57:51 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search.h"
+#include "mini.h"
 
-t_hash	*hcreate(size_t nel)
+int	ft_cmdlst_len(t_cmd **lst)
 {
-	t_hash	*hash;
-	size_t	l;
+	t_cmd	*tmp;
+	int		i;
 
-	hash = ft_calloc(sizeof(t_hash), nel);
-	if (!hash)
-		return (NULL);
-	hash->node = (t_node **)ft_calloc(sizeof(t_node *), nel);
-	if (!hash->node)
+	if (!lst || !*lst)
+		return (0);
+	tmp = *lst;
+	i = 0;
+	while (tmp)
 	{
-		free(hash);
-		return (NULL);
+		++i;
+		tmp = tmp->next;
 	}
-	l = 0;
-	while (l < nel)
-		hash->node[l++] = NULL;
-	hash->len = nel;
-	return (hash);
+	return (i);
 }

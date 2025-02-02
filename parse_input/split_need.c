@@ -1,34 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hcreate.c                                          :+:      :+:    :+:   */
+/*   split_need.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:55:04 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/10 13:55:05 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/02/01 18:42:59 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/02/01 18:46:23 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search.h"
+#include "parsing.h"
 
-t_hash	*hcreate(size_t nel)
+bool	split_need(t_string s)
 {
-	t_hash	*hash;
-	size_t	l;
+	int	i;
+	int	c;
 
-	hash = ft_calloc(sizeof(t_hash), nel);
-	if (!hash)
-		return (NULL);
-	hash->node = (t_node **)ft_calloc(sizeof(t_node *), nel);
-	if (!hash->node)
+	i = -1;
+	if (!s || !*s || *s != 2)
+		return (false);
+	c = 0;
+	while (s[++i])
 	{
-		free(hash);
-		return (NULL);
+		if ((s[i] == '"' || s[i] == '\'') && !c)
+			c = s[i];
+		else if (s[i] == c)
+			c = 0;
+		else if (s[i] == 2 && !c)
+		{
+			while (ft_isalpha(s[++i]))
+				;
+			if (s[i] != 0 && s[i] != ' ')
+				return (false);
+			return (true);
+		}
 	}
-	l = 0;
-	while (l < nel)
-		hash->node[l++] = NULL;
-	hash->len = nel;
-	return (hash);
+	return (false);
 }

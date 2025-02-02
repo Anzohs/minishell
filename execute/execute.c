@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hcreate.c                                          :+:      :+:    :+:   */
+/*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:55:04 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/10 13:55:05 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/19 14:51:34 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/02/02 17:46:54 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search.h"
+#include "../mini_struct/mini.h"
 
-t_hash	*hcreate(size_t nel)
+void	execute(void)
 {
-	t_hash	*hash;
-	size_t	l;
-
-	hash = ft_calloc(sizeof(t_hash), nel);
-	if (!hash)
-		return (NULL);
-	hash->node = (t_node **)ft_calloc(sizeof(t_node *), nel);
-	if (!hash->node)
+	if (!mini()->cmd->cmd || !*mini()->cmd->cmd)
+		return ;
+	if (ft_cmdlst_len(&mini()->cmd) == 1 && is_builtin(mini()->cmd->cmd))
 	{
-		free(hash);
-		return (NULL);
+		if (!ft_strcmp(mini()->cmd->cmd, "cd"))
+			return (cd_execute());
+		if (!ft_strcmp(mini()->cmd->cmd, "pwd"))
+			return (pwd_execute());
+		else
+			printf("nao e cd\n");
 	}
-	l = 0;
-	while (l < nel)
-		hash->node[l++] = NULL;
-	hash->len = nel;
-	return (hash);
+	else
+		printf("Long string \n");
 }

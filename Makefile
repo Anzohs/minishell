@@ -1,9 +1,25 @@
 NAME = minishell
 
-CC = cc
+CC = gcc
 OBJ_DIR = obj
-CFLAGS =  -g -I. -Isrc/libf -Ift_search -Ienv_variables -Ipipes
+CFLAGS = -Wall -Wextra -Werror -g -I. -Isrc/libf -Ift_search -Imini_struct
 CCFLAGS = -lreadline
+<<<<<<< HEAD
+SRC_SR = hash.c hcreate.c hdestroy.c hsearch.c
+SRC_MS = create_pwd.c m_copy_env.c mini.c ft_cmdlst_new.c ft_cmdlstadd_back.c create_oldpwd.c \
+		ft_cmdlstclear.c ft_cmdlstdelone.c ft_cmdlst_len.c get_var.c
+SRC_LIBFT = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c \
+			ft_islower.c ft_isprint.c ft_isupper.c ft_itoa.c ft_lstadd_back.c ft_lstadd_front.c \
+			ft_lstclear.c ft_lstdelone.c ft_lstdup.c ft_lstiter.c ft_lstlast.c ft_lstmap.c ft_lstnew.c ft_lstsize.c \
+			ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c ft_putchar_fd.c ft_putendl_fd.c \
+			ft_putnbr_fd.c ft_putstr_fd.c ft_split.c ft_strcat.c ft_strchr.c ft_strcmp.c ft_strcpy.c ft_strdup.c \
+			ft_striteri.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c ft_strncmp.c ft_strnstr.c \
+			ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c ft_lsthas.c
+SRC_PRS = parse_input.c closed_quotes.c is_valid.c transform_str.c expantions.c clean_content.c is_expantion.c sub_expantion.c split_value.c \
+			take_quotes.c free_matrix.c split_need.c is_builtin.c
+SRC_EXE = execute.c cd_execute.c pwd_execute.c
+SRC_SIG = load_signals.c
+=======
 SRC_FT = hash.c hcreate.c hdestroy.c hsearch.c node_len.c
 SRC_BLT = cd_biltin.c is_biltin.c
 SRC_SRC = copy_env.c create_env.c ft_free_strs.c
@@ -16,16 +32,15 @@ SRC_PIP = pipex.c pipex_utils.c pipex_utils_2.c pipex_val_cmd.c pipex_here_doc.c
 SRC_FREE = free_env.c free_node.c free_tmini.c free_singlenode.c
 SRC_CLN = clean_command.c closed_quotes.c clean_node.c clean_quotes.c expantions.c parse_node.c expand_args.c has_quotes.c split_value.c\
 		expand_cmd.c
+>>>>>>> main
 
-SRCS := main.c parsing.c parse_commands.c mini.c
-SRCS += $(addprefix ft_search/, $(SRC_FT))
-SRCS += $(addprefix src/, $(SRC_SRC))
-SRCS += $(addprefix env_variables/, $(SRC_ENV))
-SRCS += $(addprefix src/libft/, $(SRC_LIBF))
-SRCS += $(addprefix ft_clean/, $(SRC_FREE))
-SRCS += $(addprefix valid_str/, $(SRC_CLN))
-SRCS += $(addprefix bilt_in/, $(SRC_BLT))
-SRCS += $(addprefix pipes/, $(SRC_PIP))
+SRCS := main.c
+SRCS += $(addprefix ft_search/, $(SRC_SR))
+SRCS += $(addprefix mini_struct/, $(SRC_MS))
+SRCS += $(addprefix libft/, $(SRC_LIBFT))
+SRCS += $(addprefix parse_input/, $(SRC_PRS))
+SRCS += $(addprefix execute/, $(SRC_EXE))
+SRCS += $(addprefix signals/, $(SRC_SIG))
 
 OBJ := $(patsubst %.c, $(OBJ_DIR)/%.o,$(SRCS))
 

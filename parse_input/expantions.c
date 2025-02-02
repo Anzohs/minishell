@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hcreate.c                                          :+:      :+:    :+:   */
+/*   expantions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:55:04 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/10 13:55:05 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/18 17:22:59 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/02/01 19:27:06 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search.h"
+#include "parsing.h"
 
-t_hash	*hcreate(size_t nel)
+void	expantions(t_string *s)
 {
-	t_hash	*hash;
-	size_t	l;
+	int			i;
+	int			c;
+	t_string	str;
 
-	hash = ft_calloc(sizeof(t_hash), nel);
-	if (!hash)
-		return (NULL);
-	hash->node = (t_node **)ft_calloc(sizeof(t_node *), nel);
-	if (!hash->node)
+	if (!s || !*s)
+		return ;
+	str = *s;
+	i = -1;
+	c = 0;
+	while (str[++i] != 0)
 	{
-		free(hash);
-		return (NULL);
+		if ((str[i] == '"' || str[i] == '\'') && !c)
+			c = str[i];
+		else if (str[i] == c)
+			c = 0;
+		else if (str[i] == '$' && (!c || c == '"') && str[i + 1]
+			&& ft_isalpha(str[i + 1]))
+			str[i] = 2;
 	}
-	l = 0;
-	while (l < nel)
-		hash->node[l++] = NULL;
-	hash->len = nel;
-	return (hash);
 }

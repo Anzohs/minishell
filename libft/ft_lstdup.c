@@ -1,34 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hcreate.c                                          :+:      :+:    :+:   */
+/*   ft_lstdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:55:04 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/10 13:55:05 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/15 23:59:14 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/01/15 23:59:15 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search.h"
+#include "libft.h"
 
-t_hash	*hcreate(size_t nel)
+void	ft_lstdup(t_list **list, t_list **head)
 {
-	t_hash	*hash;
-	size_t	l;
+	t_list	*lst;
+	t_list	*tmp;
+	char	*content;
 
-	hash = ft_calloc(sizeof(t_hash), nel);
-	if (!hash)
-		return (NULL);
-	hash->node = (t_node **)ft_calloc(sizeof(t_node *), nel);
-	if (!hash->node)
+	tmp = *list;
+	while (tmp)
 	{
-		free(hash);
-		return (NULL);
+		content = ft_strdup(tmp->content);
+		if (!content)
+		{
+			ft_lstclear(head, free);
+			return ;
+		}
+		lst = ft_lstnew(content);
+		if (!lst)
+		{
+			free(content);
+			ft_lstclear(head, free);
+			exit(0);
+		}
+		ft_lstadd_back(head, lst);
+		tmp = tmp->next;
 	}
-	l = 0;
-	while (l < nel)
-		hash->node[l++] = NULL;
-	hash->len = nel;
-	return (hash);
 }

@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hcreate.c                                          :+:      :+:    :+:   */
+/*   is_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:55:04 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/10 13:55:05 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/02/02 17:45:31 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/02/02 17:46:25 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search.h"
+#include "parsing.h"
 
-t_hash	*hcreate(size_t nel)
+bool	is_builtin(t_string s)
 {
-	t_hash	*hash;
-	size_t	l;
-
-	hash = ft_calloc(sizeof(t_hash), nel);
-	if (!hash)
-		return (NULL);
-	hash->node = (t_node **)ft_calloc(sizeof(t_node *), nel);
-	if (!hash->node)
-	{
-		free(hash);
-		return (NULL);
-	}
-	l = 0;
-	while (l < nel)
-		hash->node[l++] = NULL;
-	hash->len = nel;
-	return (hash);
+	return (!ft_strcmp(s, "echo") || \
+			!ft_strcmp(s, "cd") || \
+			!ft_strcmp(s, "export") || \
+			!ft_strcmp(s, "unset") || \
+			!ft_strcmp(s, "env") || \
+			!ft_strcmp(s, "pwd"));
 }

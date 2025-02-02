@@ -1,34 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hcreate.c                                          :+:      :+:    :+:   */
+/*   take_quotes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:55:04 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/10 13:55:05 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/02/01 18:47:11 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/02/01 18:47:45 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search.h"
+#include "parsing.h"
 
-t_hash	*hcreate(size_t nel)
+void	take_quotes(t_string *str)
 {
-	t_hash	*hash;
-	size_t	l;
+	t_string	s;
+	int			i;
+	int			y;
+	int			c;
 
-	hash = ft_calloc(sizeof(t_hash), nel);
-	if (!hash)
-		return (NULL);
-	hash->node = (t_node **)ft_calloc(sizeof(t_node *), nel);
-	if (!hash->node)
+	s = *str;
+	i = -1;
+	y = -1;
+	c = 0;
+	while (s[++i])
 	{
-		free(hash);
-		return (NULL);
+		if ((s[i] == '"' || s[i] == '\'') && !c)
+			c = s[i];
+		else if (s[i] == c)
+			c = 0;
+		else
+			(*str)[++y] = s[i];
 	}
-	l = 0;
-	while (l < nel)
-		hash->node[l++] = NULL;
-	hash->len = nel;
-	return (hash);
+	while (y < i)
+		(*str)[++y] = 0;
 }

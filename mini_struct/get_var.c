@@ -1,34 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hcreate.c                                          :+:      :+:    :+:   */
+/*   get_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:55:04 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/10 13:55:05 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/19 15:09:12 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/01/19 15:12:33 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search.h"
+#include "mini.h"
 
-t_hash	*hcreate(size_t nel)
+t_string	get_var(t_string s)
 {
-	t_hash	*hash;
-	size_t	l;
+	int			i;
+	int			j;
+	t_string	str;
+	t_string	c;
 
-	hash = ft_calloc(sizeof(t_hash), nel);
-	if (!hash)
-		return (NULL);
-	hash->node = (t_node **)ft_calloc(sizeof(t_node *), nel);
-	if (!hash->node)
+	i = -1;
+	while (s[++i])
 	{
-		free(hash);
-		return (NULL);
+		if (s[i] == 2)
+		{
+			j = i + 1;
+			while (s[j] && ft_isalpha(s[j]))
+				j++;
+			str = ft_substr(s + i + 1, 0, j - i -1);
+			c = ft_lsthas(mini()->env, str);
+			free(str);
+			if (c[0] == '=')
+				return (c + 1);
+			return (c);
+		}
 	}
-	l = 0;
-	while (l < nel)
-		hash->node[l++] = NULL;
-	hash->len = nel;
-	return (hash);
+	return ("");
 }

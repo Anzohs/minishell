@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hcreate.c                                          :+:      :+:    :+:   */
+/*   ft_cmdlstclear.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:55:04 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/10 13:55:05 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/16 21:31:43 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/01/16 21:31:46 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search.h"
+#include "mini.h"
 
-t_hash	*hcreate(size_t nel)
+void	ft_cmdlstclear(t_cmd **lst, void (*del)(t_cmd **lst))
 {
-	t_hash	*hash;
-	size_t	l;
+	t_cmd	*list_t;
+	t_cmd	*list_temp;
 
-	hash = ft_calloc(sizeof(t_hash), nel);
-	if (!hash)
-		return (NULL);
-	hash->node = (t_node **)ft_calloc(sizeof(t_node *), nel);
-	if (!hash->node)
+	list_t = *lst;
+	if (!*lst || !del)
+		return ;
+	while (list_t)
 	{
-		free(hash);
-		return (NULL);
+		list_temp = list_t->next;
+		del(&list_t);
+		list_t = list_temp;
 	}
-	l = 0;
-	while (l < nel)
-		hash->node[l++] = NULL;
-	hash->len = nel;
-	return (hash);
+	*lst = NULL;
 }

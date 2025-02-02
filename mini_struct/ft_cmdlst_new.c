@@ -1,34 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hcreate.c                                          :+:      :+:    :+:   */
+/*   ft_cmdlst_new.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:55:04 by hladeiro          #+#    #+#             */
-/*   Updated: 2024/12/10 13:55:05 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/01/16 20:45:09 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/01/16 20:45:15 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_search.h"
+#include "mini.h"
 
-t_hash	*hcreate(size_t nel)
+t_cmd	*ft_cmdlst_new(char *cmd, char *arg)
 {
-	t_hash	*hash;
-	size_t	l;
+	t_cmd	*list;
 
-	hash = ft_calloc(sizeof(t_hash), nel);
-	if (!hash)
+	list = (t_cmd *)ft_calloc(1, sizeof(*list));
+	if (!list)
 		return (NULL);
-	hash->node = (t_node **)ft_calloc(sizeof(t_node *), nel);
-	if (!hash->node)
+	list->cmd = ft_strdup(cmd);
+	if (!list->cmd)
 	{
-		free(hash);
-		return (NULL);
+		free(list);
+		exit(0);
 	}
-	l = 0;
-	while (l < nel)
-		hash->node[l++] = NULL;
-	hash->len = nel;
-	return (hash);
+	list->arg = ft_strdup(arg);
+	if (!list->arg)
+	{
+		ft_cmdlstdelone(&list);
+		exit(0);
+	}
+	list->matrix = NULL;
+	list->next = NULL;
+	return (list);
 }
