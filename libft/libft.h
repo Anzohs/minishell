@@ -6,7 +6,7 @@
 /*   By: hladeiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:24:43 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/02 20:37:00 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/03 21:19:33 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void				ft_lstdelone(t_list *lst, void (*del)(void *));
 void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstdup(t_list **list, t_list **head);
 void				ft_lstiter(t_list *lst, void (*f)(void *));
+void				ft_lstsort(t_list **head);
 char				*ft_lsthas(t_list *lst, const char *str);
 t_list				*ft_lstnew(char *content);
 t_list				*ft_lstgetlst(t_list **lst, const char *str);

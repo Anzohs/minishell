@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 14:51:34 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/03 20:31:30 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/03 21:37:35 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,4 @@ void	execute(void)
 	}
 	else if (ft_cmdlst_len(&mini()->cmd) > 1)
 		printf("Long string \n");
-	//pipex(mini(), mini()->cmd);
 }

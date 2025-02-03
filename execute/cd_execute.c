@@ -76,9 +76,8 @@ static bool	cd_(void)
 		return (ft_putstr_fd("OLDPWD NOT SET\n", 2), true);
 	s++;
 	if (chdir(s) >= 0)
-		return (update_pwd(getcwd(NULL, 0), &mini()->env, true), \
-			update_pwd(getcwd(NULL, 0), &mini()->exp, true), \
-			false);
+		return (update_pwd(getcwd(NULL, 0), &mini()->env, true),
+			update_pwd(getcwd(NULL, 0), &mini()->exp, true), false);
 	else
 		return (perror(s), true);
 }
@@ -97,9 +96,8 @@ void	cd_execute(t_string *matrix)
 	else if (!ft_strcmp(matrix[0], "-"))
 		i = cd_();
 	else if (chdir(matrix[0]) >= 0)
-		return (update_pwd(getcwd(NULL, 0), &mini()->env, true), \
-			update_pwd(getcwd(NULL, 0), &mini()->exp, true), \
-			(void)*matrix);
+		return (update_pwd(getcwd(NULL, 0), &mini()->env, true),
+			update_pwd(getcwd(NULL, 0), &mini()->exp, true), (void)*matrix);
 	else if (chdir(matrix[0]) < 0)
 		return (perror(matrix[0]), (void)*matrix);
 	if (i)

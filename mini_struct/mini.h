@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 23:34:59 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/02 20:56:49 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/03 21:35:42 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,27 @@
 
 extern	int		g_sig;
 
+typedef enum	s_type{
+	APPEND,
+	CREATE,
+	HEREDOC,
+	REVERSE,
+}			t_type;
+
+typedef struct s_fd{
+	int			fd;
+	t_string	name;
+	t_type	type;
+	struct s_fd	*next;
+}		t_fd;
+
+
 typedef struct s_cmd
 {
 	t_string		cmd;
 	t_string		arg;
 	t_string		*matrix;
+	t_fd			*fd;
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -37,6 +53,7 @@ typedef struct s_minishell
 	int				start;
 	int				sig;
 	int				exit_code;
+	int				fd;
 	struct stat		stat;
 }					t_mini;
 
