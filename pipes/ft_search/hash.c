@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   hash.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
+/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/14 22:48:40 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/03 19:12:19 by malourei         ###   ########.fr       */
+/*   Created: 2024/11/23 23:31:22 by hladeiro          #+#    #+#             */
+/*   Updated: 2024/11/24 20:56:41 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "ft_search.h"
 
-# include "ft_search/ft_search.h"
-# include "libs.h"
-# include "parse_input/parsing.h"
-# include "execute/execute.h"
-# include "signals/ft_signals.h"
-# include "pipes/pipex.h"
+unsigned int	hash(const t_string key, size_t nel)
+{
+	unsigned int	hash;
+	t_string		k;
 
-#endif
+	hash = 0;
+	k = key;
+	while (*k)
+		hash = (hash << 5) + *k++;
+	return (hash % nel);
+}

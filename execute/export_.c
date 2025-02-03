@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export_.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 21:18:27 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/02 21:30:38 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/03 17:29:25 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
 
-/*
+
 static void	ft_lstswap(t_list *a, t_list *b)
 {
 	char *temp;
@@ -21,8 +21,8 @@ static void	ft_lstswap(t_list *a, t_list *b)
 	a->content = b->content;
 	b->content = temp;
 }
-*/
-/*
+
+
 static void	ft_lstsort(t_list **head)
 {
 	t_list	*current;
@@ -50,7 +50,7 @@ static void	ft_lstsort(t_list **head)
 		}
 	}
 }
-*/
+
 static void	print_exp(void)
 {
 	t_list	*tmp;

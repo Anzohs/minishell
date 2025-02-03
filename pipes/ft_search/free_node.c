@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   free_node.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
+/*   By: hladeiro <hladeiro@student.42lisboa.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/14 22:48:40 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/03 19:12:19 by malourei         ###   ########.fr       */
+/*   Created: 2024/11/26 20:36:23 by hladeiro          #+#    #+#             */
+/*   Updated: 2024/11/26 20:39:34 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "ft_search.h"
 
-# include "ft_search/ft_search.h"
-# include "libs.h"
-# include "parse_input/parsing.h"
-# include "execute/execute.h"
-# include "signals/ft_signals.h"
-# include "pipes/pipex.h"
+void	free_node(t_node *node)
+{
+	t_node	*tmp;
 
-#endif
+	tmp = node;
+	while (tmp)
+	{
+		tmp = tmp->next;
+		free(node->entry.key);
+		free(node->entry.value);
+		free(node);
+		node = tmp;
+	}
+}
