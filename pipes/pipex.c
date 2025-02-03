@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/20 23:22:58 by malourei          #+#    #+#             */
-/*   Updated: 2025/01/04 18:33:52 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/02/03 20:24:53 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/02/03 20:51:28 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "pipex.h"
-#include "../minishell.h"
+#include "../mini_struct/mini.h"
 #include <unistd.h>
 
 static void	start_pipe_1(t_pipex *pipex, \
@@ -35,7 +36,7 @@ static void	start_pipe_1(t_pipex *pipex, \
 	if (pipex->pids[i] == 0)
 	{
 		if (pipex->is_doc == 0)
-			ft_child_one(pipex, mini->super_env, pipex->paths[0], argv2);
+			ft_child_one(pipex, mini->env, pipex->paths[0], argv2);
 	}
 	if (pipex->pids[i] < 0)
 	{
@@ -142,20 +143,20 @@ static void	start_multi_pipe(t_pipex *pipex, t_mini *mini, int argc, t_node *n)
 	ft_child_one_martelado(pipex, mini->super_env, pipex->path2, n);
 }
 
-void	pipex(t_mini *mini, t_cmd *comands)
+void	pipex(t_mini *min, t_cmd *comands)
 {
 	t_pipex	pipex;
 
 	pipex = (t_pipex){0};
-	validate_args(comands, &pipex.cmd_argc);
+	validate_args(mini()->cmd, &pipex.cmd_argc);
 	count_pids(&pipex, pipex.cmd_argc);
-	if (!find_full_cmd(&pipex, mini, comands))
+	if (!find_full_cmd(&pipex, mini(), mini()->cmd))
 	{
 		clean_all(&pipex);
 		return ;
 	}
 /* 	if (ft_strncmp(comands->entry.key, "here_doc", 8) == 0)
 		start_here_doc(&pipex, comands); */
-	start_multi_pipe(&pipex, mini, node_len(comands), comands);
+	start_multi_pipe(&pipex, mini(), ft_lstsize((t_list *)mini()->cmd), mini()->cmd);
 	ft_parent(&pipex);
 }

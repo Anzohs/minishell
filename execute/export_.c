@@ -5,12 +5,26 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/02 21:18:27 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/03 17:29:25 by malourei         ###   ########.fr       */
+/*   Created: 2025/02/02 21:18:27 by malourei          #+#    #+#             */
+/*   Updated: 2025/02/03 20:56:26 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
+
+static int	ft_strcmp_(char *c, char *d)
+{
+	int	i;
+
+	i = 0;
+	if (!c && !d)
+		return (0);
+	if (!c || !d)
+		return (1);
+	while (c[i] == d[i] && d[i] && c[i])
+		i++;
+	return (c[i] - d[i]);
+}
 
 
 static void	ft_lstswap(t_list *a, t_list *b)
@@ -36,12 +50,13 @@ static void	ft_lstsort(t_list **head)
 	while (swapped)
 	{
 		swapped = 0;
-		current = *head;
+		current = *head	//pipex(mini(), mini()->cmd);
+;
 
 		while (current->next != NULL)
 		{
 			next = current->next;
-			if (ft_strcmp(current->content, next->content) > 0)
+			if (ft_strcmp_(current->content, next->content) > 0)
 			{
 				ft_lstswap(current, next);
 				swapped = 1;

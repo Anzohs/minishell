@@ -6,11 +6,11 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 23:24:14 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/30 21:22:02 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/03 20:48:37 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../mini_struct/mini.h"
 
 t_string	*fusion_strs(void)
 {
@@ -38,6 +38,8 @@ void	execve2(const char *path, t_node *node, char *const envp[], t_pipex *pipex)
 
 	(void)pipex;
 	argv = fusion_strs();
+	//buscar path t_string s = ft_lsthas(mini()->env, "PATH") =s,adma.,dma.,
+	//s++;
 	execve(path, argv, envp);
 	if (execve(path, argv, envp) == -1)
 	{

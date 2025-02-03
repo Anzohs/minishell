@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_clean.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/22 00:12:01 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/30 19:33:13 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/02/03 20:24:53 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/02/03 20:36:43 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../mini_struct/mini.h"
 
 void	ft_clean_path(t_pipex *pipex, char *path)
 {

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/19 14:51:34 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/03 19:18:36 by malourei         ###   ########.fr       */
+/*   Created: 2025/01/19 14:51:34 by malourei          #+#    #+#             */
+/*   Updated: 2025/02/03 20:31:30 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ void	execute(void)
 			printf("nao e cd\n");
 	}
 	else if (ft_cmdlst_len(&mini()->cmd) > 1)
-		pipex(mini(), mini()->cmd);
 		printf("Long string \n");
+	//pipex(mini(), mini()->cmd);
 }
