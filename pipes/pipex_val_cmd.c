@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
-#include <stdio.h>
+#include "../mini_struct/mini.h"
 
 static char	*find_cmd(char *cmd, char **path)
 {
@@ -33,9 +32,9 @@ static char	*find_cmd(char *cmd, char **path)
 	return (ft_strdup(cmd));
 }
 
-static t_string	get_command(t_node *n, int i)
+static t_string	get_command(t_cmd *n, int i)
 {
-	t_node	*tmp;
+	t_cmd	*tmp;
 	int		j;
 
 	tmp = n;
@@ -47,10 +46,10 @@ static t_string	get_command(t_node *n, int i)
 	}
 	if (!tmp)
 		return (NULL);
-	return (tmp->entry.key);
+	return (tmp->cmd);
 }
 
-static void	get_all_path(t_pipex *pipex, t_node *node)
+static void	get_all_path(t_pipex *pipex, t_cmd *node)
 {
 	int	i;
 	int	n;
@@ -72,23 +71,15 @@ static void	get_all_path(t_pipex *pipex, t_node *node)
 	ft_clean_path(pipex, pipex->path2);
 }
 
-bool	find_full_cmd(t_pipex *pipex, t_mini *mini, t_node *node)
+bool	find_full_cmd(t_pipex *pipex, t_mini *mini, t_cmd *node)
 {
-	int		i;
-	char	*tmp;
+	// Confirmar o pipex.env[0] Se não tem o PATH= no inicio
+/* 	char	*tmp;
 
-	i = get_index(mini->super_env, "PATH=", 5);
-	if (i == -1)
-	{
-		perror("Error: No Path!");
-		clean_null_env(pipex);
-		return (false);
-	}
-	pipex->env = ft_split(mini->super_env[i], ':');
 	tmp = ft_strdup(pipex->env[0] + 5);
 	free(pipex->env[0]);
 	pipex->env[0] = ft_strdup(tmp);
-	free(tmp);
+	free(tmp); */
 	get_all_path(pipex, node);
 	return (true);
 	//pipex->cmd2 = (char **)get_command(node, node_len(node) - 1);

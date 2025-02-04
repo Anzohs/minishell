@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 14:51:34 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/04 21:31:53 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/04 21:39:20 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ void	execute(void)
 		else
 			printf("nao e cd\n");
 	}
-	else if (ft_cmdlst_len(&mini()->cmd) > 1)
-		printf("Long string \n");
+	else
+		pipex(mini(), mini()->cmd);
 }

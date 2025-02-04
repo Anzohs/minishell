@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 20:24:53 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/03 20:51:28 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/04 21:22:17 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	start_multi2_pipe(t_pipex *pipex, \
 			return ;
 		}
 		ft_close_all_m(pipex, i);
-		execve2(cmd_path, node, mini->super_env, pipex);
+		execve2(cmd_path, node, pipex->env_path, pipex);
 	}
 }
 
@@ -86,7 +86,7 @@ static void	one_cmd(t_pipex *pipex, t_mini *mini)
 	if (access(pipex->path2, F_OK) != 0)
 	{
 		pipex->cmd_argc -= 1;
-		printf("command not found: %s\n", mini->commands->entry.key);
+		printf("command not found: %s\n", mini->cmd->cmd);
 		return ;
 	}
 	if (pipe(pipex->fds[0].fd) < 0)
@@ -110,16 +110,16 @@ static void	one_cmd(t_pipex *pipex, t_mini *mini)
 			return ;
 		}
 		ft_close(pipex->fds[0].fd[0]);
-		execve2(pipex->path2, mini->commands, mini->super_env, pipex);
+		execve2(pipex->path2, mini->cmd, pipex->env_path, pipex);
 	}
 	return ;
 }
 
-static void	start_multi_pipe(t_pipex *pipex, t_mini *mini, int argc, t_node *n)
+static void	start_multi_pipe(t_pipex *pipex, t_mini *mini, int argc, t_cmd *n)
 {
 	int		i;
 	int		j;
-	t_node	*node;
+	t_cmd	*node;
 
 	if (argc == 1)
 	{
@@ -140,23 +140,45 @@ static void	start_multi_pipe(t_pipex *pipex, t_mini *mini, int argc, t_node *n)
 		}
 		start_multi2_pipe(pipex, mini, i, pipex->paths[i], node);
 	}
-	ft_child_one_martelado(pipex, mini->super_env, pipex->path2, n);
+	ft_child_one_martelado(pipex, pipex->env_path, pipex->path2, n);
+}
+
+char	**get_strs_envs(t_pipex *pipex)
+{
+	char	*str;
+	char	**strs;
+	char	*str2;
+
+	str = ft_lsthas(mini()->env, "PATH=");
+	if (!*str)
+		return (NULL);
+	str2 = ft_strjoin("PATH", str);
+	if (!str2)
+		return (NULL);
+	pipex->env_path = ft_calloc(2, sizeof(char *));
+	if (!pipex->env_path)
+		return (NULL);
+	pipex->env_path[0] = str2;
+	pipex->env_path[1] = NULL;
+	str++;
+	strs = ft_split(str, ':');
+	return (strs);
 }
 
 void	pipex(t_mini *min, t_cmd *comands)
 {
 	t_pipex	pipex;
+	char	**strs_envs;
 
 	pipex = (t_pipex){0};
 	validate_args(mini()->cmd, &pipex.cmd_argc);
 	count_pids(&pipex, pipex.cmd_argc);
+	pipex.env = get_strs_envs(&pipex);
 	if (!find_full_cmd(&pipex, mini(), mini()->cmd))
 	{
 		clean_all(&pipex);
 		return ;
 	}
-/* 	if (ft_strncmp(comands->entry.key, "here_doc", 8) == 0)
-		start_here_doc(&pipex, comands); */
 	start_multi_pipe(&pipex, mini(), ft_lstsize((t_list *)mini()->cmd), mini()->cmd);
 	ft_parent(&pipex);
 }

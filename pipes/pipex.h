@@ -35,6 +35,7 @@ typedef struct s_pipex
 	char	**paths;
 	char	*path2;
 	char	**env;
+	char	**env_path;
 	char	**cmd1;
 	//char	**cmd2;
 }	t_pipex;
@@ -53,12 +54,12 @@ void	ft_close_all_1(t_pipex *pipex);
 void	ft_close_all_m(t_pipex *pipex, int i);
 void	clean_null_env(t_pipex *pipex);
 void	count_pids(t_pipex *pipex, int argc);
-void	start_here_doc(t_cmd *m, char **env);
 void	pipex(t_mini *mini, t_cmd *comands);
 void	ft_child_one_martelado(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node);
-t_string	*fusion_strs(void);
+t_string	*fusion_strs(t_cmd *cmd);
+/* void	start_here_doc(t_cmd *m, char **env);
 void	one_arrow(t_cmd *m);
 void	two_arrow(t_cmd *m);
-void	one_arrow_reverse(t_cmd *m);
+void	one_arrow_reverse(t_cmd *m); */
 
 #endif

@@ -6,23 +6,21 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 22:59:58 by malourei          #+#    #+#             */
-/*   Updated: 2025/01/12 18:21:37 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/04 20:39:10 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../mini_struct/mini.h"
 
-void	validate_args(t_node *argv, int *cmd_argc)
+void	validate_args(t_cmd *argv, int *cmd_argc)
 {
-	t_node	*node;
+	t_cmd	*node;
 	int		i;
 
 	node = argv;
 	i = 0;
 	while (node)
 	{
-		if (ft_strcmp(node->entry.key, "here_doc") == 0)
-			*cmd_argc = i;
 		node = node->next;
 		i++;
 	}

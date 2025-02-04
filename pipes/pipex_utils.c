@@ -3,41 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 23:24:14 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/03 20:48:37 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/04 21:36:05 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
 
-t_string	*fusion_strs(void)
+t_string	*fusion_strs(t_cmd *cmd)
 {
 	t_string	*matrix;
 	int			i;
 
-	matrix = ft_calloc(ft_count(mini()->commands->entry.args) + 2, sizeof(t_string));
-	matrix[0] = ft_strdup(mini()->commands->entry.key);
+	matrix = ft_calloc(matrix_len(cmd->matrix) + 2, sizeof(t_string));
+	matrix[0] = ft_strdup(cmd->cmd);
 	i = 0;
-	while (mini()->commands->entry.args[i])
-	{
-		//printf("arg[%d]: %s\n",i , mini()->commands->entry.args[i]);
-		matrix[i + 1] = ft_strdup(mini()->commands->entry.args[i]);
-		i++;
-	}
+	while (cmd->matrix[i])
+		matrix[i + 1] = ft_strdup(cmd->matrix[i++]);
 	matrix[i + 1] = NULL;
 	return (matrix);
 }
 
-void	execve2(const char *path, t_node *node, char *const envp[], t_pipex *pipex)
+void	execve2(const char *path, t_cmd *node, char *const envp[], t_pipex *pipex)
 {
 	char	**argv;
 	char	*str_join;
 	char	*str_join_2;
 
 	(void)pipex;
-	argv = fusion_strs();
+	argv = fusion_strs(node);
 	//buscar path t_string s = ft_lsthas(mini()->env, "PATH") =s,adma.,dma.,
 	//s++;
 	execve(path, argv, envp);
@@ -49,7 +45,7 @@ void	execve2(const char *path, t_node *node, char *const envp[], t_pipex *pipex)
 	//free_env(argv);
 }
 
-void	ft_child_one(t_pipex *pipex, char **env, char *cmd_path, t_node *node)
+void	ft_child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 {
 	if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
 	{
@@ -60,7 +56,7 @@ void	ft_child_one(t_pipex *pipex, char **env, char *cmd_path, t_node *node)
 	execve2(cmd_path, node, env, pipex);
 }
 
-void	ft_child_one_martelado(t_pipex *pipex, char **env, char *cmd_path, t_node *node)
+void	ft_child_one_martelado(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 {
 	int	i;
 	t_node	*tmp;
