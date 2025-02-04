@@ -6,47 +6,40 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 15:02:55 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/03 20:55:11 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/04 21:34:58 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
 
-static void	update_env(t_list **lst, t_string s)
+static void	update_env(t_list **lst, t_string key, t_string value)
 {
-	t_list	*tmp;
+	t_list		*tmp;
+	t_string	s;
 
-	if (!lst || !*s)
+	if (!lst || !value ||!*value)
 		return ;
-	tmp = *lst;
-	if (tmp->content)
-		free(tmp->content);
-	tmp->content = ft_strdup(s);
+	tmp = ft_lstgetlst(lst, key);
+	s = ft_strjoin(key, value);
+	if (!tmp)
+		ft_lstadd_back(lst, ft_lstnew(s));
+	else
+	{
+		if (tmp->content)
+			free(tmp->content);
+		tmp->content = s;
+	}
 }
 
 static void	update_pwd(t_string path, t_list **lst, bool to_free)
 {
-	t_string	s;
-	t_string	p;
-	t_list		*tmp;
+	t_string	oldpwd;
 
-	tmp = ft_lstgetlst(lst, "OLDPWD=");
-	p = ft_lsthas(mini()->env, "PWD");
-	s = ft_strjoin("OLDPWD", p);
-	if (!tmp)
-		ft_lstadd_back(lst, ft_lstnew(s));
-	else
-		update_env(&tmp, s);
-	tmp = ft_lstgetlst(lst, "PWD=");
-	if (s)
-		free(s);
-	s = ft_strjoin("PWD=", path);
-	if (!tmp)
-		ft_lstadd_back(lst, ft_lstnew(s));
-	else
-		update_env(&tmp, s);
-	if (s)
-		free(s);
+	oldpwd = ft_lsthas(mini()->env, "PWD=");
+	if (*oldpwd)
+		oldpwd++;
+	update_env(lst, "OLDPWD=", oldpwd);
+	update_env(lst, "PWD=", path);
 	if (to_free)
 		free(path);
 }
@@ -63,8 +56,8 @@ static void	home(void)
 	i = chdir(s);
 	if (i == -1)
 		perror("CD");
-	update_pwd(s, &mini()->env, false);
 	update_pwd(s, &mini()->exp, false);
+	update_pwd(s, &mini()->env, false);
 }
 
 static bool	cd_(void)
@@ -96,8 +89,9 @@ void	cd_execute(t_string *matrix)
 	else if (!ft_strcmp(matrix[0], "-"))
 		i = cd_();
 	else if (chdir(matrix[0]) >= 0)
-		return (update_pwd(getcwd(NULL, 0), &mini()->env, true),
-			update_pwd(getcwd(NULL, 0), &mini()->exp, true), (void)*matrix);
+		return (update_pwd(getcwd(NULL, 0), &mini()->exp, true),
+			update_pwd(getcwd(NULL, 0), &mini()->env, true),
+			(void)*matrix);
 	else if (chdir(matrix[0]) < 0)
 		return (perror(matrix[0]), (void)*matrix);
 	if (i)

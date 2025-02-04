@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 21:18:27 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/03 21:23:08 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/04 21:18:47 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	print_exp(void)
 	}
 }
 
-void	export_(void)
+void	export_print(void)
 {
 	ft_lstsort(&mini()->exp);
 	print_exp();

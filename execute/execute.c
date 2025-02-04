@@ -6,10 +6,11 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 14:51:34 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/03 21:37:35 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/04 21:31:53 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "execute.h"
 #include "../mini_struct/mini.h"
 
 void	execute(void)
@@ -23,7 +24,11 @@ void	execute(void)
 		if (!ft_strcmp(mini()->cmd->cmd, "pwd"))
 			return (pwd_execute());
 		if (!ft_strcmp(mini()->cmd->cmd, "export"))
-			return (export_());
+		{
+			if (*mini()->cmd->arg)
+				return ;
+			return (export_print());
+		}
 		else
 			printf("nao e cd\n");
 	}
