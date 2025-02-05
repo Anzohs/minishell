@@ -6,7 +6,7 @@
 /*   By: hladeiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:24:43 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/04 21:02:39 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/05 20:34:44 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ char				*ft_lsthas(t_list *lst, const char *str);
 t_list				*ft_lstnew(char *content);
 t_list				*ft_lstgetlst(t_list **lst, const char *str);
 t_list				*ft_lstlast(t_list *lst);
+char				**ft_lsttomatrix(t_list *lst);
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 int					ft_strcmp(char *c, char *d);
