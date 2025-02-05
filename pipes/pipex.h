@@ -57,6 +57,7 @@ void	count_pids(t_pipex *pipex, int argc);
 void	pipex(t_mini *mini, t_cmd *comands);
 void	ft_child_one_martelado(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node);
 t_string	*fusion_strs(t_cmd *cmd);
+void	free_env(char **strs);
 /* void	start_here_doc(t_cmd *m, char **env);
 void	one_arrow(t_cmd *m);
 void	two_arrow(t_cmd *m);

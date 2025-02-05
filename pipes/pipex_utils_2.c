@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 22:59:58 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/04 20:39:10 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/05 19:04:24 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,17 @@ void	count_pids(t_pipex *pipex, int argc)
 		perror("malloc3");
 		return ;
 	}
+
+}
+
+void	free_env(char **strs)
+{
+	int	i;
+	i = 0;
+	while (strs[i])
+	{
+		free(strs[i]);
+		i++;
+	}
+	free(strs);
 }

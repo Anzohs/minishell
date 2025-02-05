@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 23:24:14 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/04 21:36:05 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/05 19:05:01 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ t_string	*fusion_strs(t_cmd *cmd)
 	matrix[0] = ft_strdup(cmd->cmd);
 	i = 0;
 	while (cmd->matrix[i])
-		matrix[i + 1] = ft_strdup(cmd->matrix[i++]);
+	{
+		matrix[i + 1] = ft_strdup(cmd->matrix[i]);
+		i++;
+	}
 	matrix[i + 1] = NULL;
 	return (matrix);
 }
@@ -29,8 +32,6 @@ t_string	*fusion_strs(t_cmd *cmd)
 void	execve2(const char *path, t_cmd *node, char *const envp[], t_pipex *pipex)
 {
 	char	**argv;
-	char	*str_join;
-	char	*str_join_2;
 
 	(void)pipex;
 	argv = fusion_strs(node);
@@ -59,7 +60,7 @@ void	ft_child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 void	ft_child_one_martelado(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 {
 	int	i;
-	t_node	*tmp;
+	t_cmd	*tmp;
 
 	tmp = node;
 	i = -1;

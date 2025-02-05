@@ -55,7 +55,7 @@ static void	get_all_path(t_pipex *pipex, t_cmd *node)
 	int	n;
 
 	i = 0;
-	n = node_len(node) - 1;
+	n = ft_lstsize((t_list *)node) - 1;
 	while (i < n)
 	{
 		pipex->paths[i] = find_cmd(get_command(node, i), pipex->env);
@@ -80,6 +80,7 @@ bool	find_full_cmd(t_pipex *pipex, t_mini *mini, t_cmd *node)
 	free(pipex->env[0]);
 	pipex->env[0] = ft_strdup(tmp);
 	free(tmp); */
+	(void )mini;
 	get_all_path(pipex, node);
 	return (true);
 	//pipex->cmd2 = (char **)get_command(node, node_len(node) - 1);

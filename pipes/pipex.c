@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 20:24:53 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/04 21:22:17 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/05 18:57:11 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
 #include <unistd.h>
 
 static void	start_pipe_1(t_pipex *pipex, \
-				t_mini *mini, size_t len, t_node *argv2)
+				t_mini *mini, size_t len, t_cmd *argv2)
 {
 	int	i;
 
 	i = 0;
 	(void)len;
+	(void)mini;
 	if (pipe(pipex->fds[0].fd) < 0)
 	{
 		perror("pipe");
@@ -36,7 +37,7 @@ static void	start_pipe_1(t_pipex *pipex, \
 	if (pipex->pids[i] == 0)
 	{
 		if (pipex->is_doc == 0)
-			ft_child_one(pipex, mini->env, pipex->paths[0], argv2);
+			ft_child_one(pipex, pipex->env_path, pipex->paths[0], argv2);
 	}
 	if (pipex->pids[i] < 0)
 	{
@@ -47,8 +48,9 @@ static void	start_pipe_1(t_pipex *pipex, \
 }
 
 static void	start_multi2_pipe(t_pipex *pipex, \
-				t_mini *mini, int i, char *cmd_path, t_node *node)
+				t_mini *mini, int i, char *cmd_path, t_cmd *node)
 {
+	(void)mini;
 	if (access(cmd_path, F_OK) != 0)
 	{
 		printf("command not found\n");
@@ -168,9 +170,10 @@ char	**get_strs_envs(t_pipex *pipex)
 void	pipex(t_mini *min, t_cmd *comands)
 {
 	t_pipex	pipex;
-	char	**strs_envs;
 
 	pipex = (t_pipex){0};
+	(void)min;
+	(void)comands;
 	validate_args(mini()->cmd, &pipex.cmd_argc);
 	count_pids(&pipex, pipex.cmd_argc);
 	pipex.env = get_strs_envs(&pipex);
