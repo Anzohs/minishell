@@ -145,26 +145,17 @@ static void	start_multi_pipe(t_pipex *pipex, t_mini *mini, int argc, t_cmd *n)
 	ft_child_one_martelado(pipex, pipex->env_path, pipex->path2, n);
 }
 
-char	**get_strs_envs(t_pipex *pipex)
+void	get_strs_envs(t_pipex *pipex)
 {
 	char	*str;
-	char	**strs;
-	char	*str2;
 
 	str = ft_lsthas(mini()->env, "PATH=");
 	if (!*str)
-		return (NULL);
-	str2 = ft_strjoin("PATH", str);
-	if (!str2)
-		return (NULL);
-	pipex->env_path = ft_calloc(2, sizeof(char *));
-	if (!pipex->env_path)
-		return (NULL);
-	pipex->env_path[0] = str2;
-	pipex->env_path[1] = NULL;
+		return ;
 	str++;
-	strs = ft_split(str, ':');
-	return (strs);
+	pipex->env = ft_split(str, ':');
+	if (!pipex->env)
+		return ;
 }
 
 void	pipex(t_mini *min, t_cmd *comands)
@@ -176,7 +167,8 @@ void	pipex(t_mini *min, t_cmd *comands)
 	(void)comands;
 	validate_args(mini()->cmd, &pipex.cmd_argc);
 	count_pids(&pipex, pipex.cmd_argc);
-	pipex.env = ft_lsttomatrix(mini()->env);
+	pipex.env_path = ft_lsttomatrix(mini()->env);
+	get_strs_envs(&pipex);
 	if (!find_full_cmd(&pipex, mini(), mini()->cmd))
 	{
 		clean_all(&pipex);
