@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
+#include "pipex.h"
 
 void	ft_clean_path(t_pipex *pipex, char *path)
 {
@@ -49,6 +50,8 @@ void	clean_all(t_pipex *pipex)
 	//clean_pointer(pipex->cmd2);
 	clean_pointer(pipex->env);
 	clean_pointer(pipex->paths);
+	free_matrix(pipex->env_path);
+	clean_pointer(pipex->env_path);
 	free(pipex->path2);
 	free(pipex->pids);
 	free(pipex->fds);

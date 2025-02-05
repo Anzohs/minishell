@@ -176,12 +176,12 @@ void	pipex(t_mini *min, t_cmd *comands)
 	(void)comands;
 	validate_args(mini()->cmd, &pipex.cmd_argc);
 	count_pids(&pipex, pipex.cmd_argc);
-	pipex.env = get_strs_envs(&pipex);
+	pipex.env = ft_lsttomatrix(mini()->env);
 	if (!find_full_cmd(&pipex, mini(), mini()->cmd))
 	{
 		clean_all(&pipex);
 		return ;
 	}
-	start_multi_pipe(&pipex, mini(), ft_lstsize((t_list *)mini()->cmd), mini()->cmd);
+	start_multi_pipe(&pipex, mini(), ft_cmdsize(mini()->cmd), mini()->cmd);
 	ft_parent(&pipex);
 }
