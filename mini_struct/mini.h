@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 23:34:59 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/03 21:35:42 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/05 20:09:26 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ void				ft_cmdlstdelone(t_cmd **lst);
 int					ft_cmdlst_len(t_cmd **lst);
 t_string			get_var(t_string s);
 int					matrix_len(t_string *s);
+int					ft_cmdsize(t_cmd *cmd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 00:42:55 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/30 19:37:00 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/05 20:09:43 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	get_all_path(t_pipex *pipex, t_cmd *node)
 	int	n;
 
 	i = 0;
-	n = ft_lstsize((t_list *)node) - 1;
+	n = ft_cmdsize(node) - 1;
 	while (i < n)
 	{
 		pipex->paths[i] = find_cmd(get_command(node, i), pipex->env);
