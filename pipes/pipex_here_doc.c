@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../mini_struct/mini.h"
 #include "pipex.h"
 
 static void	here_doc(char *limiter, int fd[2], int pid)

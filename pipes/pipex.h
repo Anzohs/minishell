@@ -13,6 +13,10 @@
 #ifndef PIPEX_H
 # define PIPEX_H
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 4
+# endif
+
 # include "../libs.h"
 # include <stddef.h>
 
