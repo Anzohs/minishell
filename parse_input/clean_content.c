@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 17:22:48 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/06 20:36:01 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/06 21:38:02 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,18 @@ static void	matrix(t_cmd **lst)
 	join_matrix(lst, split_value((*lst)->arg));
 }
 
+
+static void take_spaces(t_string *s)
+{
+	int	i;
+
+	i = ft_strlen(*s) - 1;
+	if (i == -1)
+		return;
+	while (i &&  (*s)[i] == ' ')
+		(*s)[i--] = 0;
+}
+
 static void	take_expantions(t_cmd **lst)
 {
 	bool	f;
@@ -88,7 +100,10 @@ static void	take_expantions(t_cmd **lst)
 	else
 		(*lst)->matrix = split_value((*lst)->arg);
 	while ((*lst)->matrix && (*lst)->matrix[++i] != NULL)
+	{
 		take_quotes(&(*lst)->matrix[i]);
+		take_spaces(&(*lst)->matrix[i]);
+	}
 }
 
 void	clean_content(void)
