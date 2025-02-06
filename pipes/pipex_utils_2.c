@@ -55,12 +55,12 @@ void	count_pids(t_pipex *pipex, int argc)
 		perror("malloc3");
 		return ;
 	}
-
 }
 
 void	free_env(char **strs)
 {
 	int	i;
+
 	i = 0;
 	while (strs[i])
 	{

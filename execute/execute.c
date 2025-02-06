@@ -33,5 +33,5 @@ void	execute(void)
 			printf("nao e cd\n");
 	}
 	else
-		pipex(mini(), mini()->cmd);
+		pipex();
 }

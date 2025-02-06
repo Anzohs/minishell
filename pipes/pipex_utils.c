@@ -29,24 +29,20 @@ t_string	*fusion_strs(t_cmd *cmd)
 	return (matrix);
 }
 
-void	execve2(const char *path, t_cmd *node, char *const envp[], t_pipex *pipex)
+void	execve2(const char *path, t_cmd *node, char *const envp[])
 {
 	char	**argv;
 
-	(void)pipex;
 	argv = fusion_strs(node);
-	//buscar path t_string s = ft_lsthas(mini()->env, "PATH") =s,adma.,dma.,
-	//s++;
 	execve(path, argv, envp);
 	if (execve(path, argv, envp) == -1)
 	{
 		free_env(argv);
 		return ;
 	}
-	//free_env(argv);
 }
 
-void	ft_child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
+void	child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 {
 	if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
 	{
@@ -54,10 +50,10 @@ void	ft_child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 		return ;
 	}
 	ft_close_all_1(pipex);
-	execve2(cmd_path, node, env, pipex);
+	execve2(cmd_path, node, env);
 }
 
-void	ft_child_one_martelado(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
+void	child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 {
 	int	i;
 	t_cmd	*tmp;
@@ -89,7 +85,7 @@ void	ft_child_one_martelado(t_pipex *pipex, char **env, char *cmd_path, t_cmd *n
 			return ;
 		}
 		ft_close_all_p(pipex);
-		execve2(cmd_path, tmp, env, pipex);
+		execve2(cmd_path, tmp, env);
 	}
 }
 

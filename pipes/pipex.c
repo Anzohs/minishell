@@ -10,19 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "pipex.h"
 #include "../mini_struct/mini.h"
 #include <unistd.h>
 
-static void	start_pipe_1(t_pipex *pipex, \
-				t_mini *mini, size_t len, t_cmd *argv2)
+static void	start_pipe_1(t_pipex *pipex, t_cmd *argv2)
 {
 	int	i;
 
 	i = 0;
-	(void)len;
-	(void)mini;
 	if (pipe(pipex->fds[0].fd) < 0)
 	{
 		perror("pipe");
@@ -37,7 +33,7 @@ static void	start_pipe_1(t_pipex *pipex, \
 	if (pipex->pids[i] == 0)
 	{
 		if (pipex->is_doc == 0)
-			ft_child_one(pipex, pipex->env_path, pipex->paths[0], argv2);
+			child_one(pipex, pipex->env, pipex->paths[0], argv2);
 	}
 	if (pipex->pids[i] < 0)
 	{
@@ -47,10 +43,8 @@ static void	start_pipe_1(t_pipex *pipex, \
 	}
 }
 
-static void	start_multi2_pipe(t_pipex *pipex, \
-				t_mini *mini, int i, char *cmd_path, t_cmd *node)
+static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 {
-	(void)mini;
 	if (access(cmd_path, F_OK) != 0)
 	{
 		printf("command not found\n");
@@ -79,7 +73,7 @@ static void	start_multi2_pipe(t_pipex *pipex, \
 			return ;
 		}
 		ft_close_all_m(pipex, i);
-		execve2(cmd_path, node, pipex->env_path, pipex);
+		execve2(cmd_path, node, pipex->env);
 	}
 }
 
@@ -112,7 +106,7 @@ static void	one_cmd(t_pipex *pipex, t_mini *mini)
 			return ;
 		}
 		ft_close(pipex->fds[0].fd[0]);
-		execve2(pipex->path2, mini->cmd, pipex->env_path, pipex);
+		execve2(pipex->path2, mini->cmd, pipex->env);
 	}
 	return ;
 }
@@ -128,7 +122,7 @@ static void	start_multi_pipe(t_pipex *pipex, t_mini *mini, int argc, t_cmd *n)
 		one_cmd(pipex, mini);
 		return ;
 	}
-	start_pipe_1(pipex, mini, argc, n);
+	start_pipe_1(pipex, n);
 	node = n;
 	i = 0;
 	j = argc - 1;
@@ -140,9 +134,9 @@ static void	start_multi_pipe(t_pipex *pipex, t_mini *mini, int argc, t_cmd *n)
 			perror("pipe2");
 			return ;
 		}
-		start_multi2_pipe(pipex, mini, i, pipex->paths[i], node);
+		start_multi2_pip(pipex, i, pipex->paths[i], node);
 	}
-	ft_child_one_martelado(pipex, pipex->env_path, pipex->path2, n);
+	child_two(pipex, pipex->env, pipex->path2, n);
 }
 
 void	get_strs_envs(t_pipex *pipex)
@@ -153,23 +147,21 @@ void	get_strs_envs(t_pipex *pipex)
 	if (!*str)
 		return ;
 	str++;
-	pipex->env = ft_split(str, ':');
-	if (!pipex->env)
+	pipex->env_path = ft_split(str, ':');
+	if (!pipex->env_path)
 		return ;
 }
 
-void	pipex(t_mini *min, t_cmd *comands)
+void	pipex(void)
 {
 	t_pipex	pipex;
 
 	pipex = (t_pipex){0};
-	(void)min;
-	(void)comands;
 	validate_args(mini()->cmd, &pipex.cmd_argc);
 	count_pids(&pipex, pipex.cmd_argc);
-	pipex.env_path = ft_lsttomatrix(mini()->env);
+	pipex.env = ft_lsttomatrix(mini()->env);
 	get_strs_envs(&pipex);
-	if (!find_full_cmd(&pipex, mini(), mini()->cmd))
+	if (!find_full_cmd(&pipex, mini()->cmd))
 	{
 		clean_all(&pipex);
 		return ;

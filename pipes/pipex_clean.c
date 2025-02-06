@@ -18,25 +18,12 @@ void	ft_clean_path(t_pipex *pipex, char *path)
 	if (path == NULL)
 	{
 		write(2, "Error: NAO EXISTE CMD!\n", 23);
-		clean_pointer(pipex->env);
-		clean_pointer(pipex->paths);
-		clean_pointer(pipex->env_path);
+		free_matrix(pipex->env_path);
+		free_matrix(pipex->paths);
+		free_matrix(pipex->env);
 		free(pipex->pids);
 		free(pipex->fds);
 	}
-}
-
-void	clean_pointer(char **strs)
-{
-	int	i;
-
-	i = 0;
-	while (strs[i])
-	{
-		free(strs[i]);
-		i++;
-	}
-	free(strs);
 }
 
 void	clean_null_env(t_pipex *pipex)
@@ -48,7 +35,6 @@ void	clean_null_env(t_pipex *pipex)
 
 void	clean_all(t_pipex *pipex)
 {
-	//clean_pointer(pipex->cmd2);
 	free_matrix(pipex->env);
 	free_matrix(pipex->paths);
 	free_matrix(pipex->env_path);
