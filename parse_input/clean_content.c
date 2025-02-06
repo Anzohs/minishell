@@ -6,11 +6,12 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 17:22:48 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/01 18:49:38 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/06 20:36:01 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
+#include <string.h>
 
 static void	add_matix(t_cmd **lst, t_string *s)
 {
@@ -73,10 +74,11 @@ static void	matrix(t_cmd **lst)
 static void	take_expantions(t_cmd **lst)
 {
 	bool	f;
+	int		i;
 
+	i = -1;
 	f = split_need((*lst)->cmd);
 	take_quotes(&(*lst)->cmd);
-	take_quotes(&(*lst)->arg);
 	while (is_expantion((*lst)->cmd))
 		(*lst)->cmd = sub_expantion((*lst)->cmd, get_var((*lst)->cmd));
 	while (is_expantion((*lst)->arg))
@@ -85,6 +87,8 @@ static void	take_expantions(t_cmd **lst)
 		matrix(lst);
 	else
 		(*lst)->matrix = split_value((*lst)->arg);
+	while ((*lst)->matrix && (*lst)->matrix[++i] != NULL)
+		take_quotes(&(*lst)->matrix[i]);
 }
 
 void	clean_content(void)

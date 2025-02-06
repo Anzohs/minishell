@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export_built.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/06 20:21:47 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/02/06 20:57:30 by hladeiro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
 
@@ -12,7 +23,6 @@ static bool	add_exp(t_string s)
 	}
 	return (true);
 }
-
 
 static void	add_variables(t_string s, t_list **list)
 {
@@ -77,7 +87,7 @@ void	export_built(t_string *matrix)
 	int	i;
 
 	i = -1;
-	while(matrix[++i])
+	while (matrix[++i])
 	{
 		if (add_exp(matrix[i]))
 		{

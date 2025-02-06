@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 14:51:34 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/04 21:39:20 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/06 20:25:25 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	execute(void)
 		if (!ft_strcmp(mini()->cmd->cmd, "export"))
 		{
 			if (*mini()->cmd->arg)
-				return ;
+				return (export_built(mini()->cmd->matrix));
 			return (export_print());
 		}
 		else
