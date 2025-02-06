@@ -37,6 +37,7 @@ typedef struct s_cmd
 	t_string		cmd;
 	t_string		arg;
 	t_string		*matrix;
+	t_string		*arrow;
 	t_fd			*fd;
 	struct s_cmd	*next;
 }					t_cmd;

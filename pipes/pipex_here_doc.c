@@ -13,7 +13,7 @@
 #include "../mini_struct/mini.h"
 #include "pipex.h"
 
-static void	here_doc(char *limiter, int fd[2], int pid)
+static void	here_doc(char *limiter, int fd[2])
 {
 	char	*line;
 
@@ -36,9 +36,9 @@ static void	here_doc(char *limiter, int fd[2], int pid)
 	return ;
 }
 
-static void	parent(int fd[2], int pid, t_node *m)
+static void	parent(int fd[2], int pid, t_cmd *m)
 {
-	free_env(m->entry.arrow);
+	free_matrix(m->arrow);
 	ft_close(fd[0]);
 	ft_close(fd[1]);
 	waitpid(pid, NULL, 0);
@@ -47,16 +47,17 @@ static void	parent(int fd[2], int pid, t_node *m)
 
 static void	clear_pipe(int fd[2])
 {
-	char buffer[1024];
+	char	buffer[1024];
+
 	while (read(fd[0], buffer, sizeof(buffer)) > 0)
 		;
 }
 
-static void	start_cmd(char **args, char **env, int fd[2], int pid)
+static void	start_cmd(char **args, char **env, int fd[2])
 {
 	char	*cmd;
 
-	cmd = ft_strjoin("/usr/bin/", mini()->commands->entry.key);
+	cmd = ft_strjoin("/usr/bin/", mini()->cmd->cmd);
 	if (dup2(fd[0], STDIN_FILENO) < 0)
 	{
 		write(2, "Deu merda\n", 10);
@@ -76,11 +77,11 @@ static void	start_cmd(char **args, char **env, int fd[2], int pid)
 	execve(cmd, args, env);
 }
 
-void ft_here_one(int fd[2], int *pid, char *n, char **env)
+void	ft_here_one(int fd[2], int *pid, char *n, char **env)
 {
-	char **strs;
+	char	**strs;
 
-	strs = fusion_strs();
+	strs = fusion_strs(mini()->cmd);
 	*pid = fork();
 	if (*pid < 0)
 	{
@@ -89,18 +90,18 @@ void ft_here_one(int fd[2], int *pid, char *n, char **env)
 	}
 	if (*pid == 0)
 	{
-		here_doc(n, fd, *pid);
-		start_cmd(strs, env, fd, *pid);
+		here_doc(n, fd);
+		start_cmd(strs, env, fd);
 	}
 	free_env(strs);
 }
 
-void	start_here_doc(t_node *m, char **env)
+void	start_here_doc(t_cmd *m, char **env)
 {
 	int	pipefd[2];
 	int	pid;
 
-	if (!ft_strcmp(m->entry.key, "<<") && !m->entry.args[0])
+	if (!ft_strcmp(m->cmd, "<<") && !m->matrix[0])
 	{
 		write(2, "error near \"newline\" found5\n", 28);
 		return ;
@@ -110,10 +111,11 @@ void	start_here_doc(t_node *m, char **env)
 		perror("pipe1");
 		return ;
 	}
-	if (!ft_strcmp(m->entry.key, "<<"))
-		ft_here_one(pipefd, &pid, m->entry.args[0], env);
+	if (!ft_strcmp(m->cmd, "<<"))
+		ft_here_one(pipefd, &pid, m->matrix[0], env);
 	else
-		ft_here_one(pipefd, &pid, m->entry.arrow[1], env);
+		ft_here_one(pipefd, &pid, m->matrix[1], env);
 	parent(pipefd, pid, m);
+	free_matrix(env);
 	return ;
 }

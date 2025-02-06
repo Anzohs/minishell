@@ -23,7 +23,7 @@ SRC_FT = hash.c hcreate.c hdestroy.c hsearch.c node_len.c
 SRC_BLT = cd_biltin.c is_biltin.c
 SRC_SRC = copy_env.c create_env.c ft_free_strs.c
 SRC_ENV = get_index.c update_oldpwd.c update_pwd.c get_pwd.c get_export.c get_unset.c get_utils.c get_env.c get_echo.c get_envvars.c
-SRC_PIP = pipex.c pipex_utils.c pipex_utils_2.c pipex_val_cmd.c pipex_close.c pipex_clean.c
+SRC_PIP = pipex.c pipex_utils.c pipex_utils_2.c pipex_val_cmd.c pipex_close.c pipex_clean.c arrow_help.c pipex_here_doc.c
 SRC_FREE = free_env.c free_node.c free_tmini.c free_singlenode.c
 SRC_CLN = clean_command.c closed_quotes.c clean_node.c clean_quotes.c expantions.c parse_node.c expand_args.c has_quotes.c split_value.c\
 		expand_cmd.c

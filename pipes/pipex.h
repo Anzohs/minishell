@@ -60,8 +60,8 @@ void		pipex(void);
 void		child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node);
 t_string	*fusion_strs(t_cmd *cmd);
 void		free_env(char **strs);
-/* void	start_here_doc(t_cmd *m, char **env);
-void	one_arrow(t_cmd *m);
+void		start_here_doc(t_cmd *m, char **env);
+/* void	one_arrow(t_cmd *m);
 void	two_arrow(t_cmd *m);
 void	one_arrow_reverse(t_cmd *m); */
 

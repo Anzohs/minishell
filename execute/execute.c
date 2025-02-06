@@ -17,7 +17,10 @@ void	execute(void)
 {
 	if (!mini()->cmd->cmd || !*mini()->cmd->cmd)
 		return ;
-	if (ft_cmdlst_len(&mini()->cmd) == 1 && is_builtin(mini()->cmd->cmd))
+	mini()->cmd->arrow = NULL;
+	if (!ft_strcmp(mini()->cmd->cmd, "<<") || (mini()->cmd->arrow != NULL && !ft_strcmp(mini()->cmd->arrow[0], "<<")))
+			start_here_doc(mini()->cmd, ft_lsttomatrix(mini()->env));
+	else if (ft_cmdlst_len(&mini()->cmd) == 1 && is_builtin(mini()->cmd->cmd))
 	{
 		if (!ft_strcmp(mini()->cmd->cmd, "cd"))
 			return (cd_execute(mini()->cmd->matrix));
