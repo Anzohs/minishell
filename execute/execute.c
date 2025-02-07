@@ -28,6 +28,8 @@ void	execute(void)
 			return (pwd_execute());
 		if (!ft_strcmp(mini()->cmd->cmd, "env"))
 			return (env_execute());
+		if (!ft_strcmp(mini()->cmd->cmd, "unset"))
+			return (unset_execute(mini()->cmd));
 		if (!ft_strcmp(mini()->cmd->cmd, "export"))
 		{
 			if (*mini()->cmd->arg)

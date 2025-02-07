@@ -14,10 +14,10 @@ SRC_LIBFT = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isasci
 			ft_putnbr_fd.c ft_putstr_fd.c ft_split.c ft_strcat.c ft_strchr.c ft_strcmp.c ft_strcpy.c ft_strdup.c \
 			ft_striteri.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c ft_strncmp.c ft_strnstr.c \
 			ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c ft_lsthas.c ft_lstgetlst.c ft_lstsort.c ft_lsttomatrix.c \
-			get_next_line.c get_next_line_utils.c
+			get_next_line.c get_next_line_utils.c ft_lstpop.c
 SRC_PRS = parse_input.c closed_quotes.c is_valid.c transform_str.c expantions.c clean_content.c is_expantion.c sub_expantion.c split_value.c \
 			take_quotes.c free_matrix.c split_need.c is_builtin.c
-SRC_EXE = execute.c cd_execute.c pwd_execute.c export_print.c export_built.c env_execute.c
+SRC_EXE = execute.c cd_execute.c pwd_execute.c export_print.c export_built.c env_execute.c unset_execute.c
 SRC_SIG = load_signals.c
 SRC_FT = hash.c hcreate.c hdestroy.c hsearch.c node_len.c
 SRC_BLT = cd_biltin.c is_biltin.c

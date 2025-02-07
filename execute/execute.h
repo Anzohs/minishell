@@ -15,11 +15,15 @@
 
 # include "../libs.h"
 
+typedef struct s_cmd    t_cmd;
+
 void	execute(void);
 void	cd_execute(t_string *matrix);
 void	pwd_execute(void);
 void	export_print(void);
 void	export_built(t_string *matrix);
 void    env_execute(void);
+void    unset_execute(t_cmd *cmd);
+
 
 #endif
