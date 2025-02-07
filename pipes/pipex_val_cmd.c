@@ -19,7 +19,7 @@ static char	*find_cmd(char *cmd, char **path)
 	char	*tmp2;
 
 	i = 0;
-	while (paht && path[i] && cmd)
+	while (path && path[i] && cmd)
 	{
 		tmp = ft_strjoin(path[i], "/");
 		tmp2 = ft_strjoin(tmp, cmd);
