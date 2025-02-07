@@ -83,6 +83,7 @@ t_list				*ft_lstnew(char *content);
 t_list				*ft_lstgetlst(t_list **lst, const char *str);
 t_list				*ft_lstlast(t_list *lst);
 char				**ft_lsttomatrix(t_list *lst);
+void				ft_lstpop(t_list **lst, t_list *node);
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 int					ft_strcmp(char *c, char *d);
