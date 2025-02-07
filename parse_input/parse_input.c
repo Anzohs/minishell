@@ -103,4 +103,13 @@ void	parse_input(void)
 		free(cmd);
 		free(arg);
 	}
+	if (mini()->readline[i-1] == '|')
+	{
+		t_entry e;
+		
+		e.key = "";
+		e.value ="";
+		copy_entry(&e);
+	}
+
 }

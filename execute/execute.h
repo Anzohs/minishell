@@ -20,5 +20,6 @@ void	cd_execute(t_string *matrix);
 void	pwd_execute(void);
 void	export_print(void);
 void	export_built(t_string *matrix);
+void    env_execute(void);
 
 #endif

@@ -26,6 +26,8 @@ void	execute(void)
 			return (cd_execute(mini()->cmd->matrix));
 		if (!ft_strcmp(mini()->cmd->cmd, "pwd"))
 			return (pwd_execute());
+		if (!ft_strcmp(mini()->cmd->cmd, "env"))
+			return (env_execute());
 		if (!ft_strcmp(mini()->cmd->cmd, "export"))
 		{
 			if (*mini()->cmd->arg)

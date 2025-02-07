@@ -17,7 +17,7 @@ SRC_LIBFT = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isasci
 			get_next_line.c get_next_line_utils.c
 SRC_PRS = parse_input.c closed_quotes.c is_valid.c transform_str.c expantions.c clean_content.c is_expantion.c sub_expantion.c split_value.c \
 			take_quotes.c free_matrix.c split_need.c is_builtin.c
-SRC_EXE = execute.c cd_execute.c pwd_execute.c export_print.c export_built.c
+SRC_EXE = execute.c cd_execute.c pwd_execute.c export_print.c export_built.c env_execute.c
 SRC_SIG = load_signals.c
 SRC_FT = hash.c hcreate.c hdestroy.c hsearch.c node_len.c
 SRC_BLT = cd_biltin.c is_biltin.c
