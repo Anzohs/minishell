@@ -26,10 +26,13 @@ static bool	add_exp(t_string s)
 
 static void	add_variables(t_string s, t_list **list)
 {
-	t_list	*current;
-	t_string var_name;
-	t_string var_value;
-	char	*equal_sign;
+	t_list		*current;
+	t_string	var_name;
+	t_string	var_value;
+	char		*equal_sign;
+	char		*temp;
+	t_string	new_var;
+	t_string	new_content;
 
 	equal_sign = ft_strchr(s, '=');
 	if (equal_sign)
@@ -42,12 +45,12 @@ static void	add_variables(t_string s, t_list **list)
 		var_name = ft_strdup(s);
 		var_value = NULL;
 	}
-
 	current = *list;
 	while (current)
 	{
-		if (ft_strncmp(current->content, var_name, ft_strlen(var_name)) == 0 &&
-			(current->content[ft_strlen(var_name)] == '=' || current->content[ft_strlen(var_name)] == '\0'))
+		if (ft_strncmp(current->content, var_name, ft_strlen(var_name)) == 0
+			&& (current->content[ft_strlen(var_name)] == '='
+				|| current->content[ft_strlen(var_name)] == '\0'))
 		{
 			free(current->content);
 			if (var_value)
@@ -56,21 +59,20 @@ static void	add_variables(t_string s, t_list **list)
 				current->content = ft_strdup(var_name);
 			if (var_value)
 			{
-				char *temp = current->content;
+				temp = current->content;
 				current->content = ft_strjoin(current->content, var_value);
 				free(temp);
 			}
 			free(var_name);
 			free(var_value);
-			return;
+			return ;
 		}
 		current = current->next;
 	}
-
 	if (var_value)
 	{
-		t_string new_var = ft_strjoin(var_name, "=");
-		t_string new_content = ft_strjoin(new_var, var_value);
+		new_var = ft_strjoin(var_name, "=");
+		new_content = ft_strjoin(new_var, var_value);
 		ft_lstadd_back(list, ft_lstnew(new_content));
 		free(new_var);
 	}

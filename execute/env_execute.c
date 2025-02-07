@@ -1,9 +1,9 @@
 
 #include "../mini_struct/mini.h"
 
-void    env_execute(void)
+void	env_execute(void)
 {
-	t_list	*tmp;
+	t_list *tmp;
 
 	tmp = mini()->env;
 	while (tmp)

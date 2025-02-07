@@ -17,7 +17,7 @@ static void	update_env(t_list **lst, t_string key, t_string value)
 	t_list		*tmp;
 	t_string	s;
 
-	if (!lst || !value ||!*value)
+	if (!lst || !value || !*value)
 		return ;
 	tmp = ft_lstgetlst(lst, key);
 	s = ft_strjoin(key, value);
@@ -90,8 +90,7 @@ void	cd_execute(t_string *matrix)
 		i = cd_();
 	else if (chdir(matrix[0]) >= 0)
 		return (update_pwd(getcwd(NULL, 0), &mini()->exp, true),
-			update_pwd(getcwd(NULL, 0), &mini()->env, true),
-			(void)*matrix);
+			update_pwd(getcwd(NULL, 0), &mini()->env, true), (void)*matrix);
 	else if (chdir(matrix[0]) < 0)
 		return (perror(matrix[0]), (void)*matrix);
 	if (i)

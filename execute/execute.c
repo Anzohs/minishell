@@ -10,16 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
 #include "../mini_struct/mini.h"
+#include "execute.h"
+/*
+static void	check_redirects(t_cmd *cmd)
+{
+}*/
 
 void	execute(void)
 {
 	if (!mini()->cmd->cmd || !*mini()->cmd->cmd)
 		return ;
 	mini()->cmd->arrow = NULL;
-	if (!ft_strcmp(mini()->cmd->cmd, "<<") || (mini()->cmd->arrow != NULL && !ft_strcmp(mini()->cmd->arrow[0], "<<")))
-			start_here_doc(mini()->cmd, ft_lsttomatrix(mini()->env));
+	if (!ft_strcmp(mini()->cmd->cmd, "<<") || (mini()->cmd->arrow != NULL
+			&& !ft_strcmp(mini()->cmd->arrow[0], "<<")))
+		start_here_doc(mini()->cmd, ft_lsttomatrix(mini()->env));
 	else if (ft_cmdlst_len(&mini()->cmd) == 1 && is_builtin(mini()->cmd->cmd))
 	{
 		if (!ft_strcmp(mini()->cmd->cmd, "cd"))
@@ -30,6 +35,8 @@ void	execute(void)
 			return (env_execute());
 		if (!ft_strcmp(mini()->cmd->cmd, "unset"))
 			return (unset_execute(mini()->cmd));
+		if (!ft_strcmp(mini()->cmd->cmd, "echo"))
+			return (echo_exec(mini()->cmd));
 		if (!ft_strcmp(mini()->cmd->cmd, "export"))
 		{
 			if (*mini()->cmd->arg)
