@@ -1,27 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cmdlstdelone.c                                  :+:      :+:    :+:   */
+/*   ft_fd_del.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/16 21:29:51 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/08 18:15:56 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/02/08 18:13:04 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/02/08 19:26:05 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-void	ft_cmdlstdelone(t_cmd **lst)
+static void	ft_fddelone(t_fd **lst)
 {
-	t_cmd	*temp;
+	t_fd	*temp;
 
 	temp = *lst;
-	if (temp->arg)
-		free(temp->arg);
-	if (temp->cmd)
-		free(temp->cmd);
-	free_matrix(temp->matrix);
-	ft_fd_del(&(*lst)->fd);
+	if (temp->name)
+		free(temp->name);
+	if (temp->fd > 0)
+		close(temp->fd);
 	free(temp);
+}
+
+void	ft_fd_del(t_fd	**fd)
+{
+	t_fd	*list_t;
+	t_fd	*list_temp;
+
+	list_t = *fd;
+	if (!*fd)
+		return ;
+	while (list_t)
+	{
+		list_temp = list_t->next;
+		ft_fddelone(&list_t);
+		list_t = list_temp;
+	}
+	*fd = NULL;
 }

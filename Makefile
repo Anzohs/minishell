@@ -6,7 +6,8 @@ CFLAGS = -Wall -Wextra -Werror -g -I. -Isrc/libf -Ift_search -Imini_struct
 CCFLAGS = -lreadline
 SRC_SR = hash.c hcreate.c hdestroy.c hsearch.c
 SRC_MS = create_pwd.c m_copy_env.c mini.c ft_cmdlst_new.c ft_cmdlstadd_back.c create_oldpwd.c \
-		ft_cmdlstclear.c ft_cmdlstdelone.c ft_cmdlst_len.c get_var.c matrix_len.c ft_cmdsize.c
+		ft_cmdlstclear.c ft_cmdlstdelone.c ft_cmdlst_len.c get_var.c matrix_len.c ft_cmdsize.c \
+		ft_fd_del.c ft_fd_new.c ft_fdadd_back.c
 SRC_LIBFT = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c \
 			ft_islower.c ft_isprint.c ft_isupper.c ft_itoa.c ft_lstadd_back.c ft_lstadd_front.c \
 			ft_lstclear.c ft_lstdelone.c ft_lstdup.c ft_lstiter.c ft_lstlast.c ft_lstmap.c ft_lstnew.c ft_lstsize.c \
@@ -16,7 +17,7 @@ SRC_LIBFT = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isasci
 			ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c ft_lsthas.c ft_lstgetlst.c ft_lstsort.c ft_lsttomatrix.c \
 			get_next_line.c get_next_line_utils.c ft_lstpop.c
 SRC_PRS = parse_input.c closed_quotes.c is_valid.c transform_str.c expantions.c clean_content.c is_expantion.c sub_expantion.c split_value.c \
-			take_quotes.c free_matrix.c split_need.c is_builtin.c
+			take_quotes.c free_matrix.c split_need.c is_builtin.c parse_redirects.c
 SRC_EXE = execute.c cd_execute.c pwd_execute.c export_print.c export_built.c env_execute.c unset_execute.c echo_exec.c
 SRC_SIG = load_signals.c
 SRC_FT = hash.c hcreate.c hdestroy.c hsearch.c node_len.c

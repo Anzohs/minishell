@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 23:34:59 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/05 20:09:26 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/08 19:06:39 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,9 @@ int					ft_cmdlst_len(t_cmd **lst);
 t_string			get_var(t_string s);
 int					matrix_len(t_string *s);
 int					ft_cmdsize(t_cmd *cmd);
+void				ft_fd_del(t_fd	**fd);
+void				ft_fdadd_back(t_fd **lst, t_fd *n);
+t_fd				*ft_fd_new(char *name, int fd, t_type type);
+
 
 #endif

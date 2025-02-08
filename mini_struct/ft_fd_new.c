@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cmdlstdelone.c                                  :+:      :+:    :+:   */
+/*   ft_fd_new.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/16 21:29:51 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/08 18:15:56 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/02/08 18:59:16 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/02/08 19:04:52 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-void	ft_cmdlstdelone(t_cmd **lst)
+t_fd	*ft_fd_new(char *name, int fd, t_type type)
 {
-	t_cmd	*temp;
+	t_fd	*n;
 
-	temp = *lst;
-	if (temp->arg)
-		free(temp->arg);
-	if (temp->cmd)
-		free(temp->cmd);
-	free_matrix(temp->matrix);
-	ft_fd_del(&(*lst)->fd);
-	free(temp);
+	n = ft_calloc(sizeof(t_fd), 1);
+	if (!n)
+		return (NULL);
+	n->name = name;
+	n->fd = fd;
+	n->type = type;
+	n->next = NULL;
+	return (n);
 }

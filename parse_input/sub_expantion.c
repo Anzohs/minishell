@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/19 14:51:34 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/01 19:05:22 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/02/05 21:39:37 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/02/08 19:09:21 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_string	sub_expantion(t_string s, t_string str)
 
 	new = ft_calloc(ft_strlen(s) + ft_strlen(str) + 1, sizeof(char));
 	if (!new)
-		exit(0);
+		return (ft_strdup(""));
 	i = 0;
 	j = 0;
 	while (s[i])
