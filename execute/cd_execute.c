@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 15:02:55 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/04 21:34:58 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/08 20:35:24 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static bool	cd_(void)
 		return (perror(s), true);
 }
 
-void	cd_execute(t_string *matrix)
+void	cd_execute(t_string *matrix, int fd)
 {
 	bool		i;
 	t_string	s;
@@ -96,6 +96,7 @@ void	cd_execute(t_string *matrix)
 	if (i)
 		return ;
 	s = getcwd(NULL, 0);
+	ft_putendl_fd(s, fd);
 	printf("%s \n", s);
 	free(s);
 }

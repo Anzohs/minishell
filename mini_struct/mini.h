@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 23:34:59 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/08 19:06:39 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/08 20:24:24 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_cmd
 	t_string		*matrix;
 	t_string		*arrow;
 	t_fd			*fd;
+	int				w;
 	struct s_cmd	*next;
 }					t_cmd;
 

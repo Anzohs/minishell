@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 14:51:34 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/06 20:25:25 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/08 20:35:12 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	execute(void)
 	else if (ft_cmdlst_len(&mini()->cmd) == 1 && is_builtin(mini()->cmd->cmd))
 	{
 		if (!ft_strcmp(mini()->cmd->cmd, "cd"))
-			return (cd_execute(mini()->cmd->matrix));
+			return (cd_execute(mini()->cmd->matrix, mini()->cmd->w));
 		if (!ft_strcmp(mini()->cmd->cmd, "pwd"))
 			return (pwd_execute());
 		if (!ft_strcmp(mini()->cmd->cmd, "env"))
