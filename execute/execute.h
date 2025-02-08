@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 14:51:34 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/08 20:35:34 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/08 20:39:36 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ typedef struct s_cmd	t_cmd;
 
 void					execute(void);
 void					cd_execute(t_string *matrix, int fd);
-void					pwd_execute(void);
-void					export_print(void);
+void					pwd_execute(int fd);
+void					export_print(int fd);
 void					export_built(t_string *matrix);
-void					env_execute(void);
+void					env_execute(int fd);
 void					unset_execute(t_cmd *cmd);
 void					echo_exec(t_cmd *cmd);
 

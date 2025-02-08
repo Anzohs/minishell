@@ -6,13 +6,12 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 17:22:48 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/08 18:12:35 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/08 20:52:17 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
 #include "parsing.h"
-#include <string.h>
 
 static void	add_matix(t_cmd **lst, t_string *s)
 {
