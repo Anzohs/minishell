@@ -6,7 +6,7 @@
 /*   By: essmpt <essmpt@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:52:43 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/01 01:13:02 by essmpt           ###   ########.fr       */
+/*   Updated: 2025/02/08 22:43:37 by essmpt           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,12 @@ void	start_here_doc(t_cmd *m, char **env)
 		write(2, "error near \"newline\" found5\n", 28);
 		return ;
 	}
+	else if (ft_strcmp(m->cmd, "<<") && !m->arrow[1])
+	{
+		write(2, "error near \"newline\" found5\n", 28);
+		free_matrix(m->arrow);
+		return ;
+	}
 	if (pipe(pipefd) < 0)
 	{
 		perror("pipe1");
@@ -114,8 +120,7 @@ void	start_here_doc(t_cmd *m, char **env)
 	if (!ft_strcmp(m->cmd, "<<"))
 		ft_here_one(pipefd, &pid, m->matrix[0], env);
 	else
-		ft_here_one(pipefd, &pid, m->matrix[1], env);
+		ft_here_one(pipefd, &pid, m->arrow[1], env);
 	parent(pipefd, pid, m);
-	free_matrix(env);
 	return ;
 }

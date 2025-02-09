@@ -23,7 +23,7 @@ static void	echo_new_line(t_string *matrix, int fd)
 		if (matrix[i + 1])
 			ft_putchar_fd(' ', fd);
 	}
-	ft_putendl_fd("", 1);
+	ft_putendl_fd("", fd);
 }
 
 static void	echo_no_line(t_string *matrix, int fd)

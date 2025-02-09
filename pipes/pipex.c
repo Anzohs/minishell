@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
+/*   By: essmpt <essmpt@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 20:24:53 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/05 18:57:11 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/09 12:00:35 by essmpt           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,18 @@ static void	one_cmd(t_pipex *pipex, t_mini *mini)
 	if (pipex->pids[0] == 0)
 	{
 		ft_close(pipex->fds[0].fd[1]);
-		if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < -1)
+		if (dup2(pipex->fds[0].fd[0], STDIN_FILENO) < -1)
+		{
+			write(2, "DUP8\n", 5);
+			return ;
+		}
+		if (dup2(mini->cmd->w, STDOUT_FILENO) < -1)
 		{
 			write(2, "DUP8\n", 5);
 			return ;
 		}
 		ft_close(pipex->fds[0].fd[0]);
+		ft_close(mini->cmd->w);
 		execve2(pipex->path2, mini->cmd, pipex->env);
 	}
 	return ;
