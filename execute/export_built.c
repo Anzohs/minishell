@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 20:21:47 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/06 20:57:30 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/09 20:05:55 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,7 @@ static void	add_variables(t_string s, t_list **list)
 		free(new_var);
 	}
 	else
-	{
 		ft_lstadd_back(list, ft_lstnew(ft_strdup(var_name)));
-	}
 	free(var_name);
 	free(var_value);
 }

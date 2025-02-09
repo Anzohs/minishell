@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 17:20:42 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/09 19:34:46 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/09 20:02:49 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ bool	change_fd(t_cmd **cmd)
 	f = (*cmd)->fd;
 	while (f)
 	{
+		take_quotes(&f->name);
 		if (f->type == CREATE)
 			f->fd = open(f->name, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 		if (f->type == APPEND)
