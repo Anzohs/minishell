@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 20:09:42 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/09 18:07:29 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/09 20:09:29 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	sig_handler_here(int signum, siginfo_t *sig, void *s)
 		rl_on_new_line();
 		rl_redisplay();
 		mini()->sig = 1;
+		mini()->exit_code = 130;
 	}
 	if (signum == SIGQUIT)
 		return ;
