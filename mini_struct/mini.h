@@ -15,22 +15,23 @@
 
 # include "../minishell.h"
 
-extern	int		g_sig;
+extern int			g_sig;
 
-typedef enum	s_type{
+typedef enum s_type
+{
 	APPEND,
 	CREATE,
 	HEREDOC,
 	REVERSE,
-}			t_type;
+}					t_type;
 
-typedef struct s_fd{
-	int			fd;
-	t_string	name;
-	t_type	type;
-	struct s_fd	*next;
-}		t_fd;
-
+typedef struct s_fd
+{
+	int				fd;
+	t_string		name;
+	t_type			type;
+	struct s_fd		*next;
+}					t_fd;
 
 typedef struct s_cmd
 {
@@ -74,10 +75,9 @@ int					ft_cmdlst_len(t_cmd **lst);
 t_string			get_var(t_string s);
 int					matrix_len(t_string *s);
 int					ft_cmdsize(t_cmd *cmd);
-void				ft_fd_del(t_fd	**fd);
+void				ft_fd_del(t_fd **fd);
 void				ft_fdadd_back(t_fd **lst, t_fd *n);
 t_fd				*ft_fd_new(char *name, int fd, t_type type);
 void				change_fd(t_cmd **cmd);
-
 
 #endif

@@ -6,10 +6,9 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 20:09:42 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/02 17:22:38 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/09 18:07:29 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../mini_struct/mini.h"
 
@@ -30,23 +29,23 @@ void	sig_handler(int signum, siginfo_t *sig, void *s)
 	(void)sig;
 	if (signum == SIGINT)
 	{
-		//rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		printf("\n");
 		rl_on_new_line();
 		rl_redisplay();
 		mini()->sig = 1;
 	}
 	if (signum == SIGQUIT)
-		return;
+		return ;
 }
 
 void	sig_handler_here(int signum, siginfo_t *sig, void *s)
 {
 	(void)s;
 	(void)sig;
-	if (signum ==  SIGINT)
+	if (signum == SIGINT)
 	{
-		//rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 		mini()->sig = 1;

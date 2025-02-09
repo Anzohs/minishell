@@ -6,7 +6,7 @@
 /*   By: hladeiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:24:43 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/05 20:34:44 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/09 17:47:13 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,11 @@
 #  define BUFFER_SIZE 4
 # endif
 
-# include <unistd.h>
-# include <stdio.h>
 # include <fcntl.h>
-# include <stdlib.h>
 # include <limits.h>
-
-
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 typedef struct s_list
 {

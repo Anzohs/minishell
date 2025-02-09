@@ -26,16 +26,14 @@ static int	ft_strcmp_(char *c, char *d)
 	return (c[i] - d[i]);
 }
 
-
 static void	ft_lstswap(t_list *a, t_list *b)
 {
-	char *temp;
+	char	*temp;
 
 	temp = a->content;
 	a->content = b->content;
 	b->content = temp;
 }
-
 
 void	ft_lstsort(t_list **head)
 {
@@ -44,8 +42,7 @@ void	ft_lstsort(t_list **head)
 	int		swapped;
 
 	if (!head || !*head)
-		return;
-
+		return ;
 	swapped = 1;
 	while (swapped)
 	{

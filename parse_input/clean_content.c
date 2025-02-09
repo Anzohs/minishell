@@ -70,15 +70,14 @@ static void	matrix(t_cmd **lst)
 	join_matrix(lst, split_value((*lst)->arg));
 }
 
-
-static void take_spaces(t_string *s)
+static void	take_spaces(t_string *s)
 {
 	int	i;
 
 	i = ft_strlen(*s) - 1;
 	if (i == -1)
-		return;
-	while (i &&  (*s)[i] == ' ')
+		return ;
+	while (i && (*s)[i] == ' ')
 		(*s)[i--] = 0;
 }
 

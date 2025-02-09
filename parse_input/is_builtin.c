@@ -14,10 +14,7 @@
 
 bool	is_builtin(t_string s)
 {
-	return (!ft_strcmp(s, "echo") || \
-			!ft_strcmp(s, "cd") || \
-			!ft_strcmp(s, "export") || \
-			!ft_strcmp(s, "unset") || \
-			!ft_strcmp(s, "env") || \
-			!ft_strcmp(s, "pwd"));
+	return (!ft_strcmp(s, "echo") || !ft_strcmp(s, "cd") || !ft_strcmp(s,
+			"export") || !ft_strcmp(s, "unset") || !ft_strcmp(s, "env")
+		|| !ft_strcmp(s, "pwd"));
 }

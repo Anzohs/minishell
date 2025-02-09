@@ -75,7 +75,8 @@ static void	parse_redirection(t_cmd **cmd, t_string *str)
 			while ((*str)[i] == ' ')
 				i++;
 			start = i;
-			while ((*str)[i] && (*str)[i] != ' ' && (*str)[i] != '<' && (*str)[i] != '>')
+			while ((*str)[i] && (*str)[i] != ' ' && (*str)[i] != '<'
+				&& (*str)[i] != '>')
 				i++;
 			redir = ft_substr(*str, start, i - start);
 			ft_fdadd_back(&(*cmd)->fd, ft_fd_new(redir, -1, type));

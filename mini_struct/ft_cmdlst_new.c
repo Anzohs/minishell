@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 20:45:09 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/09 17:26:04 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/09 18:10:18 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ t_cmd	*ft_cmdlst_new(char *cmd, char *arg)
 		ft_cmdlstdelone(&list);
 		exit(0);
 	}
-	list->w = 1;
-	list->read = 1;
+	list->w = STDOUT_FILENO;
+	list->read = STDIN_FILENO;
 	list->matrix = NULL;
 	list->fd = NULL;
 	list->next = NULL;

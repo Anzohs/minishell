@@ -88,6 +88,7 @@ void	parse_input(void)
 	t_string	cmd;
 	t_string	arg;
 	t_entry		*entry;
+		t_entry e;
 
 	i = 0;
 	while (mini()->readline[i])
@@ -103,13 +104,10 @@ void	parse_input(void)
 		free(cmd);
 		free(arg);
 	}
-	if (mini()->readline[i-1] == '|')
+	if (mini()->readline[i - 1] == '|')
 	{
-		t_entry e;
-		
 		e.key = "";
-		e.value ="";
+		e.value = "";
 		copy_entry(&e);
 	}
-
 }

@@ -62,7 +62,6 @@ static int	end_word(t_string str, int s)
 	return (i);
 }
 
-
 t_string	*split_value(t_string str)
 {
 	t_string	*result;
