@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 23:34:59 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/08 20:24:24 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/09 17:25:45 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_cmd
 	t_string		*arrow;
 	t_fd			*fd;
 	int				w;
+	int				read;
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -76,6 +77,7 @@ int					ft_cmdsize(t_cmd *cmd);
 void				ft_fd_del(t_fd	**fd);
 void				ft_fdadd_back(t_fd **lst, t_fd *n);
 t_fd				*ft_fd_new(char *name, int fd, t_type type);
+void				change_fd(t_cmd **cmd);
 
 
 #endif
