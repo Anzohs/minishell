@@ -6,11 +6,12 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 17:20:42 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/09 17:35:47 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/09 19:34:46 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
+#include <stdbool.h>
 
 static int	get_last_fd(t_fd *fd)
 {
@@ -46,7 +47,7 @@ static int	get_last_read(t_fd *fd)
 	return (file);
 }
 
-void	change_fd(t_cmd **cmd)
+bool	change_fd(t_cmd **cmd)
 {
 	t_fd	*f;
 
@@ -59,8 +60,17 @@ void	change_fd(t_cmd **cmd)
 			f->fd = open(f->name, O_CREAT | O_WRONLY | O_APPEND, 0664);
 		if (f->type == REVERSE)
 			f->fd = open (f->name, O_RDONLY, 0664);
+		if (f->fd == -1)
+			break ;
 		f = f->next;
+	}
+	if (f && f->fd == -1)
+	{
+		ft_putstr_fd(f->name, 2);
+		ft_putendl_fd(": No such file or directory", 2);
+		return (false);
 	}
 	(*cmd)->w = get_last_fd((*cmd)->fd);
 	(*cmd)->read = get_last_read((*cmd)->fd);
+	return (true);
 }

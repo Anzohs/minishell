@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 23:34:59 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/09 17:25:45 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/09 19:21:35 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,6 @@ int					ft_cmdsize(t_cmd *cmd);
 void				ft_fd_del(t_fd **fd);
 void				ft_fdadd_back(t_fd **lst, t_fd *n);
 t_fd				*ft_fd_new(char *name, int fd, t_type type);
-void				change_fd(t_cmd **cmd);
+bool				change_fd(t_cmd **cmd);
 
 #endif
