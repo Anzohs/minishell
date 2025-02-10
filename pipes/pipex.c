@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: essmpt <essmpt@student.42.fr>              +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 20:24:53 by essmpt            #+#    #+#             */
-/*   Updated: 2025/02/09 17:36:55 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/10 15:03:19 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,20 +99,31 @@ static void	one_cmd(t_pipex *pipex, t_mini *mini)
 	}
 	if (pipex->pids[0] == 0)
 	{
-		ft_close(pipex->fds[0].fd[1]);
-		if (dup2(pipex->fds[0].fd[0], STDIN_FILENO) < -1)
+		if (mini->cmd->w == 1)
 		{
-			write(2, "DUP8\n", 5);
-			return ;
+			if (dup2(pipex->fds[0].fd[0], STDIN_FILENO) < 0)
+			{
+				write(2, "DUP8\n", 5);
+				return ;
+			}
 		}
-		if (dup2(mini->cmd->w, STDOUT_FILENO) < -1)
+		else
 		{
-			write(2, "DUP8\n", 5);
-			return ;
+			if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
+			{
+				write(2, "DUP8\n", 5);
+				return ;
+			}
+			if (dup2(mini->cmd->w, STDIN_FILENO) < 0)
+			{
+				write(2, "DUP9\n", 5);
+				return ;
+			}
 		}
-		ft_close(pipex->fds[0].fd[0]);
-		ft_close(mini->cmd->w);
-		execve2(pipex->path2, mini->cmd, pipex->env);
+	ft_close(mini->cmd->w);
+	ft_close(pipex->fds[0].fd[1]);
+	ft_close(pipex->fds[0].fd[0]);
+	execve2(pipex->path2, mini->cmd, pipex->env);
 	}
 	return ;
 }

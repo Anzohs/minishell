@@ -6,11 +6,11 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:42:55 by malourei          #+#    #+#             */
-/*   Updated: 2025/01/15 02:02:53 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/10 13:38:23 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../mini_struct/mini.h"
 
 void	ft_close(int fd)
 {
@@ -34,6 +34,7 @@ void	ft_close_all_m(t_pipex *pipex, int i)
 
 void	ft_close_all_1(t_pipex *pipex)
 {
+	ft_close(mini()->cmd->w);
 	ft_close(pipex->fds[0].fd[0]);
 	ft_close(pipex->fds[0].fd[1]);
 }
@@ -45,6 +46,7 @@ void	ft_close_all_p(t_pipex *pipex)
 	i = 0;
 	if (pipex->cmd_argc == 1)
 		ft_close_all_1(pipex);
+	ft_close(mini()->cmd->w);
 	while (i < (pipex->cmd_argc - 1))
 	{
 		ft_close(pipex->fds[i].fd[0]);
