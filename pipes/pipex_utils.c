@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
+#include "pipex.h"
 #include <unistd.h>
 
 t_string	*fusion_strs(t_cmd *cmd)
@@ -44,12 +45,14 @@ void	execve2(const char *path, t_cmd *node, char *const envp[])
 
 void	child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 {
-	if (dup2(pipex->fds[0].fd[1], node->w) < 0)
+	if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
 	{
 		perror("dup1");
 		return ;
 	}
+	dup2(node->w, STDOUT_FILENO);
 	ft_close_all_1(pipex);
+	ft_close(node->w);
 	execve2(cmd_path, node, env);
 }
 
@@ -79,12 +82,14 @@ void	child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 	}
 	if (pipex->pids[i] == 0)
 	{
-		if (dup2(pipex->fds[i].fd[0], node->read) < 0)
+		if (dup2(pipex->fds[i].fd[0], STDIN_FILENO) < 0)
 		{
 			perror("dup2");
 			return ;
 		}
+		dup2(node->read, STDIN_FILENO);
 		ft_close_all_p(pipex);
+		ft_close(node->read);
 		execve2(cmd_path, tmp, env);
 	}
 }

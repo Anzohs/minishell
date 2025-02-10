@@ -61,20 +61,20 @@ static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 	{
 		if (pipex->pids[i - 1])
 		{
-			if (dup2(pipex->fds[i - 1].fd[0], node->read) < 0)
+			if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
 			{
 				perror("dup5");
 				return ;
 			}
 		}
-		if (dup2(pipex->fds[i].fd[1], node->w) < 0)
+		if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
 		{
 			perror("dup6");
 			return ;
 		}
 		ft_close_all_m(pipex, i);
-		ft_close(node->w);
-		ft_close(node->read);
+		dup2(node->w, STDOUT_FILENO);
+		dup2(node->read, STDIN_FILENO);
 		execve2(cmd_path, node, pipex->env);
 	}
 }
@@ -119,6 +119,8 @@ static void	one_cmd(t_pipex *pipex, t_mini *mini)
 		}
 		ft_close(pipex->fds[0].fd[0]);
 		ft_close(pipex->fds[0].fd[1]);
+		ft_close(mini->cmd->read);
+		ft_close(mini->cmd->w);
 		execve2(pipex->path2, mini->cmd, pipex->env);
 	}
 	return ;
