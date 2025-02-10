@@ -79,6 +79,9 @@ static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 
 static void	one_cmd(t_pipex *pipex, t_mini *mini)
 {
+	int	flag;
+
+	flag = 0;
 	if (access(pipex->path2, F_OK) != 0)
 	{
 		pipex->cmd_argc -= 1;
@@ -90,6 +93,8 @@ static void	one_cmd(t_pipex *pipex, t_mini *mini)
 		perror("pipe");
 		return ;
 	}
+	if (mini->cmd->w == 1)
+		flag = 1;
 	pipex->pids[0] = fork();
 	if (pipex->pids[0] < 0)
 	{
@@ -97,33 +102,19 @@ static void	one_cmd(t_pipex *pipex, t_mini *mini)
 		free(pipex->pids);
 		return ;
 	}
+
 	if (pipex->pids[0] == 0)
 	{
-		if (mini->cmd->w == 1)
-		{
-			if (dup2(pipex->fds[0].fd[0], STDIN_FILENO) < 0)
-			{
-				write(2, "DUP8\n", 5);
-				return ;
-			}
-		}
+		if (flag)
+			dup2(mini->cmd->read, STDIN_FILENO);
 		else
 		{
-			if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
-			{
-				write(2, "DUP8\n", 5);
-				return ;
-			}
-			if (dup2(mini->cmd->w, STDIN_FILENO) < 0)
-			{
-				write(2, "DUP9\n", 5);
-				return ;
-			}
+			dup2(mini->cmd->w, STDOUT_FILENO);
+			ft_close(mini->cmd->w);
 		}
-	ft_close(mini->cmd->w);
-	ft_close(pipex->fds[0].fd[1]);
-	ft_close(pipex->fds[0].fd[0]);
-	execve2(pipex->path2, mini->cmd, pipex->env);
+		ft_close(pipex->fds[0].fd[0]);
+		ft_close(pipex->fds[0].fd[1]);
+		execve2(pipex->path2, mini->cmd, pipex->env);
 	}
 	return ;
 }
@@ -185,4 +176,5 @@ void	pipex(void)
 	}
 	start_multi_pipe(&pipex, mini(), ft_cmdsize(mini()->cmd), mini()->cmd);
 	ft_parent(&pipex);
+	return ;
 }

@@ -34,7 +34,6 @@ void	execve2(const char *path, t_cmd *node, char *const envp[])
 	char	**argv;
 
 	argv = fusion_strs(node);
-	execve(path, argv, envp);
 	if (execve(path, argv, envp) == -1)
 	{
 		free_env(argv);

@@ -46,7 +46,6 @@ void	ft_close_all_p(t_pipex *pipex)
 	i = 0;
 	if (pipex->cmd_argc == 1)
 		ft_close_all_1(pipex);
-	ft_close(mini()->cmd->w);
 	while (i < (pipex->cmd_argc - 1))
 	{
 		ft_close(pipex->fds[i].fd[0]);
