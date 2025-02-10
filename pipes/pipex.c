@@ -61,18 +61,20 @@ static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 	{
 		if (pipex->pids[i - 1])
 		{
-			if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
+			if (dup2(pipex->fds[i - 1].fd[0], node->read) < 0)
 			{
 				perror("dup5");
 				return ;
 			}
 		}
-		if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
+		if (dup2(pipex->fds[i].fd[1], node->w) < 0)
 		{
 			perror("dup6");
 			return ;
 		}
 		ft_close_all_m(pipex, i);
+		ft_close(node->w);
+		ft_close(node->read);
 		execve2(cmd_path, node, pipex->env);
 	}
 }
@@ -106,7 +108,10 @@ static void	one_cmd(t_pipex *pipex, t_mini *mini)
 	if (pipex->pids[0] == 0)
 	{
 		if (flag)
-			dup2(mini->cmd->read, STDIN_FILENO);
+		{
+			dup2(mini->cmd->read , STDIN_FILENO);
+			ft_close(mini->cmd->read);
+		}
 		else
 		{
 			dup2(mini->cmd->w, STDOUT_FILENO);
@@ -160,6 +165,26 @@ void	get_strs_envs(t_pipex *pipex)
 		return ;
 }
 
+void has_heredoc(t_cmd *cmd)
+{
+	t_cmd	*temp;
+	t_fd	*f;
+
+	temp = cmd;
+	while (temp)
+	{
+		f = temp->fd;
+		while (f)
+		{
+			if (f->type == HEREDOC)
+				start_here_doc(temp, ft_lsttomatrix(mini()->env));
+			f = f->next;
+		}
+		temp = temp->next;
+	}
+}
+
+
 void	pipex(void)
 {
 	t_pipex	pipex;
@@ -174,6 +199,7 @@ void	pipex(void)
 		clean_all(&pipex);
 		return ;
 	}
+
 	start_multi_pipe(&pipex, mini(), ft_cmdsize(mini()->cmd), mini()->cmd);
 	ft_parent(&pipex);
 	return ;
