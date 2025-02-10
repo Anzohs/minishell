@@ -32,8 +32,13 @@ static void	start_pipe_1(t_pipex *pipex, t_cmd *argv2)
 	pipex->pids[i] = fork();
 	if (pipex->pids[i] == 0)
 	{
+		dup2(argv2->w, STDOUT_FILENO);
+		close(argv2->w);
+		dup2(argv2->read, STDIN_FILENO);
+		close(argv2->read);
 		if (pipex->is_doc == 0)
 			child_one(pipex, pipex->env, pipex->paths[0], argv2);
+
 	}
 	if (pipex->pids[i] < 0)
 	{
@@ -59,6 +64,8 @@ static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 	}
 	if (pipex->pids[i] == 0)
 	{
+		dup2(node->w, STDOUT_FILENO);
+		close(node->w);
 		if (pipex->pids[i - 1])
 		{
 			if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
@@ -67,6 +74,8 @@ static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 				return ;
 			}
 		}
+		dup2(node->read, STDIN_FILENO);
+		close(node->read);
 		if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
 		{
 			perror("dup6");

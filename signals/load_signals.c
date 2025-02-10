@@ -29,7 +29,7 @@ void	sig_handler(int signum, siginfo_t *sig, void *s)
 	(void)sig;
 	if (signum == SIGINT)
 	{
-		rl_replace_line("", 0);
+		//rl_replace_line("", 0);
 		printf("\n");
 		rl_on_new_line();
 		rl_redisplay();
@@ -45,7 +45,7 @@ void	sig_handler_here(int signum, siginfo_t *sig, void *s)
 	(void)sig;
 	if (signum == SIGINT)
 	{
-		rl_replace_line("", 0);
+		//rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 		mini()->sig = 1;

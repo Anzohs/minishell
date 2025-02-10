@@ -50,9 +50,7 @@ void	child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 		perror("dup1");
 		return ;
 	}
-	dup2(node->w, STDOUT_FILENO);
 	ft_close_all_1(pipex);
-	ft_close(node->w);
 	execve2(cmd_path, node, env);
 }
 

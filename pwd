@@ -1,0 +1,15 @@
+Makefile
+execute
+ft_search
+libft
+libs.h
+main.c
+mini_struct
+minishell
+minishell.h
+obj
+parse_input
+pipes
+pwd
+read.supp
+signals
