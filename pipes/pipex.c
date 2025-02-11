@@ -12,8 +12,6 @@
 
 #include "../mini_struct/mini.h"
 #include "pipex.h"
-#include <stdio.h>
-#include <unistd.h>
 
 static void	start_pipe_1(t_pipex *pipex, t_cmd *argv2)
 {
@@ -90,10 +88,7 @@ static void	start_multi_pipe(t_pipex *pipex, t_mini *mini, int argc, t_cmd *n)
 	t_cmd	*node;
 
 	if (argc == 1)
-	{
-		one_cmd(pipex, mini);
-		return ;
-	}
+		return (one_cmd(pipex, mini), (void)argc);
 	start_pipe_1(pipex, n);
 	node = n;
 	i = 0;
@@ -102,10 +97,7 @@ static void	start_multi_pipe(t_pipex *pipex, t_mini *mini, int argc, t_cmd *n)
 	{
 		node = node->next;
 		if (pipe(pipex->fds[i].fd) < 0)
-		{
-			perror("pipe2");
-			return ;
-		}
+			return (perror("pipe2"), (void)i);
 		start_multi2_pip(pipex, i, pipex->paths[i], node);
 	}
 	child_two(pipex, pipex->env, pipex->path2, n);
@@ -153,10 +145,7 @@ void	pipex(void)
 	pipex.env = ft_lsttomatrix(mini()->env);
 	get_strs_envs(&pipex);
 	if (!find_full_cmd(&pipex, mini()->cmd))
-	{
-		clean_all(&pipex);
-		return ;
-	}
+		return (clean_all(&pipex), (void)pipex);
 	start_multi_pipe(&pipex, mini(), ft_cmdsize(mini()->cmd), mini()->cmd);
 	ft_parent(&pipex);
 	return ;
