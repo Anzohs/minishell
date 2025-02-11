@@ -24,14 +24,7 @@ static void	start_pipe_1(t_pipex *pipex, t_cmd *argv2)
 		return (ft_putendl_fd("commnad not found", STDERR_FILENO), (void)i);
 	pipex->pids[i] = fork();
 	if (pipex->pids[i] == 0)
-	{
-		dup2(argv2->w, STDOUT_FILENO);
-		close(argv2->w);
-		dup2(argv2->read, STDIN_FILENO);
-		close(argv2->read);
-		if (pipex->is_doc == 0)
-			child_one(pipex, pipex->env, pipex->paths[0], argv2);
-	}
+		child_one(pipex, pipex->env, pipex->paths[0], argv2);
 	if (pipex->pids[i] < 0)
 		return (perror("pid"), free(pipex->pids), (void)i);
 }
@@ -50,10 +43,22 @@ static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 		if (pipex->pids[i - 1])
 			if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
 				return (perror("dup5"), (void)i);
-		dup2(node->read, STDIN_FILENO);
-		close(node->read);
-		if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
-			return (perror("dup6"), (void)i);
+		if (node->w == 3)
+		{
+			dup2(node->w, STDOUT_FILENO);
+			close(node->w);
+		}
+		else
+		{
+			dup2(node->read, STDIN_FILENO);
+			close(node->read);
+			if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
+				return (perror("dup6"), (void)i);
+		}
+		// dup2(node->read, STDIN_FILENO);
+		// close(node->read);
+		// if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
+		// 	return (perror("dup6"), (void)i);
 		ft_close_all_m(pipex, i);
 		execve2(cmd_path, node, pipex->env);
 	}

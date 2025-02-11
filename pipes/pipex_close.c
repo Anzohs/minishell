@@ -34,7 +34,7 @@ void	ft_close_all_m(t_pipex *pipex, int i)
 
 void	ft_close_all_1(t_pipex *pipex)
 {
-	ft_close(mini()->cmd->w);
+	//ft_close(mini()->cmd->w);
 	ft_close(pipex->fds[0].fd[0]);
 	ft_close(pipex->fds[0].fd[1]);
 }
