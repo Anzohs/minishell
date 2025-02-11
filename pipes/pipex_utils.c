@@ -6,12 +6,13 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 23:24:14 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/05 19:05:01 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/11 21:44:16 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
 #include "pipex.h"
+#include <unistd.h>
 
 t_string	*fusion_strs(t_cmd *cmd)
 {
@@ -79,9 +80,7 @@ void	child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 	{
 		if (dup2(pipex->fds[i].fd[0], STDIN_FILENO) < 0)
 			return (perror("dup2"), (void)cmd_path);
-		dup2(node->read, STDIN_FILENO);
 		ft_close_all_p(pipex);
-		ft_close(node->read);
 		execve2(cmd_path, tmp, env);
 	}
 }
