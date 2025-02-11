@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
 #include "../mini_struct/mini.h"
+#include "pipex.h"
+#include <stdio.h>
 #include <unistd.h>
 
 static void	start_pipe_1(t_pipex *pipex, t_cmd *argv2)
@@ -20,15 +21,9 @@ static void	start_pipe_1(t_pipex *pipex, t_cmd *argv2)
 
 	i = 0;
 	if (pipe(pipex->fds[0].fd) < 0)
-	{
-		perror("pipe");
-		return ;
-	}
+		return (perror("pipe"), (void)i);
 	if (access(pipex->paths[0], F_OK) != 0)
-	{
-		write(2, "command not found\n", 18);
-		return ;
-	}
+		return (ft_putendl_fd("commnad not found", STDERR_FILENO), (void)i);
 	pipex->pids[i] = fork();
 	if (pipex->pids[i] == 0)
 	{
@@ -38,98 +33,51 @@ static void	start_pipe_1(t_pipex *pipex, t_cmd *argv2)
 		close(argv2->read);
 		if (pipex->is_doc == 0)
 			child_one(pipex, pipex->env, pipex->paths[0], argv2);
-
 	}
 	if (pipex->pids[i] < 0)
-	{
-		perror("pid");
-		free(pipex->pids);
-		return ;
-	}
+		return (perror("pid"), free(pipex->pids), (void)i);
 }
 
 static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 {
 	if (access(cmd_path, F_OK) != 0)
-	{
-		printf("command not found\n");
-		return ;
-	}
+		return (ft_putendl_fd("commnad not found", STDERR_FILENO), (void)i);
 	pipex->pids[i] = fork();
 	if (pipex->pids[i] < 0)
-	{
-		perror("pid");
-		free(pipex->pids);
-		return ;
-	}
+		return (perror("pid"), free(pipex->pids), (void)i);
 	if (pipex->pids[i] == 0)
 	{
 		dup2(node->w, STDOUT_FILENO);
 		close(node->w);
 		if (pipex->pids[i - 1])
-		{
 			if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
-			{
-				perror("dup5");
-				return ;
-			}
-		}
+				return (perror("dup5"), (void)i);
 		dup2(node->read, STDIN_FILENO);
 		close(node->read);
 		if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
-		{
-			perror("dup6");
-			return ;
-		}
+			return (perror("dup6"), (void)i);
 		ft_close_all_m(pipex, i);
-		dup2(node->w, STDOUT_FILENO);
-		dup2(node->read, STDIN_FILENO);
 		execve2(cmd_path, node, pipex->env);
 	}
 }
 
 static void	one_cmd(t_pipex *pipex, t_mini *mini)
 {
-	int	flag;
-
-	flag = 0;
 	if (access(pipex->path2, F_OK) != 0)
-	{
-		pipex->cmd_argc -= 1;
-		printf("command not found: %s\n", mini->cmd->cmd);
-		return ;
-	}
+		return (pipex->cmd_argc -= 1, perror(mini->cmd->cmd), (void)pipex);
 	if (pipe(pipex->fds[0].fd) < 0)
-	{
-		perror("pipe");
-		return ;
-	}
-	if (mini->cmd->w == 1)
-		flag = 1;
+		return (perror("pipe"), (void)pipex);
 	pipex->pids[0] = fork();
 	if (pipex->pids[0] < 0)
-	{
-		perror("pid");
-		free(pipex->pids);
-		return ;
-	}
-
+		return (perror("pid"), free(pipex->pids), (void)pipex);
 	if (pipex->pids[0] == 0)
 	{
-		if (flag)
-		{
-			dup2(mini->cmd->read , STDIN_FILENO);
-			ft_close(mini->cmd->read);
-		}
-		else
-		{
-			dup2(mini->cmd->w, STDOUT_FILENO);
-			ft_close(mini->cmd->w);
-		}
+		dup2(mini->cmd->read, STDIN_FILENO);
+		ft_close(mini->cmd->read);
+		dup2(mini->cmd->w, STDOUT_FILENO);
+		ft_close(mini->cmd->w);
 		ft_close(pipex->fds[0].fd[0]);
 		ft_close(pipex->fds[0].fd[1]);
-		ft_close(mini->cmd->read);
-		ft_close(mini->cmd->w);
 		execve2(pipex->path2, mini->cmd, pipex->env);
 	}
 	return ;
@@ -176,7 +124,7 @@ void	get_strs_envs(t_pipex *pipex)
 		return ;
 }
 
-void has_heredoc(t_cmd *cmd)
+void	has_heredoc(t_cmd *cmd)
 {
 	t_cmd	*temp;
 	t_fd	*f;
@@ -195,7 +143,6 @@ void has_heredoc(t_cmd *cmd)
 	}
 }
 
-
 void	pipex(void)
 {
 	t_pipex	pipex;
@@ -210,7 +157,6 @@ void	pipex(void)
 		clean_all(&pipex);
 		return ;
 	}
-
 	start_multi_pipe(&pipex, mini(), ft_cmdsize(mini()->cmd), mini()->cmd);
 	ft_parent(&pipex);
 	return ;

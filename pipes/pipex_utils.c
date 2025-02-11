@@ -12,7 +12,6 @@
 
 #include "../mini_struct/mini.h"
 #include "pipex.h"
-#include <unistd.h>
 
 t_string	*fusion_strs(t_cmd *cmd)
 {
@@ -37,26 +36,20 @@ void	execve2(const char *path, t_cmd *node, char *const envp[])
 
 	argv = fusion_strs(node);
 	if (execve(path, argv, envp) == -1)
-	{
-		free_env(argv);
-		return ;
-	}
+		return (free_env(argv), (void)argv);
 }
 
 void	child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 {
 	if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
-	{
-		perror("dup1");
-		return ;
-	}
+		return (perror("dup1"), (void)pipex);
 	ft_close_all_1(pipex);
 	execve2(cmd_path, node, env);
 }
 
 void	child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 {
-	int	i;
+	int		i;
 	t_cmd	*tmp;
 
 	tmp = node;
@@ -67,24 +60,15 @@ void	child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 		tmp = tmp->next;
 	}
 	if (access(cmd_path, F_OK) != 0)
-	{
-		write(2, "command not found\n", 18);
-		return ;
-	}
+		return (ft_putendl_fd("command not found", STDERR_FILENO),
+			(void)cmd_path);
 	pipex->pids[i] = fork();
 	if (pipex->pids[i] < 0)
-	{
-		perror("pid2");
-		free(pipex->pids);
-		return ;
-	}
+		return (perror("pid2"), free(pipex->pids), (void)cmd_path);
 	if (pipex->pids[i] == 0)
 	{
 		if (dup2(pipex->fds[i].fd[0], STDIN_FILENO) < 0)
-		{
-			perror("dup2");
-			return ;
-		}
+			return (perror("dup2"), (void)cmd_path);
 		dup2(node->read, STDIN_FILENO);
 		ft_close_all_p(pipex);
 		ft_close(node->read);
@@ -96,12 +80,9 @@ void	ft_parent(t_pipex *pipex)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	ft_close_all_p(pipex);
-	while (i < pipex->cmd_argc)
-	{
+	while (++i < pipex->cmd_argc)
 		waitpid(pipex->pids[i], NULL, 0);
-		i++;
-	}
 	clean_all(pipex);
 }

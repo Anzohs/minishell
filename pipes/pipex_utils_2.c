@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
+#include <stdio.h>
 
 void	validate_args(t_cmd *argv, int *cmd_argc)
 {
@@ -34,27 +35,16 @@ void	count_pids(t_pipex *pipex, int argc)
 	i = argc;
 	pipex->pids = ft_calloc(sizeof(int), (size_t)argc);
 	if (pipex->pids == NULL)
-	{
-		perror("malloc1");
-		return ;
-	}
+		return (perror("malloc1"), (void)argc);
 	pipex->paths = ft_calloc(sizeof(char *), argc);
 	if (pipex->paths == NULL)
-	{
-		perror("malloc2");
-		free(pipex->pids);
-		return ;
-	}
+		return (perror("malloc2"), free(pipex->pids), (void)argc);
 	if (i > 1)
 		i -= 1;
 	pipex->fds = ft_calloc(sizeof(t_fds), i);
 	if (pipex->fds == NULL)
-	{
-		free(pipex->pids);
-		free(pipex->paths);
-		perror("malloc3");
-		return ;
-	}
+		return (free(pipex->pids), free(pipex->paths), perror("malloc3"),
+			(void)argc);
 }
 
 void	free_env(char **strs)

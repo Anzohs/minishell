@@ -38,12 +38,9 @@ static t_string	get_command(t_cmd *n, int i)
 	int		j;
 
 	tmp = n;
-	j = 0;
-	while (j < i && tmp)
-	{
-		j++;
+	j = -1;
+	while (++j < i && tmp)
 		tmp = tmp->next;
-	}
 	if (!tmp)
 		return (NULL);
 	return (tmp->cmd);
