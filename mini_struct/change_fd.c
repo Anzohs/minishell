@@ -41,7 +41,7 @@ static int	get_last_read(t_fd *fd)
 		if (f->type == REVERSE)
 			file = f->fd;
 		else if (f->type == HEREDOC)
-			file = 1;
+			file = 100000;
 		f = f->next;
 	}
 	return (file);
@@ -61,6 +61,8 @@ bool	change_fd(t_cmd **cmd)
 			f->fd = open(f->name, O_CREAT | O_WRONLY | O_APPEND, 0664);
 		if (f->type == REVERSE)
 			f->fd = open (f->name, O_RDONLY, 0664);
+		if (f->type == HEREDOC)
+			f->fd = 100000;
 		if (f->fd == -1)
 			break ;
 		f = f->next;

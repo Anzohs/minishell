@@ -38,7 +38,7 @@ static void	here_doc(char *limiter, int fd[2])
 
 static void	parent(int fd[2], int pid, t_cmd *m)
 {
-	free_matrix(m->arrow);
+	(void)m;
 	ft_close(fd[0]);
 	ft_close(fd[1]);
 	waitpid(pid, NULL, 0);

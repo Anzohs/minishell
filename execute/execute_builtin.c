@@ -12,23 +12,26 @@
 
 #include "../mini_struct/mini.h"
 
-void	execute_builtin(t_cmd *cmd, int fd)
+int	execute_builtin(t_cmd *cmd, int fd, int i)
 {
 	if (!ft_strcmp(cmd->cmd, "cd"))
-		return (cd_execute(cmd->matrix, fd));
+		cd_execute(cmd->matrix, fd);
 	if (!ft_strcmp(cmd->cmd, "pwd"))
-		return (pwd_execute(fd));
+		pwd_execute(fd);
 	if (!ft_strcmp(cmd->cmd, "env"))
-		return (env_execute(fd));
+		env_execute(fd);
 	if (!ft_strcmp(cmd->cmd, "unset"))
-		return (unset_execute(cmd));
+		unset_execute(cmd);
 	if (!ft_strcmp(cmd->cmd, "echo"))
-		return (echo_exec(cmd));
+		(echo_exec(cmd));
 	if (!ft_strcmp(cmd->cmd, "export"))
 	{
 		if (*cmd->arg)
-			return (export_built(cmd->matrix));
-		return (export_print(fd));
+			(export_built(cmd->matrix));
+		else
+			(export_print(fd));
 	}
-	return ;
+	if (i)
+		return (exit(0), 1);
+	return (1);
 }

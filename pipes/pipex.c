@@ -38,6 +38,10 @@ static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 		return (perror("pid"), free(pipex->pids), (void)i);
 	if (pipex->pids[i] == 0)
 	{
+		if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
+			return (perror("dup5"), (void)i);
+		if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
+			return (perror("dup6"), (void)i);
 		if (node->fd)
 		{
 			if (node->w == 3)
@@ -49,19 +53,7 @@ static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 			{
 				dup2(node->read, STDIN_FILENO);
 				ft_close(node->read);
-				if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
-				return (perror("dup6"), (void)i);
 			}
-		}
-		else
-		{
-			//if (pipex->pids[i - 1])
-			//{
-				if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
-					return (perror("dup5"), (void)i);
-				//}
-			if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
-				return (perror("dup6"), (void)i);
 		}
 		ft_close_all_m(pipex, i);
 		execve2(cmd_path, node, pipex->env);
@@ -75,12 +67,14 @@ static void	one_cmd(t_pipex *pipex, t_mini *mini)
 	if (pipe(pipex->fds[0].fd) < 0)
 		return (perror("pipe"), (void)pipex);
 	pipex->pids[0] = fork();
+	if (mini->cmd->fd)
+		printf("%i aqui eof :%s \n", mini->cmd->fd->type == HEREDOC, mini->cmd->fd->name);
 	if (pipex->pids[0] < 0)
 		return (perror("pid"), free(pipex->pids), (void)pipex);
 	if (pipex->pids[0] == 0)
 	{
-		dup2(mini->cmd->read, STDIN_FILENO);
-		ft_close(mini->cmd->read);
+		//dup2(mini->cmd->read, STDIN_FILENO);
+		//ft_close(mini->cmd->read);
 		dup2(mini->cmd->w, STDOUT_FILENO);
 		ft_close(mini->cmd->w);
 		ft_close(pipex->fds[0].fd[0]);

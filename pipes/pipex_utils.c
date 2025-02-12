@@ -78,7 +78,7 @@ void	child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 		i++;
 		tmp = tmp->next;
 	}
-	if (access(cmd_path, F_OK) != 0)
+	if (!is_builtin(tmp->cmd) && access(cmd_path, F_OK) != 0)
 		return (ft_putendl_fd("command not found", STDERR_FILENO),
 			(void)cmd_path);
 	pipex->pids[i] = fork();
@@ -96,16 +96,15 @@ void	child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 			{
 				dup2(tmp->w, STDOUT_FILENO);
 				ft_close(tmp->w);
+				if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
+					return (perror("dup2"), (void)cmd_path);
 			}
 		}
-		else
-		{
-			if (dup2(pipex->fds[i].fd[0], STDIN_FILENO) < 0)
-				return (perror("dup2"), (void)cmd_path);
-		}
-		/* if (dup2(pipex->fds[i].fd[0], STDIN_FILENO) < 0)
-			return (perror("dup2"), (void)cmd_path); */
+		if (dup2(pipex->fds[i].fd[0], STDIN_FILENO) < 0)
+			return (perror("dup2"), (void)cmd_path);
 		ft_close_all_p(pipex);
+		if (is_builtin(tmp->cmd))
+			return (execute_builtin(tmp, STDOUT_FILENO, 1), (void)i);
 		execve2(cmd_path, tmp, env);
 	}
 }
