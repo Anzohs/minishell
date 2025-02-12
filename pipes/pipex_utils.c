@@ -44,26 +44,24 @@ void	child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 {
 	if (node->fd)
 	{
-		dup2(node->w, STDOUT_FILENO);
-		ft_close(node->w);
+		if (node->read == 3)
+		{
+			dup2(node->read, STDIN_FILENO);
+			ft_close(node->read);
+			if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
+				return (perror("dup1"), (void)pipex);
+		}
+		else if (node->w == 3)
+		{
+			dup2(node->w, STDOUT_FILENO);
+			ft_close(node->w);
+		}
 	}
 	else
 	{
 		if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
 			return (perror("dup1"), (void)pipex);
 	}
-	/* if (node->w == 3)
-	{
-		dup2(node->w, STDOUT_FILENO);
-		close(node->w);
-	}
-	else
-	{
-		dup2(node->read, STDIN_FILENO);
-		close(node->read);
-		if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
-			return (perror("dup1"), (void)pipex);
-	} */
 	ft_close_all_1(pipex);
 	execve2(cmd_path, node, env);
 }
@@ -90,12 +88,15 @@ void	child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 	{
 		if (tmp->fd)
 		{
-			// isto é quando recebe < read == 3
-			dup2(tmp->read, STDIN_FILENO);
-			ft_close(tmp->read);
-			// isto é quando recebe > w == 3
-			dup2(tmp->w, STDOUT_FILENO);
-			ft_close(tmp->w);
+			if (tmp->read == 3)
+			{
+				dup2(tmp->read, STDIN_FILENO);
+				ft_close(tmp->read);
+			} else if (tmp->w == 3)
+			{
+				dup2(tmp->w, STDOUT_FILENO);
+				ft_close(tmp->w);
+			}
 		}
 		else
 		{

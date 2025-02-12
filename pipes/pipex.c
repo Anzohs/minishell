@@ -40,37 +40,29 @@ static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 	{
 		if (node->fd)
 		{
-			dup2(node->w, STDOUT_FILENO);
-			ft_close(node->w);
+			if (node->w == 3)
+			{
+				dup2(node->w, STDOUT_FILENO);
+				ft_close(node->w);
+			}
+			else if (node->read == 3)
+			{
+				dup2(node->read, STDIN_FILENO);
+				ft_close(node->read);
+				if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
+				return (perror("dup6"), (void)i);
+			}
 		}
 		else
 		{
-			if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
-				return (perror("dup5"), (void)i);
+			//if (pipex->pids[i - 1])
+			//{
+				if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
+					return (perror("dup5"), (void)i);
+				//}
 			if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
 				return (perror("dup6"), (void)i);
 		}
-		/*dup2(node->w, STDOUT_FILENO);
-		close(node->w);
-		if (pipex->pids[i - 1])
-			if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
-				return (perror("dup5"), (void)i);
-		if (node->w == 3)
-		{
-			dup2(node->w, STDOUT_FILENO);
-			close(node->w);
-		}
-		else
-		{
-			dup2(node->read, STDIN_FILENO);
-			close(node->read);
-			if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
-				return (perror("dup6"), (void)i);
-		}
-		// dup2(node->read, STDIN_FILENO);
-		// close(node->read);
-		// if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
-		// 	return (perror("dup6"), (void)i); */
 		ft_close_all_m(pipex, i);
 		execve2(cmd_path, node, pipex->env);
 	}
