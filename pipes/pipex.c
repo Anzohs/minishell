@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 20:24:53 by essmpt            #+#    #+#             */
-/*   Updated: 2025/02/10 15:03:19 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/12 01:16:14 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,19 @@ static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 		return (perror("pid"), free(pipex->pids), (void)i);
 	if (pipex->pids[i] == 0)
 	{
-		dup2(node->w, STDOUT_FILENO);
+		if (node->fd)
+		{
+			dup2(node->w, STDOUT_FILENO);
+			ft_close(node->w);
+		}
+		else
+		{
+			if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
+				return (perror("dup5"), (void)i);
+			if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
+				return (perror("dup6"), (void)i);
+		}
+		/*dup2(node->w, STDOUT_FILENO);
 		close(node->w);
 		if (pipex->pids[i - 1])
 			if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
@@ -58,7 +70,7 @@ static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 		// dup2(node->read, STDIN_FILENO);
 		// close(node->read);
 		// if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
-		// 	return (perror("dup6"), (void)i);
+		// 	return (perror("dup6"), (void)i); */
 		ft_close_all_m(pipex, i);
 		execve2(cmd_path, node, pipex->env);
 	}
