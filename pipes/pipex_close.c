@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:42:55 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/10 13:38:23 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/13 22:38:08 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,29 @@ void	ft_close(int fd)
 	if (fd > 0 && fd != STDERR_FILENO && fd != STDIN_FILENO
 		&& fd != STDOUT_FILENO)
 		close (fd);
+}
+
+void	ft_close_file(t_cmd *cmd)
+{
+	if (cmd->fd)
+	{
+		if (cmd->w >= 3)
+			ft_close(cmd->w);
+		else if (cmd->read >= 3)
+			ft_close(cmd->read);
+	}
+}
+
+void	ft_close_all_files(t_cmd *cmd)
+{
+	t_cmd	*tmp;
+
+	tmp = cmd;
+	while (tmp)
+	{
+		ft_close_file(tmp);
+		tmp = tmp->next;
+	}
 }
 
 void	ft_close_all_m(t_pipex *pipex, int i)

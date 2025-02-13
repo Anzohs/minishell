@@ -62,6 +62,7 @@ t_string	*fusion_strs(t_cmd *cmd);
 void		free_env(char **strs);
 void		start_here_doc(t_cmd *m, char **env);
 void		create_arrow(t_cmd *node);
+void		ft_close_all_files(t_cmd *cmd);
 /* void	one_arrow(t_cmd *m);
 void	two_arrow(t_cmd *m);
 void	one_arrow_reverse(t_cmd *m); */
