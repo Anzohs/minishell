@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 20:24:53 by essmpt            #+#    #+#             */
-/*   Updated: 2025/02/13 22:17:31 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/13 23:11:17 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,10 @@ static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 				if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
 					return (perror("dup6"), (void)i);
 				dup2(node->w, STDOUT_FILENO);
-				ft_close(node->w);
 			}
 			else if (node->read >= 3)
 			{
 				dup2(node->read, STDIN_FILENO);
-				ft_close(node->read);
 				if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
 					return (perror("dup6"), (void)i);
 			}
@@ -63,6 +61,7 @@ static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 				return (perror("dup6"), (void)i);
 		}
 		ft_close_all_m(pipex, i);
+		ft_close_all_files(mini()->cmd);
 		execve2(cmd_path, node, pipex->env);
 	}
 }

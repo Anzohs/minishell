@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 23:24:14 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/13 22:44:08 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/13 23:03:56 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,11 @@ void	child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 		if (node->read == 3)
 		{
 			dup2(node->read, STDIN_FILENO);
-			ft_close(node->read);
 			if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
 				return (perror("dup1"), (void)pipex);
 		}
 		else if (node->w == 3)
-		{
 			dup2(node->w, STDOUT_FILENO);
-			ft_close(node->w);
-		}
 	}
 	else
 	{
@@ -63,6 +59,7 @@ void	child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 			return (perror("dup1"), (void)pipex);
 	}
 	ft_close_all_1(pipex);
+	ft_close_all_files(node);
 	execve2(cmd_path, node, env);
 }
 
@@ -89,16 +86,12 @@ void	child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 		if (tmp->fd)
 		{
 			if (tmp->read >= 3)
-			{
 				dup2(tmp->read, STDIN_FILENO);
-				ft_close(tmp->read);
-
-			} else if (tmp->w >= 3)
+			else if (tmp->w >= 3)
 			{
 				if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
 					return (perror("dup2"), (void)cmd_path);
 				dup2(tmp->w, STDOUT_FILENO);
-				ft_close(tmp->w);
 			}
 		}
 		else
@@ -107,6 +100,7 @@ void	child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 				return (perror("dup2"), (void)cmd_path);
 		}
 		ft_close_all_p(pipex);
+		ft_close_all_files(node);
 		if (is_builtin(tmp->cmd))
 			return (execute_builtin(tmp, STDOUT_FILENO, 1), (void)i);
 		execve2(cmd_path, tmp, env);
@@ -119,7 +113,6 @@ void	ft_parent(t_pipex *pipex)
 
 	i = -1;
 	ft_close_all_p(pipex);
-	ft_close_all_files(mini()->cmd);
 	while (++i < pipex->cmd_argc)
 		waitpid(pipex->pids[i], NULL, 0);
 	clean_all(pipex);
