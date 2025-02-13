@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/03 20:24:53 by essmpt            #+#    #+#             */
-/*   Updated: 2025/02/13 23:11:17 by malourei         ###   ########.fr       */
+/*   Created: 2025/02/13 23:25:53 by malourei          #+#    #+#             */
+/*   Updated: 2025/02/13 23:26:04 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,12 @@ static void	one_cmd(t_pipex *pipex, t_mini *mini)
 	if (pipe(pipex->fds[0].fd) < 0)
 		return (perror("pipe"), (void)pipex);
 	pipex->pids[0] = fork();
-	if (mini->cmd->fd)
-		printf("%i aqui eof :%s \n", mini->cmd->fd->type == HEREDOC, mini->cmd->fd->name);
 	if (pipex->pids[0] < 0)
 		return (perror("pid"), free(pipex->pids), (void)pipex);
 	if (pipex->pids[0] == 0)
 	{
-		//dup2(mini->cmd->read, STDIN_FILENO);
-		//ft_close(mini->cmd->read);
+		dup2(mini->cmd->read, STDIN_FILENO);
+		ft_close(mini->cmd->read);
 		dup2(mini->cmd->w, STDOUT_FILENO);
 		ft_close(mini->cmd->w);
 		ft_close(pipex->fds[0].fd[0]);
