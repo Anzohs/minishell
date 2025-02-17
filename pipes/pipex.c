@@ -6,12 +6,31 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 23:25:53 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/13 23:26:04 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/16 21:48:33 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
 #include "pipex.h"
+
+void	has_heredoc(t_cmd *cmd, char **env)
+{
+	t_cmd	*temp;
+	t_fd	*f;
+
+	temp = cmd;
+	while (temp)
+	{
+		f = temp->fd;
+		while (f)
+		{
+			if (f->type == HEREDOC)
+				start_here_doc(temp, env);
+			f = f->next;
+		}
+		temp = temp->next;
+	}
+}
 
 static void	start_pipe_1(t_pipex *pipex, t_cmd *argv2)
 {
@@ -68,6 +87,11 @@ static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 
 static void	one_cmd(t_pipex *pipex, t_mini *mini)
 {
+	if (mini->cmd->fd)
+	{
+		has_heredoc(mini->cmd, pipex->env);
+		return ;
+	}
 	if (access(pipex->path2, F_OK) != 0)
 		return (pipex->cmd_argc -= 1, perror(mini->cmd->cmd), (void)pipex);
 	if (pipe(pipex->fds[0].fd) < 0)
@@ -121,25 +145,6 @@ void	get_strs_envs(t_pipex *pipex)
 	pipex->env_path = ft_split(str, ':');
 	if (!pipex->env_path)
 		return ;
-}
-
-void	has_heredoc(t_cmd *cmd)
-{
-	t_cmd	*temp;
-	t_fd	*f;
-
-	temp = cmd;
-	while (temp)
-	{
-		f = temp->fd;
-		while (f)
-		{
-			if (f->type == HEREDOC)
-				start_here_doc(temp, ft_lsttomatrix(mini()->env));
-			f = f->next;
-		}
-		temp = temp->next;
-	}
 }
 
 void	pipex(void)
