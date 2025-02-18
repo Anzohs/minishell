@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 23:25:53 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/16 21:48:33 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/18 21:44:27 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,9 @@ static void	one_cmd(t_pipex *pipex, t_mini *mini)
 		has_heredoc(mini->cmd, pipex->env);
 		return ;
 	}
-	if (access(pipex->path2, F_OK) != 0)
+	if (ft_strcmp("", pipex->path2) == 0)
+		return (pipex->cmd_argc -= 1, printf("%s : Command not found\n", mini->cmd->cmd), (void)pipex);
+	if (ft_strcmp("", pipex->path2) == 0)
 		return (pipex->cmd_argc -= 1, perror(mini->cmd->cmd), (void)pipex);
 	if (pipe(pipex->fds[0].fd) < 0)
 		return (perror("pipe"), (void)pipex);

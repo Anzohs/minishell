@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 00:42:55 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/05 20:09:43 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/18 21:23:06 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ static char	*find_cmd(char *cmd, char **path)
 		tmp = ft_strjoin(path[i], "/");
 		tmp2 = ft_strjoin(tmp, cmd);
 		free(tmp);
-		if (access(tmp2, F_OK) == 0)
+		if (access(tmp2, F_OK | X_OK) == 0)
 			return (tmp2);
 		free(tmp2);
 		i++;
 	}
-	return (ft_strdup(cmd));
+	if (!access(cmd, F_OK | X_OK))
+		return (ft_strdup(cmd));
+	return (ft_strdup(""));
 }
 
 static t_string	get_command(t_cmd *n, int i)
