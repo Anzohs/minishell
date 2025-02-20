@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 23:24:14 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/13 23:03:56 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/20 21:28:12 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,15 @@ void	child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 {
 	if (node->fd)
 	{
-		if (node->read == 3)
+		if (node->fd->type == HEREDOC)
+		{
+			//dup2(pipex->here_fd[0], STDIN_FILENO);
+			dup2(pipex->fds[0].fd[1], STDOUT_FILENO);
+			//ft_close_all_p(pipex);
+			ft_close(pipex->here_fd[0]);
+			ft_close(pipex->here_fd[1]);
+		}
+		else if (node->read == 3)
 		{
 			dup2(node->read, STDIN_FILENO);
 			if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
@@ -59,7 +67,7 @@ void	child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 			return (perror("dup1"), (void)pipex);
 	}
 	ft_close_all_1(pipex);
-	ft_close_all_files(node);
+	//ft_close_all_files(node);
 	execve2(cmd_path, node, env);
 }
 
@@ -100,6 +108,8 @@ void	child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 				return (perror("dup2"), (void)cmd_path);
 		}
 		ft_close_all_p(pipex);
+		ft_close(pipex->here_fd[0]);
+		ft_close(pipex->here_fd[1]);
 		ft_close_all_files(node);
 		if (is_builtin(tmp->cmd))
 			return (execute_builtin(tmp, STDOUT_FILENO, 1), (void)i);
@@ -113,7 +123,10 @@ void	ft_parent(t_pipex *pipex)
 
 	i = -1;
 	ft_close_all_p(pipex);
+	ft_close(pipex->here_fd[0]);
+	ft_close(pipex->here_fd[1]);
 	while (++i < pipex->cmd_argc)
 		waitpid(pipex->pids[i], NULL, 0);
+	waitpid(pipex->pid_here, NULL, 0);
 	clean_all(pipex);
 }

@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 23:25:53 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/18 21:44:27 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/20 21:17:51 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,13 @@ static void	start_pipe_1(t_pipex *pipex, t_cmd *argv2)
 	int	i;
 
 	i = 0;
+
+	if (argv2->fd)
+	{
+		if (pipe(pipex->here_fd) < 0)
+			return (perror("pipe_here"), (void)i);
+		start_here_doc_2(argv2, pipex->env, pipex);
+	}
 	if (pipe(pipex->fds[0].fd) < 0)
 		return (perror("pipe"), (void)i);
 	if (access(pipex->paths[0], F_OK) != 0)
@@ -158,6 +165,7 @@ void	pipex(void)
 	count_pids(&pipex, pipex.cmd_argc);
 	pipex.env = ft_lsttomatrix(mini()->env);
 	get_strs_envs(&pipex);
+	pipex.pid_here = -1;
 	if (!find_full_cmd(&pipex, mini()->cmd))
 		return (clean_all(&pipex), (void)pipex);
 	start_multi_pipe(&pipex, mini(), ft_cmdsize(mini()->cmd), mini()->cmd);

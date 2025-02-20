@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_fd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 17:20:42 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/09 20:02:49 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/20 21:38:41 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,20 @@ static int	get_last_fd(t_fd *fd)
 {
 	t_fd	*f;
 	int		file;
+	bool	here;
 
 	f = fd;
 	file = 1;
+	here = false;
 	while (f)
 	{
-		if (f->type == CREATE || f->type == APPEND)
+		if ((f->type == CREATE || f->type == APPEND) && !f)
 			file = f->fd;
+		else if (f->type == HEREDOC)
+		{
+			file = 1;
+			here = true;
+		}
 		f = f->next;
 	}
 	return (file);
@@ -33,15 +40,20 @@ static int	get_last_read(t_fd *fd)
 {
 	t_fd	*f;
 	int		file;
+	bool	here;
 
 	f = fd;
 	file = 1;
+	here = false;
 	while (f)
 	{
-		if (f->type == REVERSE)
+		if (f->type == REVERSE && !f)
 			file = f->fd;
 		else if (f->type == HEREDOC)
-			file = 100000;
+		{
+			file = 0;
+			f = true;
+		}
 		f = f->next;
 	}
 	return (file);
@@ -62,7 +74,7 @@ bool	change_fd(t_cmd **cmd)
 		if (f->type == REVERSE)
 			f->fd = open (f->name, O_RDONLY, 0664);
 		if (f->type == HEREDOC)
-			f->fd = 100000;
+			f->fd = open(".heredoc", O_CREAT | O_TRUNC | O_RDWR, 0644);
 		if (f->fd == -1)
 			break ;
 		f = f->next;
