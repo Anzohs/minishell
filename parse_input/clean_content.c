@@ -104,6 +104,44 @@ static void	take_expantions(t_cmd **lst)
 	}
 }
 
+static void	mark_spaces(t_string *s)
+{
+	int			i;
+	int			c;
+
+	i = -1;
+	c = 0;
+	while ((*s)[++i])
+	{
+		if (((*s)[i] == '"' || (*s)[i] == '\'' ) && !c)
+			c = (*s)[i];
+		else if ((*s)[i] == c)
+			c = 0;
+		else if ((*s)[i] == ' ' && !c)
+				(*s)[i] = 2;
+	}
+}
+
+
+static void	create_matrix(t_cmd **cmd)
+{
+	t_string	s;
+	t_string	p;
+
+	s = ft_strjoin((*cmd)->cmd, " ");
+	p = ft_strjoin(s, (*cmd)->arg);
+	free(s);
+	mark_spaces(&p);
+	parse_redirection(cmd, &p);
+	free((*cmd)->cmd);
+	(*cmd)->matrix = ft_split(p, 2);
+	free(p);
+	if ((*cmd)->matrix[0])
+		(*cmd)->cmd = ft_strdup((*cmd)->matrix[0]);
+	else
+		(*cmd)->cmd = ft_strdup("");
+}
+
 void	clean_content(void)
 {
 	t_cmd	*lst;
@@ -111,8 +149,7 @@ void	clean_content(void)
 	lst = mini()->cmd;
 	while (lst)
 	{
-		if (has_redirection(lst->cmd) || has_redirection(lst->arg))
-			parse_redirects(&lst);
+		create_matrix(&lst);
 		expantions(&lst->cmd);
 		expantions(&lst->arg);
 		take_expantions(&lst);

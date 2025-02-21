@@ -33,7 +33,7 @@ bool	has_redirection(t_string s)
 }
 
 
-static void parse_redirection(t_cmd **cmd, t_string *str) {
+void parse_redirection(t_cmd **cmd, t_string *str) {
     int i;
     int start;
     char c;

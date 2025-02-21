@@ -24,7 +24,7 @@ static int	get_last_fd(t_fd *fd)
 	here = false;
 	while (f)
 	{
-		if ((f->type == CREATE || f->type == APPEND) && !f)
+		if ((f->type == CREATE || f->type == APPEND) && !here)
 			file = f->fd;
 		else if (f->type == HEREDOC)
 		{
@@ -47,12 +47,12 @@ static int	get_last_read(t_fd *fd)
 	here = false;
 	while (f)
 	{
-		if (f->type == REVERSE && !f)
+		if (f->type == REVERSE && !here)
 			file = f->fd;
 		else if (f->type == HEREDOC)
 		{
 			file = 0;
-			f = true;
+			here = true;
 		}
 		f = f->next;
 	}

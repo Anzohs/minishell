@@ -35,5 +35,6 @@ void					free_matrix(t_string *s);
 bool					is_builtin(t_string s);
 void					parse_redirects(t_cmd **cmd);
 bool					has_redirection(t_string s);
+void parse_redirection(t_cmd **cmd, t_string *str);
 
 #endif
