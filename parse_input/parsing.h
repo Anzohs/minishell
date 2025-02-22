@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:56:50 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/08 18:08:13 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/22 17:06:54 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void					free_matrix(t_string *s);
 bool					is_builtin(t_string s);
 void					parse_redirects(t_cmd **cmd);
 bool					has_redirection(t_string s);
-void parse_redirection(t_cmd **cmd, t_string *str);
+void					parse_redirection(t_cmd **cmd, t_string *str);
+void					create_matrix(t_cmd **cmd);
 
 #endif

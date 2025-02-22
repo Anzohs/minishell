@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:56:40 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/01 18:42:13 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/22 17:02:22 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	parse_input(void)
 	t_string	cmd;
 	t_string	arg;
 	t_entry		*entry;
-		t_entry e;
+	t_entry		e;
 
 	i = 0;
 	while (mini()->readline[i])
