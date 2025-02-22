@@ -47,6 +47,7 @@ typedef struct s_cmd
 
 typedef struct s_minishell
 {
+	t_string		*matrix;
 	char			*readline;
 	char			*prompt;
 	t_list			*env;

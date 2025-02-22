@@ -35,11 +35,12 @@ void	run_minishell(void)
 		if (mini()->readline && *mini()->readline)
 		{
 			parse_input();
+			new_parse();
 			transform_str();
 		}
 		ft_cmdlstclear(&mini()->cmd, ft_cmdlstdelone);
 		free(mini()->readline);
-		mini()->readline = readline(mini()->prompt);
+	//	mini()->readline = readline(mini()->prompt);
 	}
 }
 
