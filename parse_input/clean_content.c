@@ -11,29 +11,17 @@
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
-/*
-static void	take_spaces(t_string *s)
+
+static void	t_quotes(t_string *matrix)
 {
 	int	i;
-
-	i = ft_strlen(*s) - 1;
-	if (i == -1)
-		return ;
-	while (i && (*s)[i] == ' ')
-		(*s)[i--] = 0;
-}
-*/
-
-static void t_quotes(t_string *matrix)
-{
-	int i;
 
 	i = -1;
 	while (matrix[++i])
 		take_quotes(&matrix[i]);
 }
 
-void clean_content(void)
+void	clean_content(void)
 {
 	t_cmd	*lst;
 

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
-#include "pipex.h"
 
 void	ft_clean_path(t_pipex *pipex, char *path)
 {

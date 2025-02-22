@@ -41,9 +41,9 @@ static bool	check_redirects(t_cmd **cmd)
 
 static t_string	*new_matrix(t_string *matrix)
 {
-	int	i;
+	int			i;
 	t_string	*s;
-	int	j;
+	int			j;
 
 	i = matrix_len(matrix);
 	if (!i)

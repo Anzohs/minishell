@@ -39,7 +39,8 @@ void	create_matrix(t_cmd **cmd)
 	s = ft_strjoin((*cmd)->cmd, " ");
 	p = ft_strjoin(s, (*cmd)->arg);
 	free(s);
-	parse_redirection(cmd, &p);
+	if (has_redirection(p))
+		parse_redirection(cmd, &p);
 	expantions(&p);
 	while (is_expantion(p))
 		p = sub_expantion(p, get_var(p));
