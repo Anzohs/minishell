@@ -5,10 +5,9 @@ static int get_type(t_fd **f, t_string name)
 {
     int i;
     int c;
-    int start;
 
     i = -1;
-    start = 0;
+    c = 0;
     while (name[++i])
     {
         if ((name[i] == '"' || name[i] == '\'') && !c)
@@ -17,7 +16,6 @@ static int get_type(t_fd **f, t_string name)
 			c = 0;
 		else if (!c && (name[i] == '<' || name[i] == '>'))
 		{
-			start = i;
 			if (name[i] == '>' && name[i + 1] == '>')
 			{
 				(*f)->type = APPEND;
@@ -35,10 +33,10 @@ static int get_type(t_fd **f, t_string name)
 			i++;
 			while (name[i] == ' ')
 				i++;
-			start = i;
+			break;
         }
     }
-    return (start);
+    return (i);
 }
 
 static void     file_name_clean(t_fd **f, t_string *name)
@@ -47,6 +45,7 @@ static void     file_name_clean(t_fd **f, t_string *name)
     int     i;
 
     i = get_type(f, *name);
+    printf("%i", i);
     s = ft_substr(*name, i, ft_strlen(*name) - i);
     free(*name);
     *name = s;
@@ -60,9 +59,11 @@ static void    fd_expantions(t_fd **f)
     f_d = *f;
     while (f_d)
     {
+        file_name_clean(&f_d, &f_d->name);
         expantions(&(f_d)->name);
         while (is_expantion((f_d)->name))
 	    	(f_d)->name = sub_expantion((f_d)->name, get_var((*f)->name));
+        take_quotes(&f_d->name);
         f_d = f_d->next;
     }
 }

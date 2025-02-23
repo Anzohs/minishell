@@ -81,7 +81,7 @@ static void	change_cmd(t_cmd **cmd)
 
 void	execute(void)
 {
-	change_cmd(&mini()->cmd);
+	//change_cmd(&mini()->cmd);
 	if (!check_redirects(&mini()->cmd))
 		return ;
 	if (!mini()->cmd->cmd || !*mini()->cmd->cmd)
