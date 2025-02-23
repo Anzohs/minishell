@@ -107,7 +107,7 @@ void	new_parse(void)
 	{
 		if (!*s[i])
 			return (ft_putendl_fd("bash: syntax error near unexpected token `|'",
-				2), free_env(s));
+					2), free_env(s));
 	}
 	mini()->matrix = s;
 	matrix_to_cmd();

@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 21:48:28 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/22 21:55:31 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/23 16:51:30 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ static int	end_redirect(t_string s, int start)
 	c = 0;
 	if (s[i] == '>' || s[i] == '<')
 		i++;
-	while (s[i++] == ' ')
-		;
+	while (s[i] == ' ')
+		i++;
 	if (s[i] == '>' || s[i] == '<' || !s[i])
 		return (i);
 	while (s[i])
@@ -64,13 +64,13 @@ static t_fd	*take_red(t_string *s)
 	int		i;
 	int		j;
 
-	f = ft_calloc(sizeof(t_fd),1);
+	f = ft_calloc(sizeof(t_fd), 1);
 	if (!f)
 		return (NULL);
 	i = start_redirect(*s);
-	j = end_redirect(*s,i);
+	j = end_redirect(*s, i);
 	f->name = ft_substr(*s, i, j - i);
-	new_cut(s, i, j);
+	*s = new_cut(s, i, j);
 	return (f);
 }
 
