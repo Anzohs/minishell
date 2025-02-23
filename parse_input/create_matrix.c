@@ -68,7 +68,6 @@ void	create_matrix(t_cmd **cmd)
 	(*cmd)->matrix = ft_split((*cmd)->arg, 2);
 	if (!(*cmd)->matrix)
 		return;
-	//free((*cmd)->cmd);
 	while ((*cmd)->matrix[++i])
 		take_quotes(&(*cmd)->matrix[i]);
 }

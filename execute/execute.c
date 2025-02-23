@@ -84,8 +84,6 @@ void	execute(void)
 	change_cmd(&mini()->cmd);
 	if (!check_redirects(&mini()->cmd))
 		return ;
-	if (!mini()->cmd->cmd || !*mini()->cmd->cmd)
-		return ;
 	else if (ft_cmdlst_len(&mini()->cmd) == 1 && is_builtin(mini()->cmd->cmd))
 		execute_builtin(mini()->cmd, mini()->cmd->w, 0);
 	else

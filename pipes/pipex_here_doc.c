@@ -78,6 +78,8 @@ void	ft_here_one(int fd[2], int *pid, char *n, char **env)
 {
 	char	**strs;
 
+	if (!*mini()->cmd->cmd)
+		return ;
 	strs = fusion_strs(mini()->cmd);
 	*pid = fork();
 	if (*pid < 0)

@@ -45,7 +45,6 @@ static void     file_name_clean(t_fd **f, t_string *name)
     int     i;
 
     i = get_type(f, *name);
-    printf("%i", i);
     s = ft_substr(*name, i, ft_strlen(*name) - i);
     free(*name);
     *name = s;
