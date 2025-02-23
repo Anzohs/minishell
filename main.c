@@ -33,12 +33,7 @@ void	run_minishell(void)
 			mini()->readline = readline(mini()->prompt);
 		}
 		add_history(mini()->readline);
-		if (mini()->readline && *mini()->readline)
-		{
-			new_parse();
-			//parse_input();
-			//transform_str();
-		}
+		new_parse();
 		ft_cmdlstclear(&mini()->cmd, ft_cmdlstdelone);
 		free(mini()->readline);
 		mini()->readline = readline(mini()->prompt);

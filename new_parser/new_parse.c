@@ -81,7 +81,7 @@ void	new_parse(void)
 	int			i;
 
 	i = -1;
-	if (!*mini()->readline || !closed_quotes(mini()->readline))
+	if (!mini()->readline || !*mini()->readline || !closed_quotes(mini()->readline))
 		return ;
 	mark_pipes();
 	s = ft_split(mini()->readline, 2);
