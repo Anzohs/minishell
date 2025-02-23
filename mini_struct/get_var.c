@@ -27,7 +27,7 @@ t_string	get_var(t_string s)
 			j = i + 1;
 			while (s[j] && ft_isalpha(s[j]))
 				j++;
-			str = ft_substr(s + i + 1, 0, j - i -1);
+			str = ft_substr(s + i + 1, 0, j - i - 1);
 			c = ft_lsthas(mini()->env, str);
 			free(str);
 			if (c[0] == '=')

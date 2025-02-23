@@ -24,7 +24,7 @@ static void	ft_fddelone(t_fd **lst)
 	free(temp);
 }
 
-void	ft_fd_del(t_fd	**fd)
+void	ft_fd_del(t_fd **fd)
 {
 	t_fd	*list_t;
 	t_fd	*list_temp;

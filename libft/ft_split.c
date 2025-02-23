@@ -33,7 +33,7 @@ static int	count_words(const char *s, char c)
 		i++;
 	}
 	if (s[0] != c && i == 1 && ft_strlen(s) == 1)
-			result++;
+		result++;
 	return (result);
 }
 

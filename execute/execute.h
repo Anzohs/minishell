@@ -25,6 +25,6 @@ void					export_built(t_string *matrix);
 void					env_execute(int fd);
 void					unset_execute(t_cmd *cmd);
 void					echo_exec(t_cmd *cmd);
-int					execute_builtin(t_cmd *cmd, int fd, int i);
+int						execute_builtin(t_cmd *cmd, int fd, int i);
 
 #endif

@@ -21,28 +21,29 @@ void	init_minishell(void)
 	mini()->ht = hcreate(10);
 }
 
-static void handle_sigint(void)
+static void	handle_sigint(void)
 {
 	if (mini()->sig == 1)
-        mini()->sig = 0;
+		mini()->sig = 0;
 }
 
 void	run_minishell(void)
 {
-	    while (1)
-    {
-        handle_sigint();
-        mini()->readline = readline(mini()->prompt);
-        if (mini()->readline == NULL || ft_strcmp(mini()->readline, "exit") == 0)
-            break;
-        if (*mini()->readline)
-        {
-            add_history(mini()->readline);
-            new_parse();
-        }
-        ft_cmdlstclear(&mini()->cmd, ft_cmdlstdelone);
-        free(mini()->readline);
-    }
+	while (1)
+	{
+		handle_sigint();
+		mini()->readline = readline(mini()->prompt);
+		if (mini()->readline == NULL || ft_strcmp(mini()->readline,
+				"exit") == 0)
+			break ;
+		if (*mini()->readline)
+		{
+			add_history(mini()->readline);
+			new_parse();
+		}
+		ft_cmdlstclear(&mini()->cmd, ft_cmdlstdelone);
+		free(mini()->readline);
+	}
 }
 
 int	main(int ac, char **av, char **env)

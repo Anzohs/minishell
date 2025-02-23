@@ -5,20 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/22 21:44:29 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/23 18:02:18 by hladeiro         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   new_parse.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/22 21:17:54 by hladeiro          #+#    #+#             */
-/*   Upated: 2025/02/22 21:31:37 by hladeiro         ###   ########.fr        */
+/*   Created: 2025/02/23 21:12:56 by hladeiro          #+#    #+#             */
+/*   Updated: 2025/02/23 21:14:15 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +57,7 @@ static bool	check_errors(t_string *s)
 	{
 		if (!*s[i])
 			return (\
-		ft_putendl_fd("bash: syntax error near unexpected token `|'",
+				ft_putendl_fd("bash: syntax error near unexpected token `|'",
 					2), free_env(s), true);
 	}
 	return (false);
@@ -81,7 +69,9 @@ void	new_parse(void)
 	int			i;
 
 	i = -1;
-	if (!mini()->readline || !*mini()->readline || !closed_quotes(mini()->readline))
+	if (!mini()->readline || \
+		!*mini()->readline \
+		|| !closed_quotes(mini()->readline))
 		return ;
 	mark_pipes();
 	s = ft_split(mini()->readline, 2);

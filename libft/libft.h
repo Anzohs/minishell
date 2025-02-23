@@ -6,7 +6,7 @@
 /*   By: hladeiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:24:43 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/09 17:47:13 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:19:46 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ size_t				ft_strlcpy(char *dest, const char *src, size_t size);
 size_t				ft_strlcat(char *dest, const char *src, size_t size);
 int					ft_isalpha(int c);
 int					ft_isupper(int c);
-int					ft_islower(int c); // até aqui!
+int					ft_islower(int c);
 int					ft_isdigit(int c);
 int					ft_isalnum(int c);
 int					ft_toupper(int c);

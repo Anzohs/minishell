@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 17:20:42 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/20 21:38:41 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:25:16 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,15 @@ bool	change_fd(t_cmd **cmd)
 		if (f->type == APPEND)
 			f->fd = open(f->name, O_CREAT | O_WRONLY | O_APPEND, 0664);
 		if (f->type == REVERSE)
-			f->fd = open (f->name, O_RDONLY, 0664);
+			f->fd = open(f->name, O_RDONLY, 0664);
 		if (f->type == HEREDOC)
 			f->fd = open(".heredoc", O_CREAT | O_TRUNC | O_RDWR, 0644);
 		if (f->fd == -1)
-			break ;
+		{
+			ft_putstr_fd(f->name, 2);
+			ft_putendl_fd(": No such file or directory", 2);
+		}
 		f = f->next;
-	}
-	if (f && f->fd == -1)
-	{
-		ft_putstr_fd(f->name, 2);
-		ft_putendl_fd(": No such file or directory", 2);
-		return (false);
 	}
 	(*cmd)->w = get_last_fd((*cmd)->fd);
 	(*cmd)->read = get_last_read((*cmd)->fd);

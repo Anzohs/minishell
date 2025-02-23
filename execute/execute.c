@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
+#include "execute.h"
 #include <fcntl.h>
 #include <string.h>
-#include "execute.h"
 
 static bool	ret(t_cmd *cmd)
 {
@@ -54,10 +54,10 @@ static t_string	*new_matrix(t_string *matrix)
 	j = 0;
 	while (++j < i)
 		s[j - 1] = ft_strdup(matrix[j]);
-	return (free_env(matrix),s);
+	return (free_env(matrix), s);
 }
 
-static void new_cmd(t_cmd **cmd)
+static void	new_cmd(t_cmd **cmd)
 {
 	t_cmd	*lst;
 

@@ -26,17 +26,17 @@ void	load_signals(void)
 void	sig_handler(int signum, siginfo_t *sig, void *s)
 {
 	(void)s;
-    (void)sig;
-    if (signum == SIGINT)
-    {
-        rl_replace_line("", 0);
-        printf("\n");
-        rl_on_new_line();
-        rl_redisplay();
-        mini()->sig = 1;
-    }
-    if (signum == SIGQUIT)
-        return;
+	(void)sig;
+	if (signum == SIGINT)
+	{
+		rl_replace_line("", 0);
+		printf("\n");
+		rl_on_new_line();
+		rl_redisplay();
+		mini()->sig = 1;
+	}
+	if (signum == SIGQUIT)
+		return ;
 }
 
 void	sig_handler_here(int signum, siginfo_t *sig, void *s)
