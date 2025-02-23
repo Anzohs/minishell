@@ -41,8 +41,7 @@ typedef struct s_pipex
 	char	**env;
 	char	**env_path;
 	char	**cmd1;
-	int		here_fd[2];
-	int		pid_here;
+	int		fd_here[2];
 }	t_pipex;
 
 void		validate_args(t_cmd *argv, int *cmd_argc);
@@ -65,7 +64,7 @@ void		free_env(char **strs);
 void		start_here_doc(t_cmd *m, char **env);
 void		create_arrow(t_cmd *node);
 void		ft_close_all_files(t_cmd *cmd);
-void		start_here_doc_2(t_cmd *m, char **env, t_pipex *pipex);
+void		here_doc_2(char *limiter, int fd[2]);
 /* void	one_arrow(t_cmd *m);
 void	two_arrow(t_cmd *m);
 void	one_arrow_reverse(t_cmd *m); */

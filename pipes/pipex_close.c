@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_close.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:42:55 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/13 23:12:34 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/23 15:00:35 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	ft_close_all_1(t_pipex *pipex)
 {
 	ft_close(pipex->fds[0].fd[0]);
 	ft_close(pipex->fds[0].fd[1]);
+	ft_close(pipex->fd_here[0]);
+	ft_close(pipex->fd_here[1]);
 }
 
 void	ft_close_all_p(t_pipex *pipex)
@@ -74,4 +76,6 @@ void	ft_close_all_p(t_pipex *pipex)
 		ft_close(pipex->fds[i].fd[1]);
 		i++;
 	}
+	ft_close(pipex->fd_here[0]);
+	ft_close(pipex->fd_here[1]);
 }
