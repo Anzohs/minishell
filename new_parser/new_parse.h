@@ -21,4 +21,5 @@ void		redirects_parsing(void);
 t_string	new_cut(t_string *s, int init, int end);
 void		trim_spaces(t_string *s);
 void		trim_front_spaces(t_string *s);
+void    expantion_mark(void);
 #endif

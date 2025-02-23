@@ -33,18 +33,10 @@ static void	mark_spaces(t_string *s)
 
 void	create_matrix(t_cmd **cmd)
 {
-	t_string	s;
-	t_string	p;
-
-	s = ft_strjoin((*cmd)->cmd, " ");
-	p = ft_strjoin(s, (*cmd)->arg);
-	free(s);
-	if (has_redirection(p))
-		parse_redirection(cmd, &p);
-	expantions(&p);
-	while (is_expantion(p))
-		p = sub_expantion(p, get_var(p));
-	mark_spaces(&p);
-	(*cmd)->matrix = ft_split(p, 2);
-	free(p);
+	expantions(&(*cmd)->arg);
+	while (is_expantion((*cmd)->arg))
+		(*cmd)->arg = sub_expantion((*cmd)->arg, get_var((*cmd)->arg));
+	mark_spaces(&(*cmd)->arg);
+	(*cmd)->matrix = ft_split((*cmd)->arg, 2);
+	(*cmd)->cmd = ft_strdup((*cmd)->matrix[0]);
 }

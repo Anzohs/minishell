@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
-
+/*
 static t_string	trim_spaces(t_string str)
 {
 	int	start;
@@ -111,3 +111,4 @@ void	parse_input(void)
 		copy_entry(&e);
 	}
 }
+*/

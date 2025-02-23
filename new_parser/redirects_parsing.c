@@ -90,4 +90,5 @@ void	redirects_parsing(void)
 		take_redirect(&cmd);
 		cmd = cmd->next;
 	}
+	expantion_mark();
 }
