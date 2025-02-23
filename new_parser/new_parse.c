@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 21:44:29 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/22 21:46:55 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/23 18:02:18 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ static int	count_pipes(void)
 	return (pipes);
 }
 
-static bool check_errors(t_string *s)
+static bool	check_errors(t_string *s)
 {
-	int i;
+	int	i;
 
 	if (matrix_len(s) == 1 && !*s[0])
 		return (free_env(s), true);
@@ -68,7 +68,8 @@ static bool check_errors(t_string *s)
 	while (s[++i])
 	{
 		if (!*s[i])
-			return (ft_putendl_fd("bash: syntax error near unexpected token `|'",
+			return (\
+		ft_putendl_fd("bash: syntax error near unexpected token `|'",
 					2), free_env(s), true);
 	}
 	return (false);
