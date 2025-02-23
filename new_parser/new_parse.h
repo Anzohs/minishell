@@ -19,5 +19,6 @@ void		new_parse(void);
 void		matrix_to_cmd(void);
 void		redirects_parsing(void);
 t_string	new_cut(t_string *s, int init, int end);
-
+void	trim_spaces(t_string *s);
+void	trim_front_spaces(t_string *s);
 #endif

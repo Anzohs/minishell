@@ -29,7 +29,7 @@ SRC_PIP = pipex.c pipex_utils.c pipex_utils_2.c pipex_val_cmd.c pipex_close.c pi
 SRC_FREE = free_env.c free_node.c free_tmini.c free_singlenode.c
 SRC_CLN = clean_command.c closed_quotes.c clean_node.c clean_quotes.c expantions.c parse_node.c expand_args.c has_quotes.c split_value.c\
 		expand_cmd.c
-SRC_NEWP = matrix_to_cmd.c new_parse.c redirects_parsing.c
+SRC_NEWP = matrix_to_cmd.c new_parse.c redirects_parsing.c trim_spaces.c
 
 SRCS := main.c
 SRCS += $(addprefix ft_search/, $(SRC_SR))

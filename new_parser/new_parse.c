@@ -58,28 +58,20 @@ static int	count_pipes(void)
 	return (pipes);
 }
 
-static void	trim_spaces(t_string *s)
+static bool check_errors(t_string *s)
 {
-	int	i;
+	int i;
 
-	i = ft_strlen(*s) - 1;
-	if (i == -1)
-		return ;
-	while (i && (*s)[i] == ' ')
-		(*s)[i] = 0;
-}
-
-static void	trim_front_spaces(t_string *s)
-{
-	int			i;
-	t_string	str;
-
+	if (matrix_len(s) == 1 && !*s[0])
+		return (free_env(s), true);
 	i = -1;
-	while ((*s)[++i] == ' ')
-		;
-	str = ft_substr(*s, i, ft_strlen(*s) - i);
-	free(*s);
-	*s = str;
+	while (s[++i])
+	{
+		if (!*s[i])
+			return (ft_putendl_fd("bash: syntax error near unexpected token `|'",
+					2), free_env(s), true);
+	}
+	return (false);
 }
 
 void	new_parse(void)
@@ -100,15 +92,8 @@ void	new_parse(void)
 		trim_spaces(&s[i]);
 		trim_front_spaces(&s[i]);
 	}
-	if (matrix_len(s) == 1 && !*s[0])
-		return (free_env(s));
-	i = -1;
-	while (s[++i])
-	{
-		if (!*s[i])
-			return (ft_putendl_fd("bash: syntax error near unexpected token `|'",
-					2), free_env(s));
-	}
+	if (check_errors(s))
+		return ;
 	mini()->matrix = s;
 	matrix_to_cmd();
 }
