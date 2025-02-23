@@ -23,15 +23,11 @@ void	init_minishell(void)
 
 void	run_minishell(void)
 {
+	if (mini()->readline)
+		free(mini()->readline);
 	mini()->readline = readline(mini()->prompt);
 	while (mini()->readline && ft_strcmp(mini()->readline, "exit"))
 	{
-		if (mini()->sig == 1)
-		{
-			mini()->sig = 0;
-			free(mini()->readline);
-			mini()->readline = readline(mini()->prompt);
-		}
 		add_history(mini()->readline);
 		new_parse();
 		ft_cmdlstclear(&mini()->cmd, ft_cmdlstdelone);
