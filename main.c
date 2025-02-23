@@ -23,26 +23,26 @@ void	init_minishell(void)
 
 static void handle_sigint(void)
 {
-    if (mini()->sig == 1)
-    {
+	if (mini()->sig == 1)
         mini()->sig = 0;
-        free(mini()->readline);
-        mini()->readline = readline(mini()->prompt);
-    }
 }
 
 void	run_minishell(void)
 {
-	mini()->readline = readline(mini()->prompt);
-	while (mini()->readline && ft_strcmp(mini()->readline, "exit"))
-	{
-		handle_sigint();
-		add_history(mini()->readline);
-		new_parse();
-		ft_cmdlstclear(&mini()->cmd, ft_cmdlstdelone);
-		free(mini()->readline);
-		mini()->readline = readline(mini()->prompt);
-	}
+	    while (1)
+    {
+        handle_sigint();
+        mini()->readline = readline(mini()->prompt);
+        if (mini()->readline == NULL || ft_strcmp(mini()->readline, "exit") == 0)
+            break;
+        if (*mini()->readline)
+        {
+            add_history(mini()->readline);
+            new_parse();
+        }
+        ft_cmdlstclear(&mini()->cmd, ft_cmdlstdelone);
+        free(mini()->readline);
+    }
 }
 
 int	main(int ac, char **av, char **env)
