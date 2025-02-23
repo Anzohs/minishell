@@ -97,11 +97,6 @@ void	start_here_doc(t_cmd *m, char **env)
 	int	pipefd[2];
 	int	pid;
 
-	if (!ft_strcmp(m->cmd, "<<") && !m->fd->name)
-	{
-		write(2, "error near \"newline\" found5\n", 28);
-		return ;
-	}
 /* 	else if (ft_strcmp(m->cmd, "<<") && !m->arrow[1])
 	{
 		write(2, "error near \"newline\" found5\n", 28);
@@ -113,10 +108,7 @@ void	start_here_doc(t_cmd *m, char **env)
 		perror("pipe1");
 		return ;
 	}
-	if (!ft_strcmp(m->cmd, "<<"))
-		ft_here_one(pipefd, &pid, m->matrix[0], env);
-	else
-		ft_here_one(pipefd, &pid, m->fd->name, env);
+	ft_here_one(pipefd, &pid, m->fd->name, env);
 	parent(pipefd, pid, m);
 	return ;
 }

@@ -26,11 +26,6 @@ static int	get_last_fd(t_fd *fd)
 	{
 		if ((f->type == CREATE || f->type == APPEND) && !here)
 			file = f->fd;
-		else if (f->type == HEREDOC)
-		{
-			file = 1;
-			here = true;
-		}
 		f = f->next;
 	}
 	return (file);
