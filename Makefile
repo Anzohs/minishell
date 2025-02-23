@@ -2,7 +2,8 @@ NAME = minishell
 
 CC = gcc
 OBJ_DIR = obj
-CFLAGS = -Wall -Wextra -Werror -g -I. -Isrc/libf -Ift_search -Imini_struct
+#CFLAGS = -Wall -Wextra -Werror -g -I. -Isrc/libf -Ift_search -Imini_struct
+CFLAGS = -g -I. -Isrc/libf -Ift_search -Imini_struct
 CCFLAGS = -lreadline
 SRC_SR = hash.c hcreate.c hdestroy.c hsearch.c
 SRC_MS = create_pwd.c m_copy_env.c mini.c ft_cmdlst_new.c ft_cmdlstadd_back.c create_oldpwd.c \
@@ -28,6 +29,7 @@ SRC_PIP = pipex.c pipex_utils.c pipex_utils_2.c pipex_val_cmd.c pipex_close.c pi
 SRC_FREE = free_env.c free_node.c free_tmini.c free_singlenode.c
 SRC_CLN = clean_command.c closed_quotes.c clean_node.c clean_quotes.c expantions.c parse_node.c expand_args.c has_quotes.c split_value.c\
 		expand_cmd.c
+SRC_NEWP = matrix_to_cmd.c new_parse.c redirects_parsing.c
 
 SRCS := main.c
 SRCS += $(addprefix ft_search/, $(SRC_SR))
@@ -37,6 +39,7 @@ SRCS += $(addprefix parse_input/, $(SRC_PRS))
 SRCS += $(addprefix execute/, $(SRC_EXE))
 SRCS += $(addprefix signals/, $(SRC_SIG))
 SRCS += $(addprefix pipes/, $(SRC_PIP))
+SRCS += $(addprefix new_parser/, $(SRC_NEWP))
 
 OBJ := $(patsubst %.c, $(OBJ_DIR)/%.o,$(SRCS))
 

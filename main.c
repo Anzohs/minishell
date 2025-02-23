@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "mini_struct/mini.h"
+#include "new_parser/new_parse.h"
 
 void	init_minishell(void)
 {
@@ -34,8 +35,9 @@ void	run_minishell(void)
 		add_history(mini()->readline);
 		if (mini()->readline && *mini()->readline)
 		{
-			parse_input();
-			transform_str();
+			new_parse();
+			//parse_input();
+			//transform_str();
 		}
 		ft_cmdlstclear(&mini()->cmd, ft_cmdlstdelone);
 		free(mini()->readline);

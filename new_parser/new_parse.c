@@ -23,6 +23,7 @@
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
+#include "new_parse.h"
 
 static void	mark_pipes(void)
 {
@@ -76,8 +77,6 @@ static void	trim_front_spaces(t_string *s)
 	i = -1;
 	while ((*s)[++i] == ' ')
 		;
-	if (!(*s)[i])
-		return ;
 	str = ft_substr(*s, i, ft_strlen(*s) - i);
 	free(*s);
 	*s = str;
@@ -103,5 +102,13 @@ void	new_parse(void)
 	}
 	if (matrix_len(s) == 1 && !*s[0])
 		return (free_env(s));
+	i = -1;
+	while (s[++i])
+	{
+		if (!*s[i])
+			return (ft_putendl_fd("bash: syntax error near unexpected token `|'",
+				2), free_env(s));
+	}
 	mini()->matrix = s;
+	matrix_to_cmd();
 }
