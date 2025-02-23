@@ -42,7 +42,7 @@ void	create_matrix(t_cmd **cmd)
 	mark_spaces(&(*cmd)->arg);
 	(*cmd)->matrix = ft_split((*cmd)->arg, 2);
 	if (!(*cmd)->matrix)
-		return;
+		return ;
 	while ((*cmd)->matrix[++i])
 		take_quotes(&(*cmd)->matrix[i]);
 }

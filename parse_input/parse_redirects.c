@@ -31,4 +31,3 @@ bool	has_redirection(t_string s)
 	}
 	return (false);
 }
-
