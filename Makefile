@@ -2,8 +2,7 @@ NAME = minishell
 
 CC = gcc
 OBJ_DIR = obj
-#CFLAGS = -Wall -Wextra -Werror -g -I. -Isrc/libf -Ift_search -Imini_struct
-CFLAGS = -g -I. -Isrc/libf -Ift_search -Imini_struct
+CFLAGS = -Wall -Wextra -Werror -g -I. -Isrc/libf -Ift_search -Imini_struct
 CCFLAGS = -lreadline
 SRC_SR = hash.c hcreate.c hdestroy.c hsearch.c
 SRC_MS = create_pwd.c m_copy_env.c mini.c ft_cmdlst_new.c ft_cmdlstadd_back.c create_oldpwd.c \
