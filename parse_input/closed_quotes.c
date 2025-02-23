@@ -28,5 +28,7 @@ bool	closed_quotes(t_string s)
 		else if (s[i] == c)
 			c = 0;
 	}
+	if (c)
+		ft_putendl_fd("error open quotes", 2);
 	return (c == 0);
 }
