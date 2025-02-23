@@ -52,13 +52,11 @@ typedef struct s_minishell
 	char			*prompt;
 	t_list			*env;
 	t_list			*exp;
-	t_hash			*ht;
 	t_cmd			*cmd;
 	int				pipes;
 	int				start;
 	int				sig;
 	int				exit_code;
-	int				fd;
 	struct stat		stat;
 }					t_mini;
 

@@ -2,9 +2,8 @@ NAME = minishell
 
 CC = gcc
 OBJ_DIR = obj
-CFLAGS = -Wall -Wextra -Werror -g -I. -Isrc/libf -Ift_search -Imini_struct
+CFLAGS = -Wall -Wextra -Werror -g -I. -Isrc/libf  -Imini_struct
 CCFLAGS = -lreadline
-SRC_SR = hash.c hcreate.c hdestroy.c hsearch.c
 SRC_MS = create_pwd.c m_copy_env.c mini.c ft_cmdlst_new.c ft_cmdlstadd_back.c create_oldpwd.c \
 		ft_cmdlstclear.c ft_cmdlstdelone.c ft_cmdlst_len.c get_var.c matrix_len.c ft_cmdsize.c \
 		ft_fd_del.c ft_fd_new.c ft_fdadd_back.c change_fd.c
@@ -16,11 +15,10 @@ SRC_LIBFT = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isasci
 			ft_striteri.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c ft_strncmp.c ft_strnstr.c \
 			ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c ft_lsthas.c ft_lstgetlst.c ft_lstsort.c ft_lsttomatrix.c \
 			get_next_line.c get_next_line_utils.c ft_lstpop.c
-SRC_PRS = parse_input.c closed_quotes.c is_valid.c transform_str.c expantions.c clean_content.c is_expantion.c sub_expantion.c split_value.c \
+SRC_PRS = parse_input.c closed_quotes.c is_valid.c expantions.c clean_content.c is_expantion.c sub_expantion.c split_value.c \
 			take_quotes.c free_matrix.c split_need.c is_builtin.c parse_redirects.c create_matrix.c
 SRC_EXE = execute.c cd_execute.c pwd_execute.c export_print.c export_built.c env_execute.c unset_execute.c echo_exec.c execute_builtin.c
 SRC_SIG = load_signals.c
-SRC_FT = hash.c hcreate.c hdestroy.c hsearch.c node_len.c
 SRC_BLT = cd_biltin.c is_biltin.c
 SRC_SRC = copy_env.c create_env.c ft_free_strs.c
 SRC_ENV = get_index.c update_oldpwd.c update_pwd.c get_pwd.c get_export.c get_unset.c get_utils.c get_env.c get_echo.c get_envvars.c
@@ -31,7 +29,6 @@ SRC_CLN = clean_command.c closed_quotes.c clean_node.c clean_quotes.c expantions
 SRC_NEWP = matrix_to_cmd.c new_parse.c redirects_parsing.c trim_spaces.c expation_mark.c 
 
 SRCS := main.c
-SRCS += $(addprefix ft_search/, $(SRC_SR))
 SRCS += $(addprefix mini_struct/, $(SRC_MS))
 SRCS += $(addprefix libft/, $(SRC_LIBFT))
 SRCS += $(addprefix parse_input/, $(SRC_PRS))

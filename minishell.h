@@ -13,7 +13,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "ft_search/ft_search.h"
 # include "libs.h"
 # include "parse_input/parsing.h"
 # include "execute/execute.h"

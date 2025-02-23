@@ -18,7 +18,6 @@ void	init_minishell(void)
 	mini()->prompt = "shell $ > ";
 	load_signals();
 	ft_lstdup(&mini()->env, &mini()->exp);
-	mini()->ht = hcreate(10);
 }
 
 static void	handle_sigint(void)
@@ -36,11 +35,8 @@ void	run_minishell(void)
 		if (mini()->readline == NULL || ft_strcmp(mini()->readline,
 				"exit") == 0)
 			break ;
-		if (*mini()->readline)
-		{
-			add_history(mini()->readline);
-			new_parse();
-		}
+		add_history(mini()->readline);
+		new_parse();
 		ft_cmdlstclear(&mini()->cmd, ft_cmdlstdelone);
 		free(mini()->readline);
 	}
@@ -57,6 +53,5 @@ int	main(int ac, char **av, char **env)
 	ft_lstclear(&mini()->env, free);
 	ft_lstclear(&mini()->exp, free);
 	clear_history();
-	hdestroy(mini()->ht);
 	return (mini()->exit_code);
 }
