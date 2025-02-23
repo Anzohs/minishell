@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 23:25:53 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/20 21:17:51 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/23 14:52:27 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,27 @@ static void	start_pipe_1(t_pipex *pipex, t_cmd *argv2)
 	int	i;
 
 	i = 0;
-
-	if (argv2->fd)
+	if (pipe(pipex->fd_here) < 0)
 	{
-		if (pipe(pipex->here_fd) < 0)
-			return (perror("pipe_here"), (void)i);
-		start_here_doc_2(argv2, pipex->env, pipex);
+		perror("macho");
+		return ;
+	}
+	if (argv2->fd && argv2->fd->type == HEREDOC)
+	{
+		here_doc_2(argv2->fd->name, pipex->fd_here);
+		ft_close(pipex->fd_here[1]);
 	}
 	if (pipe(pipex->fds[0].fd) < 0)
 		return (perror("pipe"), (void)i);
 	if (access(pipex->paths[0], F_OK) != 0)
 		return (ft_putendl_fd("commnad not found", STDERR_FILENO), (void)i);
 	pipex->pids[i] = fork();
-	if (pipex->pids[i] == 0)
-		child_one(pipex, pipex->env, pipex->paths[0], argv2);
 	if (pipex->pids[i] < 0)
 		return (perror("pid"), free(pipex->pids), (void)i);
+	if (pipex->pids[i] == 0)
+	{
+		child_one(pipex, pipex->env, pipex->paths[0], argv2);
+	}
 }
 
 static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
@@ -96,8 +101,11 @@ static void	one_cmd(t_pipex *pipex, t_mini *mini)
 {
 	if (mini->cmd->fd)
 	{
-		has_heredoc(mini->cmd, pipex->env);
-		return ;
+		if (mini->cmd->fd->type == HEREDOC)
+		{
+			has_heredoc(mini->cmd, pipex->env);
+			return ;
+		}
 	}
 	if (ft_strcmp("", pipex->path2) == 0)
 		return (pipex->cmd_argc -= 1, printf("%s : Command not found\n", mini->cmd->cmd), (void)pipex);
@@ -165,7 +173,6 @@ void	pipex(void)
 	count_pids(&pipex, pipex.cmd_argc);
 	pipex.env = ft_lsttomatrix(mini()->env);
 	get_strs_envs(&pipex);
-	pipex.pid_here = -1;
 	if (!find_full_cmd(&pipex, mini()->cmd))
 		return (clean_all(&pipex), (void)pipex);
 	start_multi_pipe(&pipex, mini(), ft_cmdsize(mini()->cmd), mini()->cmd);
