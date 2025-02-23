@@ -17,14 +17,12 @@ static int	get_last_fd(t_fd *fd)
 {
 	t_fd	*f;
 	int		file;
-	bool	here;
 
 	f = fd;
 	file = 1;
-	here = false;
 	while (f)
 	{
-		if ((f->type == CREATE || f->type == APPEND) && !here)
+		if ((f->type == CREATE || f->type == APPEND))
 			file = f->fd;
 		f = f->next;
 	}
