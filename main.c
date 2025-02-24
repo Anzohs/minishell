@@ -53,5 +53,5 @@ int	main(int ac, char **av, char **env)
 	ft_lstclear(&mini()->env, free);
 	ft_lstclear(&mini()->exp, free);
 	clear_history();
-	return (mini()->exit_code);
+	exit(mini()->exit_code);
 }
