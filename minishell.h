@@ -18,5 +18,5 @@
 # include "execute/execute.h"
 # include "signals/ft_signals.h"
 # include "pipes/pipex.h"
-
+# include "new_parser/new_parse.h"
 #endif
