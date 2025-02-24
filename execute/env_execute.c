@@ -22,4 +22,5 @@ void	env_execute(int fd)
 		ft_putendl_fd(tmp->content, fd);
 		tmp = tmp->next;
 	}
+	mini()->exit_code = 0;
 }

@@ -15,14 +15,14 @@
 
 # include "../libs.h"
 
-typedef struct s_cmd    t_cmd;
+typedef struct s_cmd	t_cmd;
 
-void		new_parse(void);
-void		matrix_to_cmd(void);
-void		redirects_parsing(void);
-t_string	new_cut(t_string *s, int init, int end);
-void		trim_spaces(t_string *s);
-void		trim_front_spaces(t_string *s);
-void		expantion_mark(void);
-void        change_cmd(t_cmd **cmd);
+void					new_parse(void);
+void					matrix_to_cmd(void);
+void					redirects_parsing(void);
+t_string				new_cut(t_string *s, int init, int end);
+void					trim_spaces(t_string *s);
+void					trim_front_spaces(t_string *s);
+void					expantion_mark(void);
+void					change_cmd(t_cmd **cmd);
 #endif

@@ -53,6 +53,7 @@ static bool	new_line(t_string s)
 
 void	echo_exec(t_cmd *cmd)
 {
+	mini()->exit_code = 0;
 	if (new_line(cmd->matrix[0]))
 		return (echo_new_line(cmd->matrix, cmd->w));
 	return (echo_no_line(cmd->matrix, cmd->w));

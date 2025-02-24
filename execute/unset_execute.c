@@ -30,4 +30,5 @@ void	unset_execute(t_cmd *cmd)
 		if (exp_node)
 			ft_lstpop(&mini()->exp, exp_node);
 	}
+	mini()->exit_code = 0;
 }

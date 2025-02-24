@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "../mini_struct/mini.h"
 
 void	pwd_execute(int fd)
 {
@@ -19,4 +19,5 @@ void	pwd_execute(int fd)
 	m = getcwd(NULL, 0);
 	ft_putendl_fd(m, fd);
 	free(m);
+	mini()->exit_code = 0;
 }

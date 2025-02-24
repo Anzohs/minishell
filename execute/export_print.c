@@ -27,6 +27,7 @@ static void	print_exp(int fd)
 
 void	export_print(int fd)
 {
+	mini()->exit_code = 0;
 	ft_lstsort(&mini()->exp);
 	print_exp(fd);
 }

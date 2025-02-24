@@ -32,6 +32,6 @@ int	execute_builtin(t_cmd *cmd, int fd, int i)
 			(export_print(fd));
 	}
 	if (i)
-		return (exit(0), 1);
+		return (exit(mini()->exit_code), 1);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 21:12:56 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/23 21:14:15 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/24 01:17:29 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static bool	check_errors(t_string *s)
 	{
 		if (!*s[i])
 			return (\
-				ft_putendl_fd("bash: syntax error near unexpected token `|'",
+			ft_putendl_fd("bash: syntax error near unexpected token `|'",
 					2), free_env(s), true);
 	}
 	return (false);
@@ -69,8 +69,7 @@ void	new_parse(void)
 	int			i;
 
 	i = -1;
-	if (!mini()->readline || \
-		!*mini()->readline \
+	if (!mini()->readline || !*mini()->readline
 		|| !closed_quotes(mini()->readline))
 		return ;
 	mark_pipes();

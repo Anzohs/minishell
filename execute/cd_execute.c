@@ -51,13 +51,15 @@ static void	home(void)
 
 	s = ft_lsthas(mini()->env, "HOME=");
 	if (!s || !*s)
-		return (perror("Home not set"), (void)s);
+		return (perror("Home not set"), \
+			mini()->exit_code = 1, (void)s);
 	s++;
 	i = chdir(s);
 	if (i == -1)
-		perror("CD");
+		return (mini()->exit_code = 1, perror("CD"));
 	update_pwd(s, &mini()->exp, false);
 	update_pwd(s, &mini()->env, false);
+	mini()->exit_code = 0;
 }
 
 static bool	cd_(void)
@@ -66,13 +68,14 @@ static bool	cd_(void)
 
 	s = ft_lsthas(mini()->env, "OLDPWD=");
 	if (!s || !*s)
-		return (ft_putstr_fd("OLDPWD NOT SET\n", 2), true);
+		return (ft_putstr_fd("OLDPWD NOT SET\n", 2), \
+		mini()->exit_code = 1, true);
 	s++;
 	if (chdir(s) >= 0)
 		return (update_pwd(getcwd(NULL, 0), &mini()->env, true),
 			update_pwd(getcwd(NULL, 0), &mini()->exp, true), false);
 	else
-		return (perror(s), true);
+		return (perror(s), mini()->exit_code = 1, true);
 }
 
 void	cd_execute(t_string *matrix, int fd)
@@ -92,7 +95,7 @@ void	cd_execute(t_string *matrix, int fd)
 		return (update_pwd(getcwd(NULL, 0), &mini()->exp, true),
 			update_pwd(getcwd(NULL, 0), &mini()->env, true), (void)*matrix);
 	else if (chdir(matrix[0]) < 0)
-		return (perror(matrix[0]), (void)*matrix);
+		return (perror(matrix[0]), mini()->exit_code = 1, (void)*matrix);
 	if (i)
 		return ;
 	s = getcwd(NULL, 0);

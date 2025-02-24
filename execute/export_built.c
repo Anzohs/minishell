@@ -87,6 +87,7 @@ void	export_built(t_string *matrix)
 	int	i;
 
 	i = -1;
+	mini()->exit_code = 0;
 	while (matrix[++i])
 	{
 		if (add_exp(matrix[i]))
@@ -95,5 +96,7 @@ void	export_built(t_string *matrix)
 				add_variables(matrix[i], &mini()->env);
 			add_variables(matrix[i], &mini()->exp);
 		}
+		else
+			mini()->exit_code = 2;
 	}
 }

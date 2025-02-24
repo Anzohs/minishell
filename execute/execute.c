@@ -12,14 +12,12 @@
 
 #include "../mini_struct/mini.h"
 #include "execute.h"
-#include <fcntl.h>
-#include <string.h>
 
 static bool	ret(t_cmd *cmd)
 {
 	if (!cmd)
 		return (true);
-	return (ft_putstr_fd("Error near >", 2), false);
+	return (mini()->exit_code = 1, ft_putstr_fd("Error near >", 2), false);
 }
 
 static bool	check_redirects(t_cmd **cmd)

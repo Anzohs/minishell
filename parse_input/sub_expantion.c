@@ -12,6 +12,25 @@
 
 #include "parsing.h"
 
+static int	skip_alpha(t_string s, int i)
+{
+	while (s[i] && ft_isalpha(s[i]))
+		i++;
+	return (i);
+}
+
+static void	copy_str(t_string n, t_string str, int *j)
+{
+	while (*str != 0)
+		n[(*j)++] = *str++;
+}
+
+static void	copy_remaining(t_string new, t_string s, int *i, int *j)
+{
+	while (s[*i])
+		new[(*j)++] = s[(*i)++];
+}
+
 t_string	sub_expantion(t_string s, t_string str)
 {
 	t_string	new;
@@ -28,19 +47,14 @@ t_string	sub_expantion(t_string s, t_string str)
 		if ((s)[i] == 2)
 		{
 			i++;
-			while (s[i] && ft_isalpha(s[i]))
-				i++;
-			while (*str != 0)
-				new[j++] = *str++;
-			while (s[i])
-				new[j++] = (s)[i++];
+			i = skip_alpha(s, i);
+			copy_str(new, str, &j);
+			copy_remaining(new, s, &i, &j);
 			break ;
 		}
 		else
 			new[j++] = s[i++];
 	}
-	while (s[i])
-		new[j++] = s[i++];
-	free(s);
-	return (new);
+	copy_remaining(new, s, &i, &j);
+	return (free(s), new);
 }
