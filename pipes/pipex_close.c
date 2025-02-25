@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:42:55 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/24 23:55:39 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/25 22:47:51 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,16 @@ void	ft_close(int fd)
 
 void	ft_close_file(t_cmd *cmd)
 {
-	if (cmd->fd)
+	t_fd	*tmp;
+
+	tmp = cmd->fd;
+	while (tmp)
 	{
-		if (cmd->w >= 3)
-			ft_close(cmd->w);
-		else if (cmd->read >= 3)
-			ft_close(cmd->read);
+		if (tmp->fd != -1 && tmp->fd > 2)
+		{
+			ft_close(tmp->fd);
+			tmp->fd = 1;
+		}
 	}
 }
 

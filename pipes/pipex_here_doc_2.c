@@ -6,12 +6,13 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:52:43 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/25 00:00:29 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/25 22:36:53 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
 #include "pipex.h"
+#include <fcntl.h>
 
 static char *generate_random_filename(void)
 {
@@ -68,13 +69,13 @@ static int	check_here_doc(t_fd *fd)
 
 	tmp = fd;
 	filename = generate_random_filename();
-	printf("FileName: %s\n", filename);
-	i = open(filename, O_CREAT | O_TRUNC | O_RDWR, 0644);
 	while (tmp)
 	{
+		i = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 		if (tmp->type == HEREDOC)
 			here_doc_2(&tmp, filename, i);
 		tmp = tmp->next;
+		ft_close(i);
 	}
 	free(filename);
 	return (i);

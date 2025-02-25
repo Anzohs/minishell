@@ -6,31 +6,15 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 23:25:53 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/24 23:53:32 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/25 23:49:501 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
+#include <fcntl.h>
+#include <time.h>
+#include <unistd.h>
 #include "pipex.h"
-
-void	has_heredoc(t_cmd *cmd, char **env)
-{
-	t_cmd	*temp;
-	t_fd	*f;
-
-	temp = cmd;
-	while (temp)
-	{
-		f = temp->fd;
-		while (f)
-		{
-			if (f->type == HEREDOC)
-				start_here_doc(temp, env);
-			f = f->next;
-		}
-		temp = temp->next;
-	}
-}
 
 static void	start_pipe_1(t_pipex *pipex, t_cmd *cmd)
 {
@@ -87,30 +71,111 @@ static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 	}
 }
 
+static int read_file_get_file(t_fd *f)
+{
+	t_fd	*f_d;
+	t_string	s;
+
+	f_d = f;
+	s = NULL;
+	while (f_d)
+	{
+		if (f_d->type == HEREDOC || f_d->type == REVERSE)
+			s = f_d->name;
+		f_d = f_d->next;
+	}
+	if (!s)
+		return (0);
+	return (open(s, O_RDONLY, 0644));
+}
+
+static int write_file_get_file(t_fd *f)
+{
+	t_fd	*f_d;
+	t_string	s;
+	t_type 		x;
+
+	f_d = f;
+	s = NULL;
+	while (f_d)
+	{
+		if (f_d->type == APPEND || f_d->type == CREATE)
+		{
+			s = f_d->name;
+			x = f_d->type;
+		}
+		f_d = f_d->next;
+	}
+	if (!s)
+		return (0);
+	if (x == APPEND)
+		return (open(s, O_CREAT | O_WRONLY | O_APPEND, 0644));
+	return (open(s, O_CREAT | O_TRUNC | O_WRONLY, 0644));
+}
+
+static bool good_files(t_cmd *cmd)
+{
+	t_fd	*f;
+
+	f = cmd->fd;
+
+	while (f)
+	{
+		if (f->fd == -1)
+			return (false);
+		f = f->next;
+	}
+	return (true);
+}
+
 static void	one_cmd(t_pipex *pipex, t_mini *mini)
 {
-	if (mini->cmd->fd)
-	{
-		if (mini->cmd->fd->type == HEREDOC)
-		{
-			has_heredoc(mini->cmd, pipex->env);
-			return ;
-		}
-	}
 	if (ft_strcmp("", pipex->path2) == 0)
 		return (pipex->cmd_argc -= 1, printf("%s : Command not found\n", mini->cmd->cmd), (void)pipex);
 	if (ft_strcmp("", pipex->path2) == 0)
 		return (pipex->cmd_argc -= 1, perror(mini->cmd->cmd), (void)pipex);
+	mini->cmd->read = read_file_get_file(mini->cmd->fd);
+	mini->cmd->w = write_file_get_file(mini->cmd->fd);
 	if (pipe(pipex->fds[0].fd) < 0)
 		return (perror("pipe"), (void)pipex);
+	if (!*mini->cmd->cmd)
+		return (ft_close_all_1(pipex));
+	if (!good_files(mini->cmd))
+		return (ft_close_all_1(pipex));
 	pipex->pids[0] = fork();
 	if (pipex->pids[0] < 0)
 		return (perror("pid"), free(pipex->pids), (void)pipex);
 	if (pipex->pids[0] == 0)
 	{
-		dup2(mini->cmd->read, STDIN_FILENO);
+		if (mini->cmd->read >=3 && mini->cmd->w >= 3)
+		{
+			printf("MACHO ZE 2\n");
+			if (dup2(mini->cmd->read, STDIN_FILENO) < 0)
+				return (perror("dup0"), (void)pipex);
+			if (dup2(mini->cmd->w, STDOUT_FILENO) < 0)
+				return (perror("dup3"), (void)pipex);
+		}
+		else if (mini->cmd->w >= 3)
+		{
+			printf("MACHO ZE\n");
+			if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
+				return (perror("dup2"), (void)pipex);
+			if (dup2(mini->cmd->w, STDOUT_FILENO) < 0)
+				return (perror("dup3"), (void)pipex);
+		}
+		else if (mini->cmd->read >=3)
+		{
+			printf("MACHO ZE 3\n");
+			if (dup2(mini->cmd->read, STDIN_FILENO) < 0)
+				return (perror("dup3"), (void)pipex);
+		}
+		/* else
+		{
+			printf("MACHO ZE 2\n");
+			if (dup2(pipex->fds[0].fd[0], STDIN_FILENO) < 0)
+				return (perror("dup4"), (void)pipex);
+		} */
 		ft_close(mini->cmd->read);
-		dup2(mini->cmd->w, STDOUT_FILENO);
 		ft_close(mini->cmd->w);
 		ft_close(pipex->fds[0].fd[0]);
 		ft_close(pipex->fds[0].fd[1]);
