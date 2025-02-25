@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/09 17:20:42 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/23 21:25:16 by hladeiro         ###   ########.fr       */
+/*   Created: 2025/02/09 17:20:42 by malourei          #+#    #+#             */
+/*   Updated: 2025/02/24 23:49:11 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	get_last_read(t_fd *fd)
 			file = f->fd;
 		else if (f->type == HEREDOC)
 		{
-			file = 0;
+			file = f->fd;
 			here = true;
 		}
 		f = f->next;
@@ -67,7 +67,7 @@ bool	change_fd(t_cmd **cmd)
 		if (f->type == REVERSE)
 			f->fd = open(f->name, O_RDONLY, 0664);
 		if (f->type == HEREDOC)
-			f->fd = open(".heredoc", O_CREAT | O_TRUNC | O_RDWR, 0644);
+			f->fd = 1000;
 		if (f->fd == -1)
 		{
 			ft_putstr_fd(f->name, 2);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 23:25:53 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/23 14:52:27 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/24 23:53:32 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,11 @@ void	has_heredoc(t_cmd *cmd, char **env)
 	}
 }
 
-static void	start_pipe_1(t_pipex *pipex, t_cmd *argv2)
+static void	start_pipe_1(t_pipex *pipex, t_cmd *cmd)
 {
 	int	i;
 
 	i = 0;
-	if (pipe(pipex->fd_here) < 0)
-	{
-		perror("macho");
-		return ;
-	}
-	if (argv2->fd && argv2->fd->type == HEREDOC)
-	{
-		here_doc_2(argv2->fd->name, pipex->fd_here);
-		ft_close(pipex->fd_here[1]);
-	}
 	if (pipe(pipex->fds[0].fd) < 0)
 		return (perror("pipe"), (void)i);
 	if (access(pipex->paths[0], F_OK) != 0)
@@ -56,7 +46,7 @@ static void	start_pipe_1(t_pipex *pipex, t_cmd *argv2)
 		return (perror("pid"), free(pipex->pids), (void)i);
 	if (pipex->pids[i] == 0)
 	{
-		child_one(pipex, pipex->env, pipex->paths[0], argv2);
+		child_one(pipex, pipex->env, pipex->paths[0], cmd);
 	}
 }
 
@@ -169,6 +159,7 @@ void	pipex(void)
 	t_pipex	pipex;
 
 	pipex = (t_pipex){0};
+	check_per_cmd(mini()->cmd);
 	validate_args(mini()->cmd, &pipex.cmd_argc);
 	count_pids(&pipex, pipex.cmd_argc);
 	pipex.env = ft_lsttomatrix(mini()->env);

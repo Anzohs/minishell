@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 23:24:14 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/23 15:06:11 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/24 23:59:46 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,9 @@ void	child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 {
 	if (node->fd)
 	{
-		if (node->fd->type == HEREDOC)
+		if (node->read == 3)
 		{
-			if (dup2(pipex->fd_here[0], STDIN_FILENO)< 0)
-				return (perror("here_fd"), (void)pipex);
-			if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
-				return (perror("fd[1]"), (void)pipex);
-		}
-		else if (node->read == 3)
-		{
+			printf("ZZZ\n");
 			dup2(node->read, STDIN_FILENO);
 			if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
 				return (perror("dup1"), (void)pipex);
