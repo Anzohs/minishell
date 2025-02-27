@@ -42,24 +42,23 @@ void	execve2(const char *path, t_cmd *node, char *const envp[])
 
 void child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 {
-    if (node->fd)
+    node->read = read_file_get_file(node->fd);
+	node->w = write_file_get_file(node->fd);
+    if (node->read >= 3)
     {
-        if (node->read >= 3)
-        {
-            if (dup2(node->read, STDIN_FILENO) < 0)
-                return (perror("dup1"), (void)pipex);
-            if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
-                return (perror("dup2"), (void)pipex);
-        }
-        else if (node->w >= 3)
-        {
-            if (dup2(node->w, STDOUT_FILENO) < 0)
-                return (perror("dup3"), (void)pipex);
-        }
+        if (dup2(node->read, STDIN_FILENO) < 0)
+            return (perror("dup1"), (void)pipex);
     }
-    
-    if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
-        return (perror("dup4"), (void)pipex);
+    else if (node->w >= 3)
+    {
+        if (dup2(node->w, STDOUT_FILENO) < 0)
+            return (perror("dup3"), (void)pipex);
+    }
+    if (node->w < 3)
+    {
+        if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
+           return (perror("dup4"), (void)pipex);
+    }
     ft_close_all_1(pipex);
     ft_close_all_files(node);
     execve2(cmd_path, node, env);
@@ -71,7 +70,7 @@ void child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
     t_cmd *tmp;
 
     tmp = node;
-    i = -1;
+    i = 0;
     while (tmp->next)
     {
         i++;
@@ -86,8 +85,6 @@ void child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
     {
      	tmp->read = read_file_get_file(tmp->fd);
 	    tmp->w = write_file_get_file(tmp->fd);
-        if (tmp->fd)
-        {
             if (tmp->read >= 3)
             {
                 if (dup2(tmp->read, STDIN_FILENO) < 0)
@@ -98,10 +95,10 @@ void child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
                 if (dup2(tmp->w, STDOUT_FILENO) < 0)
                     return (perror("dup6"), (void)cmd_path);
             }
-        }
-        else
+        if (tmp->read < 3)
         {
-            if (dup2(pipex->fds[i].fd[0], STDIN_FILENO) < 0)
+
+            if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0) 
                 return (perror("dup7"), (void)cmd_path);
         }
         ft_close_all_p(pipex);

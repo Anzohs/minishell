@@ -46,23 +46,26 @@ static void start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
     {
    		node->read = read_file_get_file(node->fd);
 		node->w = write_file_get_file(node->fd);
-        if (node->fd)
-        {
             if (node->w >= 3)
             {
                 if (dup2(node->w, STDOUT_FILENO) < 0)
                     return (perror("dup7"), (void)i);
             }
-            else if (node->read >= 3)
+            if (node->read >= 3)
             {
                 if (dup2(node->read, STDIN_FILENO) < 0)
                     return (perror("dup8"), (void)i);
             }
-        }
-        if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
-            return (perror("dup10"), (void)i);
-        if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
-            return (perror("dup11"), (void)i);
+		if (node->read < 3)
+		{
+			if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
+           		return (perror("dup10"), (void)i);
+		}
+		if (node->w < 3)
+		{
+			if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
+	            return (perror("dup11"), (void)i);
+		}
         ft_close_all_m(pipex, i);
         ft_close_all_files(mini()->cmd);
         execve2(cmd_path, node, pipex->env);
