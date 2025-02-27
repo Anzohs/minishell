@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 23:24:14 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/26 23:25:52 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/27 19:39:18 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
         if (dup2(node->read, STDIN_FILENO) < 0)
             return (perror("dup1"), (void)pipex);
     }
-    else if (node->w >= 3)
+    if (node->w >= 3)
     {
         if (dup2(node->w, STDOUT_FILENO) < 0)
             return (perror("dup3"), (void)pipex);
@@ -98,7 +98,7 @@ void child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
         if (tmp->read < 3)
         {
 
-            if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0) 
+            if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
                 return (perror("dup7"), (void)cmd_path);
         }
         ft_close_all_p(pipex);

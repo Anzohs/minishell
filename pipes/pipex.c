@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:14:26 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/26 23:54:51 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/27 19:46:38 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,60 +16,77 @@
 #include <unistd.h>
 #include "pipex.h"
 
+static bool good_files(t_cmd *cmd)
+{
+	t_fd	*f;
+
+	f = cmd->fd;
+
+	while (f)
+	{
+		if (f->fd == -1)
+			return (false);
+		f = f->next;
+	}
+	return (true);
+}
+
 static void start_pipe_1(t_pipex *pipex, t_cmd *cmd)
 {
-    int i;
+	int i;
 
-    i = 0;
-    if (pipe(pipex->fds[0].fd) < 0)
-        return (perror("pipe"), (void)i);
-    if (access(pipex->paths[0], F_OK) != 0)
-        return (ft_putendl_fd("command not found", STDERR_FILENO), (void)i);
-    pipex->pids[i] = fork();
-    if (pipex->pids[i] < 0)
-        return (perror("pid"), free(pipex->pids), (void)i);
-    if (pipex->pids[i] == 0)
-    {
-        child_one(pipex, pipex->env, pipex->paths[0], cmd);
-    }
+	i = 0;
+	if (pipe(pipex->fds[0].fd) < 0)
+		return (perror("pipe"), (void)i);
+	if (access(pipex->paths[0], F_OK) != 0)
+		return (ft_putendl_fd("command not found", STDERR_FILENO), (void)i);
+	if (!good_files(cmd))
+		return (ft_close_all_1(pipex));
+	pipex->pids[i] = fork();
+	if (pipex->pids[i] < 0)
+		return (perror("pid"), free(pipex->pids), (void)i);
+	if (pipex->pids[i] == 0)
+	{
+		child_one(pipex, pipex->env, pipex->paths[0], cmd);
+	}
 }
 
 
 static void start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 {
-    if (access(cmd_path, F_OK) != 0)
-        return (ft_putendl_fd("command not found", STDERR_FILENO), (void)i);
-    pipex->pids[i] = fork();
-    if (pipex->pids[i] < 0)
-        return (perror("pid"), free(pipex->pids), (void)i);
-    if (pipex->pids[i] == 0)
-    {
+	if (access(cmd_path, F_OK) != 0)
+		return (ft_putendl_fd("command not found", STDERR_FILENO), (void)i);
+	pipex->pids[i] = fork();
+	if (pipex->pids[i] < 0)
+		return (perror("pid"), free(pipex->pids), (void)i);
+	if (pipex->pids[i] == 0)
+	{
    		node->read = read_file_get_file(node->fd);
 		node->w = write_file_get_file(node->fd);
-            if (node->w >= 3)
-            {
-                if (dup2(node->w, STDOUT_FILENO) < 0)
-                    return (perror("dup7"), (void)i);
-            }
-            if (node->read >= 3)
-            {
-                if (dup2(node->read, STDIN_FILENO) < 0)
-                    return (perror("dup8"), (void)i);
-            }
+			if (node->w >= 3)
+			{
+				if (dup2(node->w, STDOUT_FILENO) < 0)
+					return (perror("dup7"), (void)i);
+			}
+			if (node->read >= 3)
+			{
+				if (dup2(node->read, STDIN_FILENO) < 0)
+					return (perror("dup8"), (void)i);
+			}
 		if (node->read < 3)
 		{
 			if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
-           		return (perror("dup10"), (void)i);
+		   		return (perror("dup10"), (void)i);
 		}
 		if (node->w < 3)
 		{
 			if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
-	            return (perror("dup11"), (void)i);
+				return (perror("dup11"), (void)i);
 		}
-        ft_close_all_m(pipex, i);
-        ft_close_all_files(mini()->cmd);
-        execve2(cmd_path, node, pipex->env);
-    }
+		ft_close_all_m(pipex, i);
+			ft_close_all_files(mini()->cmd);
+		execve2(cmd_path, node, pipex->env);
+	}
 }
 
 int read_file_get_file(t_fd *f)
@@ -114,20 +131,6 @@ int write_file_get_file(t_fd *f)
 	return (open(s, O_CREAT | O_TRUNC | O_WRONLY, 0644));
 }
 
-static bool good_files(t_cmd *cmd)
-{
-	t_fd	*f;
-
-	f = cmd->fd;
-
-	while (f)
-	{
-		if (f->fd == -1)
-			return (false);
-		f = f->next;
-	}
-	return (true);
-}
 
 static void	one_cmd(t_pipex *pipex, t_mini *mini)
 {
