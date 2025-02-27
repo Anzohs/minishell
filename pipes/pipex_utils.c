@@ -57,11 +57,9 @@ void child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
                 return (perror("dup3"), (void)pipex);
         }
     }
-    else
-    {
-        if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
-            return (perror("dup4"), (void)pipex);
-    }
+    
+    if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
+        return (perror("dup4"), (void)pipex);
     ft_close_all_1(pipex);
     ft_close_all_files(node);
     execve2(cmd_path, node, env);
@@ -86,8 +84,8 @@ void child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
         return (perror("pid2"), free(pipex->pids), (void)cmd_path);
     if (pipex->pids[i] == 0)
     {
-   	tmp->read = read_file_get_file(tmp->fd);
-	tmp->w = write_file_get_file(tmp->fd);
+     	tmp->read = read_file_get_file(tmp->fd);
+	    tmp->w = write_file_get_file(tmp->fd);
         if (tmp->fd)
         {
             if (tmp->read >= 3)

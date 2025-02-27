@@ -44,14 +44,12 @@ static void start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
         return (perror("pid"), free(pipex->pids), (void)i);
     if (pipex->pids[i] == 0)
     {
-   	node->read = read_file_get_file(node->fd);
-	node->w = write_file_get_file(node->fd);
+   		node->read = read_file_get_file(node->fd);
+		node->w = write_file_get_file(node->fd);
         if (node->fd)
         {
             if (node->w >= 3)
             {
-                if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
-                    return (perror("dup6"), (void)i);
                 if (dup2(node->w, STDOUT_FILENO) < 0)
                     return (perror("dup7"), (void)i);
             }
@@ -59,17 +57,12 @@ static void start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
             {
                 if (dup2(node->read, STDIN_FILENO) < 0)
                     return (perror("dup8"), (void)i);
-                if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
-                    return (perror("dup9"), (void)i);
             }
         }
-        else
-        {
-            if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
-                return (perror("dup10"), (void)i);
-            if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
-                return (perror("dup11"), (void)i);
-        }
+        if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
+            return (perror("dup10"), (void)i);
+        if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
+            return (perror("dup11"), (void)i);
         ft_close_all_m(pipex, i);
         ft_close_all_files(mini()->cmd);
         execve2(cmd_path, node, pipex->env);
@@ -89,7 +82,6 @@ int read_file_get_file(t_fd *f)
 			s = f_d->name;
 		f_d = f_d->next;
 	}
-	printf("NOME: %s\n", s);
 	if (!s)
 		return (0);
 	return (open(s, O_RDONLY, 0644));
@@ -156,12 +148,6 @@ static void	one_cmd(t_pipex *pipex, t_mini *mini)
 			if (dup2(mini->cmd->read, STDIN_FILENO) < 0)
 				return (perror("dup3"), (void)pipex);
 		}
-		/* else
-		{
-			printf("MACHO ZE 2\n");
-			if (dup2(pipex->fds[0].fd[0], STDIN_FILENO) < 0)
-				return (perror("dup4"), (void)pipex);
-		} */
 		if (mini->cmd->w >= 3 )
 		{
 			if (dup2(mini->cmd->w, STDOUT_FILENO) < 0)
