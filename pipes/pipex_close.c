@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:42:55 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/25 22:47:51 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/26 22:36:42 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	ft_close_file(t_cmd *cmd)
 			ft_close(tmp->fd);
 			tmp->fd = 1;
 		}
+		tmp = tmp->next;
 	}
 }
 

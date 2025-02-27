@@ -3,21 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:14:26 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/24 23:56:00 by malourei         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/02 22:44:14 by malourei          #+#    #+#             */
-/*   Updated: 2024/12/29 17:03:28 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/26 23:24:31 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +24,7 @@
 
 typedef struct s_minishell	t_mini;
 typedef struct s_cmd		t_cmd;
-
+typedef	struct s_fd			t_fd;
 typedef struct s_fds
 {
 	int	fd[2];
@@ -73,13 +62,14 @@ void		pipex(void);
 void		child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node);
 t_string	*fusion_strs(t_cmd *cmd);
 void		free_env(char **strs);
-void		start_here_doc(t_cmd *m, char **env);
 void		create_arrow(t_cmd *node);
 void		ft_close_all_files(t_cmd *cmd);
 //void		here_doc_2(char *limiter, int fd);
 void		clear_pipe(int fd[2]);
 //void		check_here_doc(t_cmd *cmd);
 void 		check_per_cmd(t_cmd *cmd);
+int read_file_get_file (t_fd *f);
+int write_file_get_file(t_fd *f);
 /* void	one_arrow(t_cmd *m);
 void	two_arrow(t_cmd *m);
 void	one_arrow_reverse(t_cmd *m); */

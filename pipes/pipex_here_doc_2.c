@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:52:43 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/25 22:36:53 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/26 23:58:03 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,11 @@ static int	check_here_doc(t_fd *fd)
 	filename = generate_random_filename();
 	while (tmp)
 	{
-		i = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 		if (tmp->type == HEREDOC)
+		{
+		i = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 			here_doc_2(&tmp, filename, i);
+		}
 		tmp = tmp->next;
 		ft_close(i);
 	}

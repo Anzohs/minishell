@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 23:24:14 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/24 23:59:46 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/26 23:25:52 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,72 +40,78 @@ void	execve2(const char *path, t_cmd *node, char *const envp[])
 		return (free_env(argv), (void)argv);
 }
 
-void	child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
+void child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 {
-	if (node->fd)
-	{
-		if (node->read == 3)
-		{
-			printf("ZZZ\n");
-			dup2(node->read, STDIN_FILENO);
-			if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
-				return (perror("dup1"), (void)pipex);
-		}
-		else if (node->w == 3)
-			dup2(node->w, STDOUT_FILENO);
-	}
-	else
-	{
-		if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
-			return (perror("dup1"), (void)pipex);
-	}
-	ft_close_all_1(pipex);
-	ft_close_all_files(node);
-	execve2(cmd_path, node, env);
+    if (node->fd)
+    {
+        if (node->read >= 3)
+        {
+            if (dup2(node->read, STDIN_FILENO) < 0)
+                return (perror("dup1"), (void)pipex);
+            if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
+                return (perror("dup2"), (void)pipex);
+        }
+        else if (node->w >= 3)
+        {
+            if (dup2(node->w, STDOUT_FILENO) < 0)
+                return (perror("dup3"), (void)pipex);
+        }
+    }
+    else
+    {
+        if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
+            return (perror("dup4"), (void)pipex);
+    }
+    ft_close_all_1(pipex);
+    ft_close_all_files(node);
+    execve2(cmd_path, node, env);
 }
 
-void	child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
+void child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 {
-	int		i;
-	t_cmd	*tmp;
+    int i;
+    t_cmd *tmp;
 
-	tmp = node;
-	i = -1;
-	while (tmp->next)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	if (!is_builtin(tmp->cmd) && access(cmd_path, F_OK) != 0)
-		return (ft_putendl_fd("command not found", STDERR_FILENO),
-			(void)cmd_path);
-	pipex->pids[i] = fork();
-	if (pipex->pids[i] < 0)
-		return (perror("pid2"), free(pipex->pids), (void)cmd_path);
-	if (pipex->pids[i] == 0)
-	{
-		if (tmp->fd)
-		{
-			if (tmp->read >= 3)
-				dup2(tmp->read, STDIN_FILENO);
-			else if (tmp->w >= 3)
-			{
-				if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
-					return (perror("dup2"), (void)cmd_path);
-				dup2(tmp->w, STDOUT_FILENO);
-			}
-		}
-		else
-		{
-			if (dup2(pipex->fds[i].fd[0], STDIN_FILENO) < 0)
-				return (perror("dup2"), (void)cmd_path);
-		}
-		ft_close_all_p(pipex);
-		ft_close_all_files(node);
-		if (is_builtin(tmp->cmd))
-			return (execute_builtin(tmp, STDOUT_FILENO, 1), (void)i);
-		execve2(cmd_path, tmp, env);
-	}
+    tmp = node;
+    i = -1;
+    while (tmp->next)
+    {
+        i++;
+        tmp = tmp->next;
+    }
+    if (!is_builtin(tmp->cmd) && access(cmd_path, F_OK) != 0)
+        return (ft_putendl_fd("command not found", STDERR_FILENO), (void)cmd_path);
+    pipex->pids[i] = fork();
+    if (pipex->pids[i] < 0)
+        return (perror("pid2"), free(pipex->pids), (void)cmd_path);
+    if (pipex->pids[i] == 0)
+    {
+   	tmp->read = read_file_get_file(tmp->fd);
+	tmp->w = write_file_get_file(tmp->fd);
+        if (tmp->fd)
+        {
+            if (tmp->read >= 3)
+            {
+                if (dup2(tmp->read, STDIN_FILENO) < 0)
+                    return (perror("dup5"), (void)cmd_path);
+            }
+            if (tmp->w >= 3)
+            {
+                if (dup2(tmp->w, STDOUT_FILENO) < 0)
+                    return (perror("dup6"), (void)cmd_path);
+            }
+        }
+        else
+        {
+            if (dup2(pipex->fds[i].fd[0], STDIN_FILENO) < 0)
+                return (perror("dup7"), (void)cmd_path);
+        }
+        ft_close_all_p(pipex);
+        ft_close_all_files(node);
+        if (is_builtin(tmp->cmd))
+            return (execute_builtin(tmp, STDOUT_FILENO, 1), (void)i);
+        execve2(cmd_path, tmp, env);
+    }
 }
 
 void	ft_parent(t_pipex *pipex)

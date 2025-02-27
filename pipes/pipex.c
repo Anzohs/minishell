@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 23:25:53 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/25 23:49:501 by malourei         ###   ########.fr       */
+/*   Created: 2025/02/24 18:14:26 by malourei          #+#    #+#             */
+/*   Updated: 2025/02/26 23:54:51 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,62 +16,67 @@
 #include <unistd.h>
 #include "pipex.h"
 
-static void	start_pipe_1(t_pipex *pipex, t_cmd *cmd)
+static void start_pipe_1(t_pipex *pipex, t_cmd *cmd)
 {
-	int	i;
+    int i;
 
-	i = 0;
-	if (pipe(pipex->fds[0].fd) < 0)
-		return (perror("pipe"), (void)i);
-	if (access(pipex->paths[0], F_OK) != 0)
-		return (ft_putendl_fd("commnad not found", STDERR_FILENO), (void)i);
-	pipex->pids[i] = fork();
-	if (pipex->pids[i] < 0)
-		return (perror("pid"), free(pipex->pids), (void)i);
-	if (pipex->pids[i] == 0)
-	{
-		child_one(pipex, pipex->env, pipex->paths[0], cmd);
-	}
+    i = 0;
+    if (pipe(pipex->fds[0].fd) < 0)
+        return (perror("pipe"), (void)i);
+    if (access(pipex->paths[0], F_OK) != 0)
+        return (ft_putendl_fd("command not found", STDERR_FILENO), (void)i);
+    pipex->pids[i] = fork();
+    if (pipex->pids[i] < 0)
+        return (perror("pid"), free(pipex->pids), (void)i);
+    if (pipex->pids[i] == 0)
+    {
+        child_one(pipex, pipex->env, pipex->paths[0], cmd);
+    }
 }
 
-static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
+
+static void start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 {
-	if (access(cmd_path, F_OK) != 0)
-		return (ft_putendl_fd("commnad not found", STDERR_FILENO), (void)i);
-	pipex->pids[i] = fork();
-	if (pipex->pids[i] < 0)
-		return (perror("pid"), free(pipex->pids), (void)i);
-	if (pipex->pids[i] == 0)
-	{
-		if (node->fd)
-		{
-			if (node->w >= 3)
-			{
-				if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
-					return (perror("dup6"), (void)i);
-				dup2(node->w, STDOUT_FILENO);
-			}
-			else if (node->read >= 3)
-			{
-				dup2(node->read, STDIN_FILENO);
-				if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
-					return (perror("dup6"), (void)i);
-			}
-		}
-		else
-		{
-			if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
-				return (perror("dup5"), (void)i);
-			if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
-				return (perror("dup6"), (void)i);
-		}
-		ft_close_all_m(pipex, i);
-		ft_close_all_files(mini()->cmd);
-		execve2(cmd_path, node, pipex->env);
-	}
+    if (access(cmd_path, F_OK) != 0)
+        return (ft_putendl_fd("command not found", STDERR_FILENO), (void)i);
+    pipex->pids[i] = fork();
+    if (pipex->pids[i] < 0)
+        return (perror("pid"), free(pipex->pids), (void)i);
+    if (pipex->pids[i] == 0)
+    {
+   	node->read = read_file_get_file(node->fd);
+	node->w = write_file_get_file(node->fd);
+        if (node->fd)
+        {
+            if (node->w >= 3)
+            {
+                if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
+                    return (perror("dup6"), (void)i);
+                if (dup2(node->w, STDOUT_FILENO) < 0)
+                    return (perror("dup7"), (void)i);
+            }
+            else if (node->read >= 3)
+            {
+                if (dup2(node->read, STDIN_FILENO) < 0)
+                    return (perror("dup8"), (void)i);
+                if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
+                    return (perror("dup9"), (void)i);
+            }
+        }
+        else
+        {
+            if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
+                return (perror("dup10"), (void)i);
+            if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
+                return (perror("dup11"), (void)i);
+        }
+        ft_close_all_m(pipex, i);
+        ft_close_all_files(mini()->cmd);
+        execve2(cmd_path, node, pipex->env);
+    }
 }
 
-static int read_file_get_file(t_fd *f)
+int read_file_get_file(t_fd *f)
 {
 	t_fd	*f_d;
 	t_string	s;
@@ -84,12 +89,13 @@ static int read_file_get_file(t_fd *f)
 			s = f_d->name;
 		f_d = f_d->next;
 	}
+	printf("NOME: %s\n", s);
 	if (!s)
 		return (0);
 	return (open(s, O_RDONLY, 0644));
 }
 
-static int write_file_get_file(t_fd *f)
+int write_file_get_file(t_fd *f)
 {
 	t_fd	*f_d;
 	t_string	s;
@@ -132,10 +138,6 @@ static void	one_cmd(t_pipex *pipex, t_mini *mini)
 {
 	if (ft_strcmp("", pipex->path2) == 0)
 		return (pipex->cmd_argc -= 1, printf("%s : Command not found\n", mini->cmd->cmd), (void)pipex);
-	if (ft_strcmp("", pipex->path2) == 0)
-		return (pipex->cmd_argc -= 1, perror(mini->cmd->cmd), (void)pipex);
-	mini->cmd->read = read_file_get_file(mini->cmd->fd);
-	mini->cmd->w = write_file_get_file(mini->cmd->fd);
 	if (pipe(pipex->fds[0].fd) < 0)
 		return (perror("pipe"), (void)pipex);
 	if (!*mini->cmd->cmd)
@@ -147,25 +149,10 @@ static void	one_cmd(t_pipex *pipex, t_mini *mini)
 		return (perror("pid"), free(pipex->pids), (void)pipex);
 	if (pipex->pids[0] == 0)
 	{
-		if (mini->cmd->read >=3 && mini->cmd->w >= 3)
+		mini->cmd->read = read_file_get_file(mini->cmd->fd);
+		mini->cmd->w = write_file_get_file(mini->cmd->fd);
+		if (mini->cmd->read >= 3)
 		{
-			printf("MACHO ZE 2\n");
-			if (dup2(mini->cmd->read, STDIN_FILENO) < 0)
-				return (perror("dup0"), (void)pipex);
-			if (dup2(mini->cmd->w, STDOUT_FILENO) < 0)
-				return (perror("dup3"), (void)pipex);
-		}
-		else if (mini->cmd->w >= 3)
-		{
-			printf("MACHO ZE\n");
-			if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
-				return (perror("dup2"), (void)pipex);
-			if (dup2(mini->cmd->w, STDOUT_FILENO) < 0)
-				return (perror("dup3"), (void)pipex);
-		}
-		else if (mini->cmd->read >=3)
-		{
-			printf("MACHO ZE 3\n");
 			if (dup2(mini->cmd->read, STDIN_FILENO) < 0)
 				return (perror("dup3"), (void)pipex);
 		}
@@ -175,10 +162,13 @@ static void	one_cmd(t_pipex *pipex, t_mini *mini)
 			if (dup2(pipex->fds[0].fd[0], STDIN_FILENO) < 0)
 				return (perror("dup4"), (void)pipex);
 		} */
+		if (mini->cmd->w >= 3 )
+		{
+			if (dup2(mini->cmd->w, STDOUT_FILENO) < 0)
+				return (perror("dup3"), (void)pipex);
+		}
 		ft_close(mini->cmd->read);
 		ft_close(mini->cmd->w);
-		ft_close(pipex->fds[0].fd[0]);
-		ft_close(pipex->fds[0].fd[1]);
 		execve2(pipex->path2, mini->cmd, pipex->env);
 	}
 	return ;
