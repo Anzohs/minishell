@@ -40,7 +40,7 @@ void	execve2(const char *path, t_cmd *node, char *const envp[])
 		return (free_env(argv), (void)argv);
 }
 
-void child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
+void	child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 {
 	node->read = read_file_get_file(node->fd);
 	node->w = write_file_get_file(node->fd);
@@ -57,19 +57,20 @@ void child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 	if (node->w < 3)
 	{
 		if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)
-		   return (perror("dup4"), (void)pipex);
+			return (perror("dup4"), (void)pipex);
 	}
 	if (is_builtin(node->cmd))
-		return (clean_all(pipex), execute_builtin(node, STDOUT_FILENO, 1), (void)1);
+		return (clean_all(pipex), execute_builtin(node, STDOUT_FILENO, 1),
+			(void)1);
 	ft_close_all_1(pipex);
 	ft_close_all_files(node);
 	execve2(cmd_path, node, env);
 }
 
-void child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
+void	child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 {
-	int i;
-	t_cmd *tmp;
+	int		i;
+	t_cmd	*tmp;
 
 	tmp = node;
 	i = 0;
@@ -79,32 +80,33 @@ void child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 		tmp = tmp->next;
 	}
 	if (!is_builtin(tmp->cmd) && access(cmd_path, F_OK) != 0)
-		return (ft_putendl_fd("command not found", STDERR_FILENO), (void)cmd_path);
+		return (ft_putendl_fd("command not found", STDERR_FILENO),
+			(void)cmd_path);
 	pipex->pids[i] = fork();
 	if (pipex->pids[i] < 0)
 		return (perror("pid2"), free(pipex->pids), (void)cmd_path);
 	if (pipex->pids[i] == 0)
 	{
-	 	tmp->read = read_file_get_file(tmp->fd);
+		tmp->read = read_file_get_file(tmp->fd);
 		tmp->w = write_file_get_file(tmp->fd);
-			if (tmp->read >= 3)
-			{
-				if (dup2(tmp->read, STDIN_FILENO) < 0)
-					return (perror("dup5"), (void)cmd_path);
-			}
-			if (tmp->w >= 3)
-			{
-				if (dup2(tmp->w, STDOUT_FILENO) < 0)
-					return (perror("dup6"), (void)cmd_path);
-			}
+		if (tmp->read >= 3)
+		{
+			if (dup2(tmp->read, STDIN_FILENO) < 0)
+				return (perror("dup5"), (void)cmd_path);
+		}
+		if (tmp->w >= 3)
+		{
+			if (dup2(tmp->w, STDOUT_FILENO) < 0)
+				return (perror("dup6"), (void)cmd_path);
+		}
 		if (tmp->read < 3)
 		{
-
 			if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
 				return (perror("dup7"), (void)cmd_path);
 		}
 		if (is_builtin(tmp->cmd))
-			return (clean_all(pipex), execute_builtin(tmp, STDOUT_FILENO, 1), (void)i);
+			return (clean_all(pipex), execute_builtin(tmp, STDOUT_FILENO, 1),
+				(void)i);
 		ft_close_all_p(pipex);
 		ft_close_all_files(node);
 		execve2(cmd_path, tmp, env);

@@ -16,7 +16,7 @@ void	ft_close(int fd)
 {
 	if (fd > 0 && fd != STDERR_FILENO && fd != STDIN_FILENO
 		&& fd != STDOUT_FILENO)
-		close (fd);
+		close(fd);
 }
 
 void	ft_close_file(t_cmd *cmd)

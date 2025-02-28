@@ -11,17 +11,16 @@
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
+#include "pipex.h"
 #include <fcntl.h>
 #include <time.h>
 #include <unistd.h>
-#include "pipex.h"
 
-static bool good_files(t_cmd *cmd)
+static bool	good_files(t_cmd *cmd)
 {
 	t_fd	*f;
 
 	f = cmd->fd;
-
 	while (f)
 	{
 		if (f->fd == -1)
@@ -31,9 +30,9 @@ static bool good_files(t_cmd *cmd)
 	return (true);
 }
 
-static void start_pipe_1(t_pipex *pipex, t_cmd *cmd)
+static void	start_pipe_1(t_pipex *pipex, t_cmd *cmd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (pipe(pipex->fds[0].fd) < 0)
@@ -51,8 +50,7 @@ static void start_pipe_1(t_pipex *pipex, t_cmd *cmd)
 	}
 }
 
-
-static void start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
+static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 {
 	if (access(cmd_path, F_OK) != 0)
 		return (ft_putendl_fd("command not found", STDERR_FILENO), (void)i);
@@ -61,22 +59,22 @@ static void start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 		return (perror("pid"), free(pipex->pids), (void)i);
 	if (pipex->pids[i] == 0)
 	{
-   		node->read = read_file_get_file(node->fd);
+		node->read = read_file_get_file(node->fd);
 		node->w = write_file_get_file(node->fd);
-			if (node->w >= 3)
-			{
-				if (dup2(node->w, STDOUT_FILENO) < 0)
-					return (perror("dup7"), (void)i);
-			}
-			if (node->read >= 3)
-			{
-				if (dup2(node->read, STDIN_FILENO) < 0)
-					return (perror("dup8"), (void)i);
-			}
+		if (node->w >= 3)
+		{
+			if (dup2(node->w, STDOUT_FILENO) < 0)
+				return (perror("dup7"), (void)i);
+		}
+		if (node->read >= 3)
+		{
+			if (dup2(node->read, STDIN_FILENO) < 0)
+				return (perror("dup8"), (void)i);
+		}
 		if (node->read < 3)
 		{
 			if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
-		   		return (perror("dup10"), (void)i);
+				return (perror("dup10"), (void)i);
 		}
 		if (node->w < 3)
 		{
@@ -84,16 +82,17 @@ static void start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 				return (perror("dup11"), (void)i);
 		}
 		if (is_builtin(node->cmd))
-			return (clean_all(pipex), execute_builtin(node, STDOUT_FILENO, 1), (void)i);
+			return (clean_all(pipex), execute_builtin(node, STDOUT_FILENO, 1),
+				(void)i);
 		ft_close_all_m(pipex, i);
 		ft_close_all_files(mini()->cmd);
 		execve2(cmd_path, node, pipex->env);
 	}
 }
 
-int read_file_get_file(t_fd *f)
+int	read_file_get_file(t_fd *f)
 {
-	t_fd	*f_d;
+	t_fd		*f_d;
 	t_string	s;
 
 	f_d = f;
@@ -109,11 +108,11 @@ int read_file_get_file(t_fd *f)
 	return (open(s, O_RDONLY, 0644));
 }
 
-int write_file_get_file(t_fd *f)
+int	write_file_get_file(t_fd *f)
 {
-	t_fd	*f_d;
+	t_fd		*f_d;
 	t_string	s;
-	t_type 		x;
+	t_type		x;
 
 	f_d = f;
 	s = NULL;
@@ -133,11 +132,11 @@ int write_file_get_file(t_fd *f)
 	return (open(s, O_CREAT | O_TRUNC | O_WRONLY, 0644));
 }
 
-
 static void	one_cmd(t_pipex *pipex, t_mini *mini)
 {
 	if (ft_strcmp("", pipex->path2) == 0)
-		return (pipex->cmd_argc -= 1, printf("%s : Command not found\n", mini->cmd->cmd), (void)pipex);
+		return (pipex->cmd_argc -= 1, printf("%s : Command not found\n",
+				mini->cmd->cmd), (void)pipex);
 	if (pipe(pipex->fds[0].fd) < 0)
 		return (perror("pipe"), (void)pipex);
 	if (!*mini->cmd->cmd)
@@ -156,7 +155,7 @@ static void	one_cmd(t_pipex *pipex, t_mini *mini)
 			if (dup2(mini->cmd->read, STDIN_FILENO) < 0)
 				return (perror("dup3"), (void)pipex);
 		}
-		if (mini->cmd->w >= 3 )
+		if (mini->cmd->w >= 3)
 		{
 			if (dup2(mini->cmd->w, STDOUT_FILENO) < 0)
 				return (perror("dup3"), (void)pipex);
@@ -164,7 +163,8 @@ static void	one_cmd(t_pipex *pipex, t_mini *mini)
 		ft_close(mini->cmd->read);
 		ft_close(mini->cmd->w);
 		if (is_builtin(mini->cmd->cmd))
-			return (clean_all(pipex), execute_builtin(mini->cmd, STDOUT_FILENO, 1), (void)pipex);
+			return (clean_all(pipex), execute_builtin(mini->cmd, STDOUT_FILENO,
+					1), (void)pipex);
 		execve2(pipex->path2, mini->cmd, pipex->env);
 	}
 	return ;
