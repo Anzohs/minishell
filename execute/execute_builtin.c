@@ -6,11 +6,12 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 17:38:55 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/09 18:04:52 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/27 23:24:53 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
+#include "execute.h"
 
 int	execute_builtin(t_cmd *cmd, int fd, int i)
 {
@@ -26,12 +27,12 @@ int	execute_builtin(t_cmd *cmd, int fd, int i)
 		(echo_exec(cmd));
 	if (!ft_strcmp(cmd->cmd, "export"))
 	{
-		if (*cmd->arg)
-			(export_built(cmd->matrix));
-		else
+		if (!cmd->matrix || !cmd->matrix[0] || !*cmd->matrix[0])
 			(export_print(fd));
+		else
+			(export_built(cmd->matrix));
 	}
-	if (i)
-		return (exit(mini()->exit_code), 1);
+	if (i || !ft_strcmp(cmd->cmd, "exit"))
+		return (exit_minishell(), 1);
 	return (1);
 }

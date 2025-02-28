@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:14:26 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/27 19:46:38 by malourei         ###   ########.fr       */
+/*   Updated: 2025/02/27 23:27:03 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void start_pipe_1(t_pipex *pipex, t_cmd *cmd)
 	i = 0;
 	if (pipe(pipex->fds[0].fd) < 0)
 		return (perror("pipe"), (void)i);
-	if (access(pipex->paths[0], F_OK) != 0)
+	if (!is_builtin(cmd->cmd) && access(pipex->paths[0], F_OK) != 0)
 		return (ft_putendl_fd("command not found", STDERR_FILENO), (void)i);
 	if (!good_files(cmd))
 		return (ft_close_all_1(pipex));
@@ -83,8 +83,10 @@ static void start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 			if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
 				return (perror("dup11"), (void)i);
 		}
+		if (is_builtin(node->cmd))
+			return (clean_all(pipex), execute_builtin(node, STDOUT_FILENO, 1), (void)i);
 		ft_close_all_m(pipex, i);
-			ft_close_all_files(mini()->cmd);
+		ft_close_all_files(mini()->cmd);
 		execve2(cmd_path, node, pipex->env);
 	}
 }
@@ -161,6 +163,8 @@ static void	one_cmd(t_pipex *pipex, t_mini *mini)
 		}
 		ft_close(mini->cmd->read);
 		ft_close(mini->cmd->w);
+		if (is_builtin(mini->cmd->cmd))
+			return (clean_all(pipex), execute_builtin(mini->cmd, STDOUT_FILENO, 1), (void)pipex);
 		execve2(pipex->path2, mini->cmd, pipex->env);
 	}
 	return ;

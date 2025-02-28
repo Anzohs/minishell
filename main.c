@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 22:51:00 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/02 20:07:43 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/02/27 23:33:35 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ void	run_minishell(void)
 	{
 		handle_sigint();
 		mini()->readline = readline(mini()->prompt);
-		if (mini()->readline == NULL || ft_strcmp(mini()->readline,
-				"exit") == 0)
+		if (mini()->readline == NULL)
 			break ;
 		add_history(mini()->readline);
 		new_parse();
