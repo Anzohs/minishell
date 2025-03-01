@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:14:26 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/27 23:27:03 by malourei         ###   ########.fr       */
+/*   Updated: 2025/03/01 00:21:45 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,6 @@
 #include <fcntl.h>
 #include <time.h>
 #include <unistd.h>
-
-static bool	good_files(t_cmd *cmd)
-{
-	t_fd	*f;
-
-	f = cmd->fd;
-	while (f)
-	{
-		if (f->fd == -1)
-			return (false);
-		f = f->next;
-	}
-	return (true);
-}
 
 static void	start_pipe_1(t_pipex *pipex, t_cmd *cmd)
 {
@@ -39,8 +25,8 @@ static void	start_pipe_1(t_pipex *pipex, t_cmd *cmd)
 		return (perror("pipe"), (void)i);
 	if (!is_builtin(cmd->cmd) && access(pipex->paths[0], F_OK) != 0)
 		return (ft_putendl_fd("command not found", STDERR_FILENO), (void)i);
-	if (!good_files(cmd))
-		return (ft_close_all_1(pipex));
+	if (!good_files(cmd) || !*cmd->cmd)
+		return ;
 	pipex->pids[i] = fork();
 	if (pipex->pids[i] < 0)
 		return (perror("pid"), free(pipex->pids), (void)i);
@@ -54,6 +40,8 @@ static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 {
 	if (access(cmd_path, F_OK) != 0)
 		return (ft_putendl_fd("command not found", STDERR_FILENO), (void)i);
+	if (!good_files(node) || !*node->cmd)
+		return ;
 	pipex->pids[i] = fork();
 	if (pipex->pids[i] < 0)
 		return (perror("pid"), free(pipex->pids), (void)i);
@@ -88,6 +76,20 @@ static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 		ft_close_all_files(mini()->cmd);
 		execve2(cmd_path, node, pipex->env);
 	}
+}
+
+bool	good_files(t_cmd *cmd)
+{
+	t_fd	*f;
+
+	f = cmd->fd;
+	while (f)
+	{
+		if (f->fd == -1)
+			return (false);
+		f = f->next;
+	}
+	return (true);
 }
 
 int	read_file_get_file(t_fd *f)

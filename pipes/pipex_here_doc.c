@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:52:43 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/28 23:51:32 by malourei         ###   ########.fr       */
+/*   Updated: 2025/03/01 00:25:16 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,11 @@
 
 static char	*generate_random_filename(void)
 {
-	static const t_string	charset;
+	static const t_string	charset = FL;
 	char					*filename;
 	int						i;
 	int						len;
 
-	charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	srand(time(NULL));
 	len = 11;
 	filename = ft_calloc(len + 9, 1);
@@ -69,6 +68,7 @@ static int	check_here_doc(t_fd *fd)
 	int			i;
 
 	tmp = fd;
+	i= 0;
 	filename = generate_random_filename();
 	while (tmp)
 	{
@@ -78,7 +78,8 @@ static int	check_here_doc(t_fd *fd)
 			here_doc(&tmp, filename, i);
 		}
 		tmp = tmp->next;
-		ft_close(i);
+		if (i > 0)
+			ft_close(i);
 	}
 	free(filename);
 	return (i);

@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 23:24:14 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/27 23:17:39 by malourei         ###   ########.fr       */
+/*   Updated: 2025/03/01 00:21:56 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ void	child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 	if (!is_builtin(tmp->cmd) && access(cmd_path, F_OK) != 0)
 		return (ft_putendl_fd("command not found", STDERR_FILENO),
 			(void)cmd_path);
+	if (!good_files(tmp) || !*tmp->cmd)
+		return ;
 	pipex->pids[i] = fork();
 	if (pipex->pids[i] < 0)
 		return (perror("pid2"), free(pipex->pids), (void)cmd_path);
@@ -102,7 +104,7 @@ void	child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 		if (tmp->read < 3)
 		{
 			if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
-				return (perror("dup7"), (void)cmd_path);
+				return (perror("dup69"), (void)cmd_path);
 		}
 		if (is_builtin(tmp->cmd))
 			return (clean_all(pipex), execute_builtin(tmp, STDOUT_FILENO, 1),

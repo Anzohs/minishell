@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:14:26 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/28 23:36:54 by malourei         ###   ########.fr       */
+/*   Updated: 2025/03/01 00:14:57 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,13 @@
 #  define BUFFER_SIZE 4
 # endif
 
+
 # include "../libs.h"
 # include "../minishell.h"
 # include <stddef.h>
 # include <sys/ioctl.h>
+# define FL "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
 
 typedef struct s_minishell	t_mini;
 typedef struct s_cmd		t_cmd;
@@ -69,5 +72,6 @@ void						ft_close_all_files(t_cmd *cmd);
 void						check_per_cmd(t_cmd *cmd);
 int							read_file_get_file(t_fd *f);
 int							write_file_get_file(t_fd *f);
+bool						good_files(t_cmd *cmd);
 
 #endif
