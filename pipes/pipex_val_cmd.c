@@ -11,14 +11,21 @@
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
+#include <sys/types.h>
+#include <dirent.h>
 
 static char	*find_cmd(char *cmd, char **path)
 {
 	int		i;
 	char	*tmp;
 	char	*tmp2;
+	DIR 	*s;
 
+	s = opendir(cmd);
 	i = 0;
+	if (s)
+		return (free(s), ft_strdup(""));
+	free(s);
 	while (path && path[i] && cmd)
 	{
 		tmp = ft_strjoin(path[i], "/");

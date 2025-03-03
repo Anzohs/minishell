@@ -17,6 +17,8 @@ void	pwd_execute(int fd)
 	t_string	m;
 
 	m = getcwd(NULL, 0);
+	if (!m)
+		return (mini()->exit_code = 1, (void)m);
 	ft_putendl_fd(m, fd);
 	free(m);
 	mini()->exit_code = 0;

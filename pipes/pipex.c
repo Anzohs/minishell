@@ -23,7 +23,7 @@ static void	start_pipe_1(t_pipex *pipex, t_cmd *cmd)
 	if (pipe(pipex->fds[0].fd) < 0)
 		return (perror("pipe"), (void)i);
 	if (!is_builtin(cmd->cmd) && access(pipex->paths[0], F_OK) != 0)
-		return (ft_putendl_fd("command not found", STDERR_FILENO), (void)i);
+		return (ft_putendl_fd("command not found", STDERR_FILENO));
 	if (!good_files(cmd) || !*cmd->cmd)
 		return ;
 	pipex->pids[i] = fork();
@@ -37,7 +37,7 @@ static void	start_pipe_1(t_pipex *pipex, t_cmd *cmd)
 
 static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 {
-	if (access(cmd_path, F_OK) != 0)
+	if (!is_builtin(node->cmd) && access(cmd_path, F_OK) != 0)
 		return (ft_putendl_fd("command not found", STDERR_FILENO), (void)i);
 	check_command(node, cmd_path);
 	pipex->pids[i] = fork();
@@ -56,6 +56,7 @@ static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 			if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
 				return (perror("dup11"), (void)i);
 		}
+		printf("I 2: %d\n", i);
 		if (is_builtin(node->cmd))
 			return (clean_all(pipex), execute_builtin(node, STDOUT_FILENO, 1),
 				(void)i);
@@ -83,7 +84,9 @@ static void	one_cmd(t_pipex *pipex, t_mini *mini)
 		check_ridirects(mini->cmd, pipex->path2);
 		if (is_builtin(mini->cmd->cmd))
 			return (clean_all(pipex), execute_builtin(mini->cmd, STDOUT_FILENO,
-					1), (void)pipex);
+					1), ft_close_all_1(pipex), (void)pipex);
+		ft_close_all_1(pipex);
+		ft_close_all_files(mini->cmd);
 		execve2(pipex->path2, mini->cmd, pipex->env);
 	}
 	return ;

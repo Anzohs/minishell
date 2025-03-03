@@ -24,6 +24,10 @@ void	ft_close_file(t_cmd *cmd)
 			ft_close(tmp->fd);
 			tmp->fd = 1;
 		}
+		if (cmd->w >= 3)
+			ft_close(cmd->w);
+		if (cmd->read >= 3)
+			ft_close(cmd->read);
 		tmp = tmp->next;
 	}
 }

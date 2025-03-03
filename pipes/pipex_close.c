@@ -25,6 +25,7 @@ void	ft_close_all_m(t_pipex *pipex, int i, t_cmd *node)
 	int	k;
 
 	k = 0;
+	printf("I: %d\n", i);
 	while (k <= i)
 	{
 		ft_close(pipex->fds[k].fd[0]);
