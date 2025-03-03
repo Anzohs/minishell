@@ -16,10 +16,10 @@
 
 static char	*generate_random_filename(void)
 {
-	static const t_string	charset;
-	char					*filename;
-	int						i;
-	int						len;
+	static t_string	charset;
+	char			*filename;
+	int				i;
+	int				len;
 
 	charset = FL;
 	srand(time(NULL));

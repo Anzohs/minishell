@@ -42,18 +42,7 @@ void	execve2(const char *path, t_cmd *node, char *const envp[])
 
 void	child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 {
-	node->read = read_file_get_file(node->fd);
-	node->w = write_file_get_file(node->fd);
-	if (node->read >= 3)
-	{
-		if (dup2(node->read, STDIN_FILENO) < 0)
-			return (perror("dup1"), (void)pipex);
-	}
-	if (node->w >= 3)
-	{
-		if (dup2(node->w, STDOUT_FILENO) < 0)
-			return (perror("dup3"), (void)pipex);
-	}
+	check_ridirects(node, cmd_path);
 	if (node->w < 3)
 	{
 		if (dup2(pipex->fds[0].fd[1], STDOUT_FILENO) < 0)

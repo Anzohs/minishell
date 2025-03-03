@@ -16,7 +16,7 @@ bool	check_command(t_cmd *tmp, char *cmd_path)
 {
 	if (!is_builtin(tmp->cmd) && access(cmd_path, F_OK) != 0)
 		return (ft_putendl_fd("command not found", STDERR_FILENO),
-				false);
+			false);
 	if (!good_files(tmp) || !*tmp->cmd)
 		return (false);
 	return (true);

@@ -21,7 +21,8 @@
 # include "../minishell.h"
 # include <stddef.h>
 # include <sys/ioctl.h>
-# define FL "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+# define FL "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
 typedef struct s_minishell	t_mini;
 typedef struct s_cmd		t_cmd;
@@ -58,7 +59,7 @@ void						execve2(const char *path, t_cmd *node,
 								char *const envp[]);
 void						ft_close_all_p(t_pipex *pipex);
 void						ft_close_all_1(t_pipex *pipex);
-void						ft_close_all_m(t_pipex *pipex, int i);
+void						ft_close_all_m(t_pipex *pipex, int i, t_cmd *node);
 void						clean_null_env(t_pipex *pipex);
 void						count_pids(t_pipex *pipex, int argc);
 void						pipex(void);
@@ -68,9 +69,9 @@ t_string					*fusion_strs(t_cmd *cmd);
 void						free_env(char **strs);
 void						ft_close_all_files(t_cmd *cmd);
 void						check_per_cmd(t_cmd *cmd);
-int							read_file_get_file(t_fd *f);
-int							write_file_get_file(t_fd *f);
 bool						good_files(t_cmd *cmd);
 bool						check_command(t_cmd *tmp, char *cmd_path);
+void						check_ridirects(t_cmd *tmp, char *cmd_path);
+void						get_strs_envs(t_pipex *pipex);
 
 #endif

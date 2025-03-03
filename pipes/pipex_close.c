@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
+#include "pipex.h"
 
 void	ft_close(int fd)
 {
@@ -19,7 +20,7 @@ void	ft_close(int fd)
 		close(fd);
 }
 
-void	ft_close_all_m(t_pipex *pipex, int i)
+void	ft_close_all_m(t_pipex *pipex, int i, t_cmd *node)
 {
 	int	k;
 
@@ -30,6 +31,7 @@ void	ft_close_all_m(t_pipex *pipex, int i)
 		ft_close(pipex->fds[k].fd[1]);
 		k++;
 	}
+	ft_close_all_files(node);
 }
 
 void	ft_close_all_1(t_pipex *pipex)

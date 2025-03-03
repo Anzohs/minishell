@@ -12,22 +12,6 @@
 
 #include "../mini_struct/mini.h"
 
-static void	child_two_help(t_cmd *tmp, char *cmd_path)
-{
-	tmp->read = read_file_get_file(tmp->fd);
-	tmp->w = write_file_get_file(tmp->fd);
-	if (tmp->read >= 3)
-	{
-		if (dup2(tmp->read, STDIN_FILENO) < 0)
-			return (perror("dup5"), (void)cmd_path);
-	}
-	if (tmp->w >= 3)
-	{
-		if (dup2(tmp->w, STDOUT_FILENO) < 0)
-			return (perror("dup6"), (void)cmd_path);
-	}
-}
-
 static t_cmd	*child_two_help_2(t_cmd *node, int *i)
 {
 	t_cmd	*tmp;
@@ -55,7 +39,7 @@ void	child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 		return (perror("pid2"), free(pipex->pids), (void)cmd_path);
 	if (pipex->pids[i] == 0)
 	{
-		child_two_help(tmp, cmd_path);
+		check_ridirects(tmp, cmd_path);
 		if (tmp->read < 3)
 		{
 			if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
