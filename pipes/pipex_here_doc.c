@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:52:43 by malourei          #+#    #+#             */
-/*   Updated: 2025/03/01 20:39:35 by malourei         ###   ########.fr       */
+/*   Updated: 2025/03/04 19:32:14 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void	here_doc(t_fd **f, t_string filename, int f_d)
 	if (f_d == -1)
 		return ;
 	limiter = ft_strdup((*f)->name);
+	ft_putendl_fd((*f)->name, 1);
 	free((*f)->name);
 	(*f)->name = ft_strdup(filename);
 	(*f)->fd = f_d;
