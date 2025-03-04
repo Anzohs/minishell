@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 14:51:34 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/09 19:22:25 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:57:54 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,27 @@ static bool	check_redirects(t_cmd **cmd)
 	return (ret(temp));
 }
 
+static bool	bad_files(t_fd *f)
+{
+	t_fd	*fl;
+
+	if (!f)
+		return (false);
+	fl = f;
+	while (fl)
+	{
+		if (fl->fd == -1)
+			return (mini()->exit_code = 2, true);
+		fl = fl->next;
+	}
+	return (false);
+}
+
 void	execute(void)
 {
 	change_cmd(&mini()->cmd);
-	if (!check_redirects(&mini()->cmd))
+	check_redirects(&mini()->cmd);
+	if (ft_cmdlst_len(&mini()->cmd) == 1 && bad_files(mini()->cmd->fd))
 		return ;
 	else if (ft_cmdlst_len(&mini()->cmd) == 1 && is_builtin(mini()->cmd->cmd))
 		execute_builtin(mini()->cmd, mini()->cmd->w, 0);
