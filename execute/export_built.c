@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 20:21:47 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/03/04 19:27:44 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/03/04 19:42:25 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ static void	add_variables(t_string s, t_list **list)
 	current = *list;
 	while (current)
 	{
+		if (ft_strncmp(current->content, var_name, ft_strlen(var_name)) == 0
+			&& !ft_strchr(s, '='))
+			return (free(var_name), free(var_value));
 		if (ft_strncmp(current->content, var_name, ft_strlen(var_name)) == 0
 			&& (current->content[ft_strlen(var_name)] == '='
 				|| current->content[ft_strlen(var_name)] == '\0'))
