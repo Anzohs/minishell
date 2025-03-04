@@ -11,15 +11,15 @@
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
-#include <sys/types.h>
 #include <dirent.h>
+#include <sys/types.h>
 
 static char	*find_cmd(char *cmd, char **path)
 {
 	int		i;
 	char	*tmp;
 	char	*tmp2;
-	DIR 	*s;
+	DIR		*s;
 
 	s = opendir(cmd);
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:14:26 by malourei          #+#    #+#             */
-/*   Updated: 2025/03/01 00:21:45 by malourei         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:45:02 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 			if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
 				return (perror("dup11"), (void)i);
 		}
-		printf("I 2: %d\n", i);
 		if (is_builtin(node->cmd))
 			return (clean_all(pipex), execute_builtin(node, STDOUT_FILENO, 1),
 				(void)i);
