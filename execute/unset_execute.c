@@ -6,11 +6,32 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 21:31:13 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/09 18:04:38 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/03/04 21:07:19 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
+
+static void	unset_exp(t_list *lst, t_string s)
+{
+	while (lst)
+	{
+		if (lst->content[ft_strlen(s)] == '='
+			|| lst->content[ft_strlen(s)] == 0)
+			return (ft_lstpop(&mini()->exp, lst));
+		lst = lst->next;
+	}
+}
+
+static void	unset_env(t_list *lst, t_string s)
+{
+	while (lst)
+	{
+		if (lst->content[ft_strlen(s)] == '=')
+			return (ft_lstpop(&mini()->env, lst));
+		lst = lst->next;
+	}
+}
 
 void	unset_execute(t_cmd *cmd)
 {
@@ -25,10 +46,10 @@ void	unset_execute(t_cmd *cmd)
 	{
 		env_node = ft_lstgetlst(&mini()->env, cmd->matrix[i]);
 		if (env_node)
-			ft_lstpop(&mini()->env, env_node);
+			unset_env(env_node, cmd->matrix[i]);
 		exp_node = ft_lstgetlst(&mini()->exp, cmd->matrix[i]);
 		if (exp_node)
-			ft_lstpop(&mini()->exp, exp_node);
+			unset_exp(env_node, cmd->matrix[i]);
 	}
 	mini()->exit_code = 0;
 }

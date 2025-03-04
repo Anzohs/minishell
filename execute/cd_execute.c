@@ -51,8 +51,7 @@ static void	home(void)
 
 	s = ft_lsthas(mini()->env, "HOME=");
 	if (!s || !*s)
-		return (perror("Home not set"), \
-			mini()->exit_code = 1, (void)s);
+		return (perror("Home not set"), mini()->exit_code = 1, (void)s);
 	s++;
 	i = chdir(s);
 	if (i == -1)
@@ -68,8 +67,8 @@ static bool	cd_(void)
 
 	s = ft_lsthas(mini()->env, "OLDPWD=");
 	if (!s || !*s)
-		return (ft_putstr_fd("OLDPWD NOT SET\n", 2), \
-		mini()->exit_code = 1, true);
+		return (ft_putstr_fd("OLDPWD NOT SET\n", 2), mini()->exit_code = 1,
+			true);
 	s++;
 	if (chdir(s) >= 0)
 		return (update_pwd(getcwd(NULL, 0), &mini()->env, true),
