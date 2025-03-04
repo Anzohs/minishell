@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 14:51:34 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/03/04 16:48:16 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/03/04 19:27:27 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,7 @@ void					unset_execute(t_cmd *cmd);
 void					echo_exec(t_cmd *cmd);
 int						execute_builtin(t_cmd *cmd, int fd, int i);
 void					exit_minishell(void);
+void					update_existing_var(t_list *current, t_string var_name,
+							t_string var_value);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 20:21:47 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/09 20:05:55 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/03/04 19:27:44 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,51 +24,11 @@ static bool	add_exp(t_string s)
 	return (true);
 }
 
-static void	add_variables(t_string s, t_list **list)
+static void	add_new_var(t_list **list, t_string var_name, t_string var_value)
 {
-	t_list		*current;
-	t_string	var_name;
-	t_string	var_value;
-	char		*equal_sign;
-	char		*temp;
 	t_string	new_var;
 	t_string	new_content;
 
-	equal_sign = ft_strchr(s, '=');
-	if (equal_sign)
-	{
-		var_name = ft_substr(s, 0, equal_sign - s);
-		var_value = ft_strdup(equal_sign + 1);
-	}
-	else
-	{
-		var_name = ft_strdup(s);
-		var_value = NULL;
-	}
-	current = *list;
-	while (current)
-	{
-		if (ft_strncmp(current->content, var_name, ft_strlen(var_name)) == 0
-			&& (current->content[ft_strlen(var_name)] == '='
-				|| current->content[ft_strlen(var_name)] == '\0'))
-		{
-			free(current->content);
-			if (var_value)
-				current->content = ft_strjoin(var_name, "=");
-			else
-				current->content = ft_strdup(var_name);
-			if (var_value)
-			{
-				temp = current->content;
-				current->content = ft_strjoin(current->content, var_value);
-				free(temp);
-			}
-			free(var_name);
-			free(var_value);
-			return ;
-		}
-		current = current->next;
-	}
 	if (var_value)
 	{
 		new_var = ft_strjoin(var_name, "=");
@@ -78,6 +38,47 @@ static void	add_variables(t_string s, t_list **list)
 	}
 	else
 		ft_lstadd_back(list, ft_lstnew(ft_strdup(var_name)));
+}
+
+static void	split_var(t_string s, t_string *var_name, t_string *var_value)
+{
+	char	*equal_sign;
+
+	equal_sign = ft_strchr(s, '=');
+	if (equal_sign)
+	{
+		*var_name = ft_substr(s, 0, equal_sign - s);
+		*var_value = ft_strdup(equal_sign + 1);
+	}
+	else
+	{
+		*var_name = ft_strdup(s);
+		*var_value = NULL;
+	}
+}
+
+static void	add_variables(t_string s, t_list **list)
+{
+	t_list		*current;
+	t_string	var_name;
+	t_string	var_value;
+
+	split_var(s, &var_name, &var_value);
+	current = *list;
+	while (current)
+	{
+		if (ft_strncmp(current->content, var_name, ft_strlen(var_name)) == 0
+			&& (current->content[ft_strlen(var_name)] == '='
+				|| current->content[ft_strlen(var_name)] == '\0'))
+		{
+			update_existing_var(current, var_name, var_value);
+			free(var_name);
+			free(var_value);
+			return ;
+		}
+		current = current->next;
+	}
+	add_new_var(list, var_name, var_value);
 	free(var_name);
 	free(var_value);
 }

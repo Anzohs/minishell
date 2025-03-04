@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:14:26 by malourei          #+#    #+#             */
-/*   Updated: 2025/03/04 16:45:02 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/03/04 18:14:59 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 {
 	if (!is_builtin(node->cmd) && access(cmd_path, F_OK) != 0)
 		return (ft_putendl_fd("command not found", STDERR_FILENO), (void)i);
+	if (!good_files(node) || !*node->cmd)
+		return ;
 	check_command(node, cmd_path);
 	pipex->pids[i] = fork();
 	if (pipex->pids[i] < 0)
