@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 17:20:42 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/24 23:49:11 by malourei         ###   ########.fr       */
+/*   Updated: 2025/03/04 20:42:31 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ bool	change_fd(t_cmd **cmd)
 	f = (*cmd)->fd;
 	while (f)
 	{
-		take_quotes(&f->name);
 		if (f->type == CREATE)
 			f->fd = open(f->name, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 		if (f->type == APPEND)
