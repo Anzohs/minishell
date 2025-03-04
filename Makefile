@@ -1,6 +1,6 @@
 NAME = minishell
 
-CC = gcc
+CC = cc
 OBJ_DIR = obj
 CFLAGS = -Wall -Wextra -Werror -g -I. -Isrc/libf  -Imini_struct
 CCFLAGS = -lreadline
