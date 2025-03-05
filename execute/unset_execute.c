@@ -16,9 +16,9 @@ static void	unset_exp(t_list *lst, t_string s)
 {
 	while (lst)
 	{
-		if (ft_strlen(lst->content) >= ft_strlen(s) &&
-			(lst->content[ft_strlen(s)] == '='
-			|| lst->content[ft_strlen(s)] == 0))
+		if (ft_strlen(lst->content) >= ft_strlen(s)
+			&& (lst->content[ft_strlen(s)] == '='
+				|| lst->content[ft_strlen(s)] == 0))
 			return (ft_lstpop(&mini()->exp, lst));
 		lst = lst->next;
 	}
@@ -28,9 +28,8 @@ static void	unset_env(t_list *lst, t_string s)
 {
 	while (lst)
 	{
-		
-		if (ft_strlen(lst->content) >= ft_strlen(s) &&
-			(lst->content[ft_strlen(s)] == '='))
+		if (ft_strlen(lst->content) >= ft_strlen(s)
+			&& (lst->content[ft_strlen(s)] == '='))
 			return (ft_lstpop(&mini()->env, lst));
 		lst = lst->next;
 	}

@@ -30,8 +30,8 @@ void	expantions(t_string *s)
 		else if (str[i] == c)
 			c = 0;
 		else if (str[i] == '$' && (!c || c == '"') && str[i + 1]
-			&& (ft_isalpha(str[i + 1])|| str[i + 1] == '?'\
-			 || str[i + 1] == '_'))
+			&& (ft_isalpha(str[i + 1]) || str[i + 1] == '?' \
+			|| str[i + 1] == '_'))
 			str[i] = 2;
 	}
 }
