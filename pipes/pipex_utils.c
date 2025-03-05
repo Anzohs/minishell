@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 23:24:14 by malourei          #+#    #+#             */
-/*   Updated: 2025/03/01 23:58:12 by malourei         ###   ########.fr       */
+/*   Updated: 2025/03/05 01:02:12 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	child_one(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 			return (perror("dup4"), (void)pipex);
 	}
 	if (is_builtin(node->cmd))
-		return (clean_all(pipex), execute_builtin(node, STDOUT_FILENO, 1),
-			(void)1);
+		return (mini()->pipex = pipex, mini()->pipes = 0, \
+			execute_builtin(node, STDOUT_FILENO, 1), (void)1);
 	ft_close_all_1(pipex);
 	ft_close_all_files(node);
 	execve2(cmd_path, node, env);

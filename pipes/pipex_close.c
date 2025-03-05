@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_close.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:42:55 by malourei          #+#    #+#             */
-/*   Updated: 2025/03/01 20:41:50 by malourei         ###   ########.fr       */
+/*   Updated: 2025/03/05 00:17:50 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,17 @@ void	ft_close(int fd)
 		close(fd);
 }
 
-void	ft_close_all_m(t_pipex *pipex, int i, t_cmd *node)
+void	ft_close_all_m(t_pipex *pipex, int i)
 {
 	int	k;
 
 	k = 0;
-	printf("I: %d\n", i);
 	while (k <= i)
 	{
 		ft_close(pipex->fds[k].fd[0]);
 		ft_close(pipex->fds[k].fd[1]);
 		k++;
 	}
-	ft_close_all_files(node);
 }
 
 void	ft_close_all_1(t_pipex *pipex)

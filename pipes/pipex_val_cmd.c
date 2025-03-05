@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_val_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 00:42:55 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/18 21:23:06 by malourei         ###   ########.fr       */
+/*   Updated: 2025/03/04 23:36:14 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ static char	*find_cmd(char *cmd, char **path)
 	s = opendir(cmd);
 	i = 0;
 	if (s)
-		return (free(s), ft_strdup(""));
-	free(s);
+		return (ft_strdup(""));
 	while (path && path[i] && cmd)
 	{
 		tmp = ft_strjoin(path[i], "/");

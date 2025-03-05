@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:14:26 by malourei          #+#    #+#             */
-/*   Updated: 2025/03/02 00:00:00 by malourei         ###   ########.fr       */
+/*   Updated: 2025/03/04 23:30:32 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void						execve2(const char *path, t_cmd *node,
 								char *const envp[]);
 void						ft_close_all_p(t_pipex *pipex);
 void						ft_close_all_1(t_pipex *pipex);
-void						ft_close_all_m(t_pipex *pipex, int i, t_cmd *node);
+void						ft_close_all_m(t_pipex *pipex, int i);
 void						clean_null_env(t_pipex *pipex);
 void						count_pids(t_pipex *pipex, int argc);
 void						pipex(void);

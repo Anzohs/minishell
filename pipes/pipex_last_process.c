@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 23:56:35 by malourei          #+#    #+#             */
-/*   Updated: 2025/03/02 00:01:33 by malourei         ###   ########.fr       */
+/*   Updated: 2025/03/05 00:20:28 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	child_two(t_pipex *pipex, char **env, char *cmd_path, t_cmd *node)
 				return (perror("dup69"), (void)cmd_path);
 		}
 		if (is_builtin(tmp->cmd))
-			return (clean_all(pipex), execute_builtin(tmp, STDOUT_FILENO, 1),
+			return (mini()->pipex = pipex, mini()->pipes = -1, \
+					execute_builtin(tmp, STDOUT_FILENO, 1),
 				(void)i);
 		return (ft_close_all_p(pipex), ft_close_all_files(node),
 			execve2(cmd_path, tmp, env));
