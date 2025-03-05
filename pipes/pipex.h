@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:14:26 by malourei          #+#    #+#             */
-/*   Updated: 2025/03/04 23:30:32 by malourei         ###   ########.fr       */
+/*   Updated: 2025/03/05 20:58:45 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void						child_two(t_pipex *pipex, char **env,
 t_string					*fusion_strs(t_cmd *cmd);
 void						free_env(char **strs);
 void						ft_close_all_files(t_cmd *cmd);
-void						check_per_cmd(t_cmd *cmd);
+bool						check_per_cmd(t_cmd *cmd);
 bool						good_files(t_cmd *cmd);
 bool						check_command(t_cmd *tmp, char *cmd_path);
 void						check_ridirects(t_cmd *tmp, char *cmd_path);

@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:52:43 by malourei          #+#    #+#             */
-/*   Updated: 2025/03/05 01:11:54 by malourei         ###   ########.fr       */
+/*   Updated: 2025/03/05 21:01:19 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static int	check_here_doc(t_fd *fd)
 	return (i);
 }
 
-void	check_per_cmd(t_cmd *cmd)
+bool	check_per_cmd(t_cmd *cmd)
 {
 	t_cmd	*tmp;
 
@@ -97,4 +97,5 @@ void	check_per_cmd(t_cmd *cmd)
 			tmp->read = check_here_doc(tmp->fd);
 		tmp = tmp->next;
 	}
+	return (mini()->sig == 2);
 }

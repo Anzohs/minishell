@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 22:54:56 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/03/05 00:09:10 by malourei         ###   ########.fr       */
+/*   Updated: 2025/03/05 20:39:59 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 static void	start_tmini(t_mini *mini)
 {
 	mini->start = 1;
+	mini->sig = 1;
 	mini->pipex = NULL;
-	//rl_catch_signals = 1;
+	rl_catch_signals = 1;
 }
 
 t_mini	*mini(void)
