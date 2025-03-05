@@ -11,9 +11,12 @@
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include "../mini_struct/mini.h"
 
 static int	skip_alpha(t_string s, int i)
 {
+	if (s[i] == '?')
+		return (++i);
 	while (s[i] && ft_isalpha(s[i]))
 		i++;
 	return (i);
@@ -34,12 +37,14 @@ static void	copy_remaining(t_string new, t_string s, int *i, int *j)
 t_string	sub_expantion(t_string s, t_string str)
 {
 	t_string	new;
+	t_string	it;
 	int			i;
 	int			j;
 
 	new = ft_calloc(ft_strlen(s) + ft_strlen(str) + 1, sizeof(char));
 	if (!new)
 		return (ft_strdup(""));
+	it = ft_itoa(mini()->exit_code);
 	i = 0;
 	j = 0;
 	while (s[i])
@@ -48,7 +53,10 @@ t_string	sub_expantion(t_string s, t_string str)
 		{
 			i++;
 			i = skip_alpha(s, i);
-			copy_str(new, str, &j);
+			if (s[i-1] == '?')
+				copy_str(new, it, &j);
+			else
+				copy_str(new, str, &j);
 			copy_remaining(new, s, &i, &j);
 			break ;
 		}
@@ -56,5 +64,5 @@ t_string	sub_expantion(t_string s, t_string str)
 			new[j++] = s[i++];
 	}
 	copy_remaining(new, s, &i, &j);
-	return (free(s), new);
+	return (free(s), free(it), new);
 }

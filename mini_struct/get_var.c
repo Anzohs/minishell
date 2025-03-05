@@ -24,6 +24,8 @@ t_string	get_var(t_string s)
 	{
 		if (s[i] == 2)
 		{
+			if (s[i + 1] == '?')
+				return ("");
 			j = i + 1;
 			while (s[j] && ft_isalpha(s[j]))
 				j++;

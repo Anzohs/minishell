@@ -39,7 +39,7 @@ void	create_matrix(t_cmd **cmd)
 	expantions(&(*cmd)->arg);
 	while (is_expantion((*cmd)->arg))
 		(*cmd)->arg = sub_expantion((*cmd)->arg, get_var((*cmd)->arg));
-	mark_spaces(&(*cmd)->arg);
+	mark_spaces(&(*cmd)->arg); 
 	(*cmd)->matrix = ft_split((*cmd)->arg, 2);
 	if (!(*cmd)->matrix)
 		return ;
