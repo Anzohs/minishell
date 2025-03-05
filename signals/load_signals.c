@@ -6,7 +6,7 @@
 /*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 20:09:42 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/03/05 20:56:55 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/03/05 21:38:28 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 #include "ft_signals.h"
 #include <readline/readline.h>
 #include <signal.h>
+#include <stdio.h>
 #include <unistd.h>
+
+int			g_sig = 0;
 
 void	load_signals(void)
 {
@@ -58,7 +61,10 @@ void	sig_handler_here(int signum, siginfo_t *sig, void *s)
 	(void)sig;
 	if (signum == SIGINT)
 	{
+		mini()->sig = 1;
 		rl_done = 1;
+		g_sig = 1;
+		printf("signal recieve\n");
 	}
 	if (signum == SIGQUIT)
 		return ;
@@ -73,6 +79,7 @@ void	sig_handler_pipe(int signum, siginfo_t *sig, void *s)
 		ft_putstr_fd("\n", STDOUT_FILENO);
 		mini()->sig = 1;
 		mini()->exit_code = 130;
+		g_sig = 1;
 	}
 	if (signum == SIGQUIT)
 		return (ft_putstr_fd("Quit (core dumped)\n", STDOUT_FILENO));

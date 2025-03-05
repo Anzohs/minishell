@@ -6,13 +6,16 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:52:43 by malourei          #+#    #+#             */
-/*   Updated: 2025/03/05 21:01:19 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/03/05 21:34:25 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
 #include "pipex.h"
+#include "../signals/ft_signals.h"
 #include <fcntl.h>
+
+extern int s_sig;
 
 static char	*generate_random_filename(void)
 {
@@ -47,8 +50,9 @@ static void	here_doc(t_fd **f, t_string filename, int f_d)
 	(*f)->fd = f_d;
 	while (1)
 	{
+		printf("%i sig\n", g_sig);
 		line = readline("> ");
-		if (line == NULL)
+		if (line == NULL || g_sig)
 			break ;
 		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 		{
@@ -71,12 +75,16 @@ static int	check_here_doc(t_fd *fd)
 	tmp = fd;
 	i = 0;
 	filename = generate_random_filename();
-	while (tmp)
+	if (!filename)
+		return (-1);
+	while (tmp && !g_sig)
 	{
 		if (tmp->type == HEREDOC)
 		{
 			i = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 			here_doc(&tmp, filename, i);
+			if (g_sig)
+				break ;
 		}
 		tmp = tmp->next;
 		if (i > 0)
@@ -91,11 +99,17 @@ bool	check_per_cmd(t_cmd *cmd)
 	t_cmd	*tmp;
 
 	tmp = cmd;
+	mini()->sig = 2;
+	load_signals();
 	while (tmp)
 	{
 		if (tmp->read == 1000)
 			tmp->read = check_here_doc(tmp->fd);
+		if (g_sig || tmp->read == -1)
+			break ;
 		tmp = tmp->next;
 	}
-	return (mini()->sig == 2);
+	mini()->sig = 1;
+	load_signals();
+	return (g_sig == 0);
 }

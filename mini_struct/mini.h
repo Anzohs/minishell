@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/14 23:34:59 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/03/04 23:48:34 by malourei         ###   ########.fr       */
+/*   Created: 2025/01/14 23:34:59 by malourei          #+#    #+#             */
+/*   Updated: 2025/03/05 21:04:16 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define MINI_H
 
 # include "../minishell.h"
-
-extern int			g_sig;
 
 typedef enum s_type
 {

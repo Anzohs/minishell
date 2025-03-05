@@ -6,11 +6,12 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:14:26 by malourei          #+#    #+#             */
-/*   Updated: 2025/03/05 20:32:11 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/03/05 21:08:55 by hladeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
+#include "../signals/ft_signals.h"
 #include "pipex.h"
 #include <fcntl.h>
 #include <unistd.h>
@@ -118,7 +119,8 @@ void	pipex(void)
 	t_pipex	pipex;
 
 	pipex = (t_pipex){0};
-	check_per_cmd(mini()->cmd);
+	if (!check_per_cmd(mini()->cmd))
+		return (g_sig = 0, (void)pipex);
 	validate_args(mini()->cmd, &pipex.cmd_argc);
 	count_pids(&pipex, pipex.cmd_argc);
 	pipex.env = ft_lsttomatrix(mini()->env);
