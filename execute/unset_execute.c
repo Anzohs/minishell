@@ -16,8 +16,9 @@ static void	unset_exp(t_list *lst, t_string s)
 {
 	while (lst)
 	{
-		if (lst->content[ft_strlen(s)] == '='
-			|| lst->content[ft_strlen(s)] == 0)
+		if (ft_strlen(lst->content) >= ft_strlen(s) &&
+			(lst->content[ft_strlen(s)] == '='
+			|| lst->content[ft_strlen(s)] == 0))
 			return (ft_lstpop(&mini()->exp, lst));
 		lst = lst->next;
 	}
@@ -27,7 +28,9 @@ static void	unset_env(t_list *lst, t_string s)
 {
 	while (lst)
 	{
-		if (lst->content[ft_strlen(s)] == '=')
+		
+		if (ft_strlen(lst->content) >= ft_strlen(s) &&
+			(lst->content[ft_strlen(s)] == '='))
 			return (ft_lstpop(&mini()->env, lst));
 		lst = lst->next;
 	}
@@ -49,7 +52,7 @@ void	unset_execute(t_cmd *cmd)
 			unset_env(env_node, cmd->matrix[i]);
 		exp_node = ft_lstgetlst(&mini()->exp, cmd->matrix[i]);
 		if (exp_node)
-			unset_exp(env_node, cmd->matrix[i]);
+			unset_exp(exp_node, cmd->matrix[i]);
 	}
 	mini()->exit_code = 0;
 }
