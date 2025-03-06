@@ -64,6 +64,6 @@ v :	$(NAME)
 	valgrind --suppressions=read.supp --show-leak-kinds=all --leak-check=full ./minishell
 
 vf : $(NAME)
-	valgrind --suppressions=read.supp --show-leak-kinds=all --trace-children=yes --track-fds=all ./minishell
+	valgrind --suppressions=read.supp --show-leak-kinds=all --leak-check=full --trace-children=yes --track-fds=yes ./minishell
 
 .PHONY: all clean fclean re
