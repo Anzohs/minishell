@@ -67,9 +67,8 @@ void	sig_handler_here(int signum, siginfo_t *sig, void *s)
 	if (signum == SIGINT)
 	{
 		g_sig = 1;
-        rl_done = 1;
         rl_replace_line("", 0);
-        printf("\n");
+        rl_done = 1;
 	}
 	if (signum == SIGQUIT)
 		return ;
