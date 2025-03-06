@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:52:43 by malourei          #+#    #+#             */
-/*   Updated: 2025/03/05 21:34:25 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/03/06 18:30:13 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 #include "../signals/ft_signals.h"
 #include <fcntl.h>
 
-int rl_hook(void)
+int	rl_hook(void)
 {
-    if (g_sig) {
-        rl_done = 1;  // Ensure readline exits if the signal was received
-    }
-	return 0;
+	if (g_sig)
+	{
+		rl_done = 1;
+	}
+	return (0);
 }
 
 static char	*generate_random_filename(void)
@@ -61,14 +62,14 @@ static void	here_doc(t_fd **f, t_string filename, int f_d)
 		if (!line || ft_strcmp(line, limiter) == 0 || g_sig)
 		{
 			if (!line && !g_sig)
-				return (free(limiter), ft_putendl_fd("",STDOUT_FILENO));
+				return (free(limiter), ft_putendl_fd("", STDOUT_FILENO));
 			if (line)
 				free(line);
 			if (g_sig)
 				return (free(limiter));
 		}
-        ft_putendl_fd(line, f_d);
-        free(line);
+		ft_putendl_fd(line, f_d);
+		free(line);
 	}
 	free(limiter);
 	return ;

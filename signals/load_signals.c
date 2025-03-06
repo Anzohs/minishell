@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_signals.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 20:09:42 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/03/05 21:38:28 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/03/06 18:34:55 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,17 @@ void	sig_handler(int signum, siginfo_t *sig, void *s)
 		return ;
 }
 
-void sig_handler_here(int signum, siginfo_t *sig, void *s) {
-    (void)s;
-    (void)sig;
-    if (signum == SIGINT) {
-        g_sig = 1;
-        rl_done = 1; 
-    }
-    if (signum == SIGQUIT)
-        return;
+void	sig_handler_here(int signum, siginfo_t *sig, void *s)
+{
+	(void)s;
+	(void)sig;
+	if (signum == SIGINT)
+	{
+		g_sig = 1;
+		rl_done = 1;
+	}
+	if (signum == SIGQUIT)
+		return ;
 }
 
 void	sig_handler_pipe(int signum, siginfo_t *sig, void *s)

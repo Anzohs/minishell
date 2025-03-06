@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sub_expantion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hladeiro <hladeiro@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 21:39:37 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/02/08 19:09:21 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/03/06 18:25:47 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	copy_remaining(t_string new, t_string s, int *i, int *j)
 		new[(*j)++] = s[(*i)++];
 }
 
-static void t_string_new(t_string *new, t_string s, t_string str, t_string it)
+static void	t_string_new(t_string *new, t_string s, t_string str, t_string it)
 {
 	if (!str || *str == 0)
 		*new = ft_calloc(ft_strlen(s) + ft_strlen(it) + 1, sizeof(char));
@@ -61,7 +61,7 @@ t_string	sub_expantion(t_string s, t_string str)
 		{
 			i++;
 			i = skip_alpha(s, i);
-			if (s[i-1] == '?')
+			if (s[i - 1] == '?')
 				copy_str(new, it, &j);
 			else
 				copy_str(new, str, &j);

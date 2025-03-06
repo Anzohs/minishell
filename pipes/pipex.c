@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:14:26 by malourei          #+#    #+#             */
-/*   Updated: 2025/03/05 21:08:55 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/03/06 18:28:43 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void	pipex(void)
 	mini()->exit_code = 0;
 	load_signals();
 	if (!find_full_cmd(&pipex, mini()->cmd))
-		return (clean_all(&pipex), mini()->sig = 1 , load_signals());
+		return (clean_all(&pipex), mini()->sig = 1, load_signals());
 	start_multi_pipe(&pipex, mini(), ft_cmdsize(mini()->cmd), mini()->cmd);
 	ft_parent(&pipex);
 	return (mini()->sig = 1, load_signals());
