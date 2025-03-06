@@ -32,10 +32,15 @@ void	load_signals(void)
 	if (mini()->sig == 2)
 	{
 		sig.sa_sigaction = sig_handler_here;
+		sigaction(SIGINT, &sig, NULL);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	if (mini()->sig == 3)
+	{
 		sig.sa_sigaction = sig_handler_pipe;
+		sigaction(SIGINT, &sig, NULL);
+		signal(SIGQUIT, SIG_IGN);
+	}
 	rl_event_hook = 0;
 }
 
@@ -61,10 +66,11 @@ void	sig_handler_here(int signum, siginfo_t *sig, void *s)
 	(void)sig;
 	if (signum == SIGINT)
 	{
-		mini()->sig = 1;
-		rl_done = 1;
 		g_sig = 1;
-		printf("signal recieve\n");
+		rl_done = 1;
+		rl_replace_line("", 0);
+		printf("\n");
+		rl_on_new_line();
 	}
 	if (signum == SIGQUIT)
 		return ;

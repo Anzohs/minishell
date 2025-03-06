@@ -50,7 +50,6 @@ static void	here_doc(t_fd **f, t_string filename, int f_d)
 	(*f)->fd = f_d;
 	while (1)
 	{
-		printf("%i sig\n", g_sig);
 		line = readline("> ");
 		if (line == NULL || g_sig)
 			break ;
