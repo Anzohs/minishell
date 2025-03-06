@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 21:39:37 by hladeiro          #+#    #+#             */
-/*   Updated: 2025/03/06 18:25:47 by malourei         ###   ########.fr       */
+/*   Updated: 2025/03/06 19:30:57 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_string	sub_expantion(t_string s, t_string str)
 	it = ft_itoa(mini()->exit_code);
 	t_string_new(&new, s, str, it);
 	if (!new)
-		return (ft_strdup(""));
+		return (free(it), ft_strdup(""));
 	i = 0;
 	j = 0;
 	while (s[i])

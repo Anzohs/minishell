@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:52:43 by malourei          #+#    #+#             */
-/*   Updated: 2025/03/06 18:30:13 by malourei         ###   ########.fr       */
+/*   Updated: 2025/03/06 19:24:09 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,13 @@ static void	here_doc(t_fd **f, t_string filename, int f_d)
 			if (!line && !g_sig)
 				return (free(limiter), ft_putendl_fd("", STDOUT_FILENO));
 			if (line)
-				free(line);
-			if (g_sig)
-				return (free(limiter));
+				return (free(line), free(limiter));
+			return ;
 		}
 		ft_putendl_fd(line, f_d);
 		free(line);
 	}
-	free(limiter);
-	return ;
+	return (free(limiter));
 }
 
 static int	check_here_doc(t_fd *fd)
@@ -86,14 +84,12 @@ static int	check_here_doc(t_fd *fd)
 	filename = generate_random_filename();
 	if (!filename)
 		return (-1);
-	while (tmp)
+	while (tmp && g_sig == 0)
 	{
 		if (tmp->type == HEREDOC)
 		{
 			i = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 			here_doc(&tmp, filename, i);
-			if (g_sig)
-				break ;
 		}
 		tmp = tmp->next;
 		if (i > 0)
@@ -114,7 +110,7 @@ bool	check_per_cmd(t_cmd *cmd)
 	{
 		if (tmp->read == 1000)
 			tmp->read = check_here_doc(tmp->fd);
-		if (g_sig || tmp->read == -1)
+		if (g_sig)
 			break ;
 		tmp = tmp->next;
 	}
