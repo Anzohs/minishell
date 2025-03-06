@@ -22,7 +22,7 @@ void	init_minishell(void)
 
 static void	handle_sigint(void)
 {
-	if (mini()->sig == 1)
+	if (mini()->sig != 0)
 		mini()->sig = 0;
 }
 

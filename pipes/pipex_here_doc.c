@@ -51,9 +51,9 @@ static void	here_doc(t_fd **f, t_string filename, int f_d)
 	while (1)
 	{
 		line = readline("> ");
-		if (line == NULL || g_sig)
+		if (line == NULL)
 			break ;
-		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
+		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0 || g_sig)
 		{
 			free(line);
 			break ;

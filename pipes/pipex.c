@@ -32,6 +32,8 @@ static void	start_pipe_1(t_pipex *pipex, t_cmd *cmd)
 		return (perror("pid"), free(pipex->pids), (void)i);
 	if (pipex->pids[i] == 0)
 	{
+		mini()->sig = 3;
+		load_signals();
 		child_one(pipex, pipex->env, pipex->paths[0], cmd);
 	}
 }
@@ -125,9 +127,11 @@ void	pipex(void)
 	count_pids(&pipex, pipex.cmd_argc);
 	pipex.env = ft_lsttomatrix(mini()->env);
 	get_strs_envs(&pipex);
+	mini()->sig = 3;
+	load_signals();
 	if (!find_full_cmd(&pipex, mini()->cmd))
-		return (clean_all(&pipex), (void)pipex);
+		return (clean_all(&pipex), mini()->sig = 1 , load_signals());
 	start_multi_pipe(&pipex, mini(), ft_cmdsize(mini()->cmd), mini()->cmd);
 	ft_parent(&pipex);
-	return ;
+	return (mini()->sig = 1, load_signals());
 }

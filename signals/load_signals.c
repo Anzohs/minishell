@@ -39,7 +39,7 @@ void	load_signals(void)
 	{
 		sig.sa_sigaction = sig_handler_pipe;
 		sigaction(SIGINT, &sig, NULL);
-		signal(SIGQUIT, SIG_IGN);
+		sigaction(SIGQUIT, &sig, NULL);
 	}
 	rl_event_hook = 0;
 }
@@ -67,10 +67,10 @@ void	sig_handler_here(int signum, siginfo_t *sig, void *s)
 	if (signum == SIGINT)
 	{
 		g_sig = 1;
-		rl_done = 1;
-		rl_replace_line("", 0);
-		printf("\n");
-		rl_on_new_line();
+        rl_done = 1;
+        rl_replace_line("", 0);
+        ft_putstr_fd("\n", STDOUT_FILENO);
+        rl_on_new_line();
 	}
 	if (signum == SIGQUIT)
 		return ;
@@ -83,10 +83,11 @@ void	sig_handler_pipe(int signum, siginfo_t *sig, void *s)
 	if (signum == SIGINT)
 	{
 		ft_putstr_fd("\n", STDOUT_FILENO);
-		mini()->sig = 1;
 		mini()->exit_code = 130;
-		g_sig = 1;
 	}
 	if (signum == SIGQUIT)
-		return (ft_putstr_fd("Quit (core dumped)\n", STDOUT_FILENO));
+	{
+		ft_putstr_fd("Quit (core dumped)\n", STDOUT_FILENO);
+		mini()->exit_code = 131;
+	}
 }
