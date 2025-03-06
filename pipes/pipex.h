@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:14:26 by malourei          #+#    #+#             */
-/*   Updated: 2025/03/05 20:58:45 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/03/06 20:35:31 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ bool						good_files(t_cmd *cmd);
 bool						check_command(t_cmd *tmp, char *cmd_path);
 void						check_ridirects(t_cmd *tmp, char *cmd_path);
 void						get_strs_envs(t_pipex *pipex);
+void						multi_pipe_help(t_cmd *node, t_pipex *pipex, int i);
 
 #endif

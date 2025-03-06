@@ -6,7 +6,7 @@
 /*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:14:26 by malourei          #+#    #+#             */
-/*   Updated: 2025/03/06 19:20:27 by malourei         ###   ########.fr       */
+/*   Updated: 2025/03/06 20:36:13 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,7 @@ static void	start_multi2_pip(t_pipex *pipex, int i, char *cmd_path, t_cmd *node)
 	if (pipex->pids[i] == 0)
 	{
 		check_ridirects(node, cmd_path);
-		if (node->read < 3 || node->w < 3)
-		{
-			if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
-				return (perror("dup10"), (void)i);
-			if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
-				return (perror("dup11"), (void)i);
-		}
+		multi_pipe_help(node, pipex, i);
 		if (is_builtin(node->cmd))
 			return (mini()->pipex = pipex, mini()->pipes = i,
 				execute_builtin(node, STDOUT_FILENO, 1), (void)i);

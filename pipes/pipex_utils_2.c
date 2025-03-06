@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malourei <malourei@student.42.com>         +#+  +:+       +#+        */
+/*   By: malourei <malourei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 22:59:58 by malourei          #+#    #+#             */
-/*   Updated: 2025/02/09 19:40:18 by hladeiro         ###   ########.fr       */
+/*   Updated: 2025/03/06 20:35:06 by malourei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,18 @@ void	free_env(char **strs)
 		i++;
 	}
 	free(strs);
+}
+
+void	multi_pipe_help(t_cmd *node, t_pipex *pipex, int i)
+{
+	if (node->read < 3)
+	{
+		if (dup2(pipex->fds[i - 1].fd[0], STDIN_FILENO) < 0)
+			return (perror("dup10"), (void)i);
+	}
+	if (node->w < 3)
+	{
+		if (dup2(pipex->fds[i].fd[1], STDOUT_FILENO) < 0)
+			return (perror("dup11"), (void)i);
+	}
 }
