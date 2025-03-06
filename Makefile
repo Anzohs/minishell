@@ -16,7 +16,7 @@ SRC_LIBFT = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isasci
 			ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c ft_lsthas.c ft_lstgetlst.c ft_lstsort.c ft_lsttomatrix.c \
 			get_next_line.c get_next_line_utils.c ft_lstpop.c
 SRC_PRS = parse_input.c closed_quotes.c is_valid.c expantions.c clean_content.c is_expantion.c sub_expantion.c split_value.c \
-			take_quotes.c free_matrix.c split_need.c is_builtin.c parse_redirects.c create_matrix.c
+			take_quotes.c free_matrix.c split_need.c is_builtin.c parse_redirects.c create_matrix.c process_expantion.c
 SRC_EXE = execute.c cd_execute.c pwd_execute.c export_print.c export_built.c env_execute.c unset_execute.c echo_exec.c execute_builtin.c exit_execute.c \
 			update_var.c
 SRC_SIG = load_signals.c
@@ -64,6 +64,6 @@ v :	$(NAME)
 	valgrind --suppressions=read.supp --show-leak-kinds=all --leak-check=full ./minishell
 
 vf : $(NAME)
-	valgrind --suppressions=read.supp --show-leak-kinds=all --leak-check=full --trace-children=yes --track-fds=yes ./minishell
+	valgrind --suppressions=read.supp --show-leak-kinds=all --trace-children=yes --track-fds=all ./minishell
 
 .PHONY: all clean fclean re

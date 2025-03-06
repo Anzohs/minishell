@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../mini_struct/mini.h"
+
 /*
 static t_string	trim_spaces(t_string str)
 {
