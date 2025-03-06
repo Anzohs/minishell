@@ -34,6 +34,14 @@ static void	copy_remaining(t_string new, t_string s, int *i, int *j)
 		new[(*j)++] = s[(*i)++];
 }
 
+static void t_string_new(t_string *new, t_string s, t_string str, t_string it)
+{
+	if (!str || *str == 0)
+		*new = ft_calloc(ft_strlen(s) + ft_strlen(it) + 1, sizeof(char));
+	else
+		*new = ft_calloc(ft_strlen(s) + ft_strlen(str) + 1, sizeof(char));
+}
+
 t_string	sub_expantion(t_string s, t_string str)
 {
 	t_string	new;
@@ -41,10 +49,10 @@ t_string	sub_expantion(t_string s, t_string str)
 	int			i;
 	int			j;
 
-	new = ft_calloc(ft_strlen(s) + ft_strlen(str) + 1, sizeof(char));
+	it = ft_itoa(mini()->exit_code);
+	t_string_new(&new, s, str, it);
 	if (!new)
 		return (ft_strdup(""));
-	it = ft_itoa(mini()->exit_code);
 	i = 0;
 	j = 0;
 	while (s[i])

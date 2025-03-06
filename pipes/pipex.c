@@ -128,6 +128,7 @@ void	pipex(void)
 	pipex.env = ft_lsttomatrix(mini()->env);
 	get_strs_envs(&pipex);
 	mini()->sig = 3;
+	mini()->exit_code = 0;
 	load_signals();
 	if (!find_full_cmd(&pipex, mini()->cmd))
 		return (clean_all(&pipex), mini()->sig = 1 , load_signals());

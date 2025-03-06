@@ -15,7 +15,7 @@
 #include "../signals/ft_signals.h"
 #include <fcntl.h>
 
-extern int s_sig;
+extern int g_sig;
 
 static char	*generate_random_filename(void)
 {
