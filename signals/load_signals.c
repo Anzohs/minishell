@@ -60,19 +60,15 @@ void	sig_handler(int signum, siginfo_t *sig, void *s)
 		return ;
 }
 
-void	sig_handler_here(int signum, siginfo_t *sig, void *s)
-{
-	(void)s;
-	(void)sig;
-	if (signum == SIGINT)
-	{
-		g_sig = 1;
-        rl_done = 1;
-        rl_replace_line("", 0);
-        printf("\n");
-	}
-	if (signum == SIGQUIT)
-		return ;
+void sig_handler_here(int signum, siginfo_t *sig, void *s) {
+    (void)s;
+    (void)sig;
+    if (signum == SIGINT) {
+        g_sig = 1;
+        rl_done = 1; 
+    }
+    if (signum == SIGQUIT)
+        return;
 }
 
 void	sig_handler_pipe(int signum, siginfo_t *sig, void *s)

@@ -15,7 +15,13 @@
 #include "../signals/ft_signals.h"
 #include <fcntl.h>
 
-extern int g_sig;
+int rl_hook(void)
+{
+    if (g_sig) {
+        rl_done = 1;  // Ensure readline exits if the signal was received
+    }
+	return 0;
+}
 
 static char	*generate_random_filename(void)
 {
@@ -48,16 +54,19 @@ static void	here_doc(t_fd **f, t_string filename, int f_d)
 	free((*f)->name);
 	(*f)->name = ft_strdup(filename);
 	(*f)->fd = f_d;
-	rl_event_hook = 0;
+	rl_event_hook = rl_hook;
 	while (1)
 	{
 		line = readline("> ");
-        if (line == NULL || g_sig)
-            return (ft_putendl_fd("", STDOUT_FILENO), free(limiter));
-        if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0 || g_sig) {
-            free(line);
-            break;
-        }
+		if (!line || ft_strcmp(line, limiter) == 0 || g_sig)
+		{
+			if (!line && !g_sig)
+				return (free(limiter), ft_putendl_fd("",STDOUT_FILENO));
+			if (line)
+				free(line);
+			if (g_sig)
+				return (free(limiter));
+		}
         ft_putendl_fd(line, f_d);
         free(line);
 	}
