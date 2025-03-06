@@ -99,6 +99,5 @@ void	cd_execute(t_string *matrix, int fd)
 		return ;
 	s = getcwd(NULL, 0);
 	ft_putendl_fd(s, fd);
-	printf("%s \n", s);
 	free(s);
 }
